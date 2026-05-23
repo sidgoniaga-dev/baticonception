@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bati Conception — Entreprise de rénovation</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React + Babel -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #F7F4ED; font-family: 'Manrope', system-ui, sans-serif; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn { animation: fadeIn 0.5s ease-out; }
+
+    select { background-image: none; }
+
+    /* Splash while React boots */
+    #__boot {
+      position: fixed; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: #F7F4ED; z-index: 9999;
+      transition: opacity .4s ease;
+    }
+    #__boot.gone { opacity: 0; pointer-events: none; }
+    #__boot .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #AED8E6; margin: 0 4px;
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+    #__boot .dot:nth-child(2) { animation-delay: .15s; }
+    #__boot .dot:nth-child(3) { animation-delay: .3s; }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(.6); opacity: .4; }
+      40%           { transform: scale(1);  opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="__boot"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="react" src="icons.jsx"></script>
+  <script type="text/babel" data-presets="react" src="data.jsx"></script>
+  <script type="text/babel" data-presets="react" src="components.jsx"></script>
+  <script type="text/babel" data-presets="react" src="motion.jsx"></script>
+  <script type="text/babel" data-presets="react" src="projects.jsx"></script>
+  <script type="text/babel" data-presets="react" src="pages.jsx"></script>
+  <script type="text/babel" data-presets="react" src="contact.jsx"></script>
+  <script type="text/babel" data-presets="react" src="app.jsx"></script>
+
+  <script>
+    // Hide splash once React has mounted something into #root
+    (function () {
+      const boot = document.getElementById('__boot');
+      const root = document.getElementById('root');
+      const obs = new MutationObserver(() => {
+        if (root.childElementCount > 0) {
+          boot.classList.add('gone');
+          setTimeout(() => boot.remove(), 500);
+          obs.disconnect();
+        }
+      });
+      obs.observe(root, { childList: true });
+    })();
+  </script>
+</body>
+</html>
