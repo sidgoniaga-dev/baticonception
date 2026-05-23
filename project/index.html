@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind CSS (served locally, generated at build time) -->
-  <link rel="stylesheet" href="/tailwind.css" />
+  <!-- Tailwind via CDN (dev) -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- React + Babel -->
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
@@ -168,6 +168,7 @@ const Logo = ({ className = "h-8", invert = false }) => (
 const SERVICES = {
   "salle-de-bain": {
     icon: Bath,
+    photo: "uploads/PHOTO-2025-08-06-20-11-52.jpg",
     label: "Salle de bain",
     title: "Rénovation de salle de bain",
     tagline: "Transformez votre espace en un lieu moderne, confortable et fonctionnel",
@@ -201,6 +202,7 @@ const SERVICES = {
   },
   toiture: {
     icon: HomeIcon,
+    photo: "uploads/PHOTO-2024-09-03-12-53-47.jpg",
     label: "Toiture",
     title: "Rénovation de toiture",
     tagline: "Protégez durablement votre habitation",
@@ -235,6 +237,7 @@ const SERVICES = {
   },
   facade: {
     icon: Layers,
+    photo: "uploads/PHOTO-2026-01-15-22-19-43.jpg",
     label: "Façade",
     title: "Rénovation de façade",
     tagline: "Améliorez l'apparence et la performance de votre habitation",
@@ -266,6 +269,7 @@ const SERVICES = {
   },
   amenagement: {
     icon: Hammer,
+    photo: "uploads/PHOTO-2026-03-06-13-42-24.jpg",
     label: "Aménagement intérieur",
     title: "Aménagement intérieur",
     tagline: "Optimisez et transformez vos espaces de vie",
@@ -296,6 +300,7 @@ const SERVICES = {
   },
   isolation: {
     icon: Thermometer,
+    photo: "uploads/PHOTO-2026-02-16-15-11-15.jpg",
     label: "Isolation",
     title: "Travaux d'isolation",
     tagline: "Améliorez le confort et réduisez vos factures d'énergie",
@@ -328,6 +333,7 @@ const SERVICES = {
   },
   "renovation-complete": {
     icon: Building2,
+    photo: "uploads/PHOTO-2026-03-05-14-55-01.jpg",
     label: "Rénovation complète",
     title: "Rénovation complète de votre habitation",
     tagline: "Un accompagnement de A à Z pour tous vos projets",
@@ -719,7 +725,7 @@ const BigHero = ({ eyebrow, title, intro, labels }) => {
         <h1
           className="font-['Manrope'] font-extrabold text-center leading-[0.85] tracking-[-0.045em] px-2 pb-8 md:pb-16 select-none"
           style={{
-            fontSize: "clamp(2.5rem, 18vw, 22rem)",
+            fontSize: "clamp(2.5rem, 11vw, 13rem)",
             backgroundImage:
               "linear-gradient(180deg, #F7F4ED 0%, #F7F4ED 50%, rgba(247,244,237,0.55) 75%, rgba(247,244,237,0.05) 92%, transparent 100%)",
             WebkitBackgroundClip: "text",
@@ -776,7 +782,7 @@ const FinalCta = ({ go }) => (
         <p className="text-[#0A0A0A]/80 leading-relaxed">
           Un projet en tête ? Obtenez un devis gratuit et personnalisé, sans engagement.
         </p>
-        <CtaButton onClick={() => go("contact")} variant="dark">
+        <CtaButton onClick={() => go("contact")} variant="primary">
           Demander un devis
         </CtaButton>
       </div>
@@ -853,7 +859,7 @@ const Footer = ({ go }) => (
           <ul className="space-y-2">
             <li className="flex items-start gap-2">
               <MapPin className="w-4 h-4 mt-0.5 text-[#AED8E6] shrink-0" />
-              <span>Bruxelles & Belgique</span>
+              <span>Belgique</span>
             </li>
             <li className="flex items-start gap-2">
               <Phone className="w-4 h-4 mt-0.5 text-[#AED8E6] shrink-0" />
@@ -869,7 +875,7 @@ const Footer = ({ go }) => (
 
       <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#F7F4ED]/40">
         <span>© {new Date().getFullYear()} Bati Conception — Tous droits réservés</span>
-        <span>Site en construction · Belgique</span>
+        <span>TVA BE 1030.623.416</span>
       </div>
     </div>
   </footer>
@@ -1138,7 +1144,7 @@ const PROJECTS = [
     location: "Périphérie bruxelloise",
     year: "2025",
     description:
-      "Démolition d'un revêtement vieillissant, reprise du support, pose de dalles en pierre bleue grand format avec joints au cordeau.",
+      "Démolition d'un revêtement vieillissant, reprise du support, pose de carrelage avec joints au cordeau.",
     avant: "uploads/PHOTO-2025-05-23-19-48-19.jpg",
     apres: "uploads/PHOTO-2025-07-31-21-24-40.jpg",
     pendant: ["uploads/PHOTO-2025-07-10-13-19-31.jpg"],
@@ -1814,38 +1820,21 @@ const ServicesPage = ({ go }) => (
                 }`}
               >
                 <div className="lg:col-span-4 lg:[direction:ltr]">
-                  <div className="relative aspect-square bg-gradient-to-br from-[#AED8E6] to-[#AED8E6]/40 flex items-center justify-center overflow-hidden">
-                    <svg
-                      className="absolute inset-0 w-full h-full opacity-25"
-                      viewBox="0 0 200 200"
-                      preserveAspectRatio="none"
-                    >
-                      {[...Array(15)].map((_, j) => (
-                        <line
-                          key={j}
-                          x1="0"
-                          y1={j * 14}
-                          x2="200"
-                          y2={j * 14 - 40}
-                          stroke="#0A0A0A"
-                          strokeWidth="0.4"
-                        />
-                      ))}
-                    </svg>
-                    <div className="relative text-center">
-                      <div className="font-['Fraunces'] italic text-[12rem] md:text-[14rem] leading-none text-[#0A0A0A]/15">
-                        {String(i + 1).padStart(2, "0")}
-                      </div>
-                      <Ic
-                        className="absolute inset-0 m-auto w-20 h-20 text-[#0A0A0A]"
-                        strokeWidth={1}
-                      />
-                    </div>
-                    <div className="absolute top-4 left-4 text-xs uppercase tracking-[0.2em] text-[#0A0A0A]/60">
+                  <div className="relative aspect-square overflow-hidden">
+                    <img
+                      src={s.photo}
+                      alt={s.label}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent" />
+                    <div className="absolute top-4 left-4 bg-[#0A0A0A]/50 backdrop-blur-sm text-[#F7F4ED] text-xs uppercase tracking-[0.2em] px-3 py-1.5 rounded-full">
                       Service · {String(i + 1).padStart(2, "0")}
                     </div>
-                    <div className="absolute bottom-4 right-4 text-xs uppercase tracking-[0.2em] text-[#0A0A0A]/60">
-                      / 06
+                    <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-[#AED8E6] flex items-center justify-center">
+                        <Ic className="w-4 h-4 text-[#0A0A0A]" strokeWidth={1.5} />
+                      </div>
+                      <span className="text-[#F7F4ED] text-sm font-medium">{s.label}</span>
                     </div>
                   </div>
                 </div>
@@ -2317,6 +2306,37 @@ Object.assign(window, { HomePage, ServicePage, ServicesPage, RealisationsPage })
 // ===== contact.jsx =====
 const { useState: useStateC } = React;
 
+const inputBase =
+  "w-full bg-transparent border-0 border-b border-[#0A0A0A]/20 py-3 text-[#0A0A0A] placeholder-[#0A0A0A]/30 focus:border-[#0A0A0A] focus:outline-none transition-colors";
+
+const Field = ({ label, children }) => (
+  <label className="block">
+    <span className="text-xs uppercase tracking-[0.2em] text-[#0A0A0A]/60 mb-2 block">
+      {label}
+    </span>
+    {children}
+  </label>
+);
+
+const RadioGroup = ({ name, value, options, onChange }) => (
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+    {options.map((opt) => (
+      <button
+        type="button"
+        key={opt}
+        onClick={() => onChange(name, opt)}
+        className={`px-4 py-3 rounded-full text-sm border transition-all ${
+          value === opt
+            ? "bg-[#0A0A0A] text-[#F7F4ED] border-[#0A0A0A]"
+            : "border-[#0A0A0A]/20 text-[#0A0A0A]/70 hover:border-[#0A0A0A]"
+        }`}
+      >
+        {opt}
+      </button>
+    ))}
+  </div>
+);
+
 const ContactPage = () => {
   const [form, setForm] = useStateC({
     nom: "",
@@ -2340,6 +2360,9 @@ const ContactPage = () => {
 
   const submit = async (e) => {
     e.preventDefault();
+    if (!form.delai) { setError("Veuillez choisir un délai pour votre projet."); return; }
+    if (!form.surface) { setError("Veuillez choisir une surface concernée."); return; }
+    if (!form.contactType) { setError("Veuillez choisir un mode de contact."); return; }
     setSubmitting(true);
     setError(null);
     try {
@@ -2390,36 +2413,6 @@ const ContactPage = () => {
     );
   }
 
-  const inputBase =
-    "w-full bg-transparent border-0 border-b border-[#0A0A0A]/20 py-3 text-[#0A0A0A] placeholder-[#0A0A0A]/30 focus:border-[#0A0A0A] focus:outline-none transition-colors";
-
-  const Field = ({ label, children }) => (
-    <label className="block">
-      <span className="text-xs uppercase tracking-[0.2em] text-[#0A0A0A]/60 mb-2 block">
-        {label}
-      </span>
-      {children}
-    </label>
-  );
-
-  const RadioGroup = ({ name, value, options, onChange }) => (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-      {options.map((opt) => (
-        <button
-          type="button"
-          key={opt}
-          onClick={() => onChange(name, opt)}
-          className={`px-4 py-3 rounded-full text-sm border transition-all ${
-            value === opt
-              ? "bg-[#0A0A0A] text-[#F7F4ED] border-[#0A0A0A]"
-              : "border-[#0A0A0A]/20 text-[#0A0A0A]/70 hover:border-[#0A0A0A]"
-          }`}
-        >
-          {opt}
-        </button>
-      ))}
-    </div>
-  );
 
   return (
     <React.Fragment>
@@ -2433,7 +2426,7 @@ const ContactPage = () => {
       <section data-screen-label="Contact / Infos" className="border-y border-[#0A0A0A]/10 bg-[#F7F4ED]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#0A0A0A]/10">
           {[
-            [MapPin, "Zone d'intervention", "Bruxelles & Belgique", null],
+            [MapPin, "Zone d'intervention", "Belgique", null],
             [Phone, "Téléphone", "+32 470 86 63 59", "tel:+32470866359"],
             [Mail, "Email", "baticonception@outlook.com", "mailto:baticonception@outlook.com"],
           ].map(([Ic, label, val, href], i) => (
@@ -2499,27 +2492,30 @@ const ContactPage = () => {
                     placeholder="vous@email.be"
                   />
                 </Field>
-                <Field label="Rue et numéro">
+                <Field label="Rue et numéro *">
                   <input
                     type="text"
+                    required
                     value={form.rue}
                     onChange={update("rue")}
                     className={inputBase}
                     placeholder="Rue ..."
                   />
                 </Field>
-                <Field label="Ville">
+                <Field label="Ville *">
                   <input
                     type="text"
+                    required
                     value={form.ville}
                     onChange={update("ville")}
                     className={inputBase}
                     placeholder="Bruxelles"
                   />
                 </Field>
-                <Field label="Code postal">
+                <Field label="Code postal *">
                   <input
                     type="text"
+                    required
                     value={form.codePostal}
                     onChange={update("codePostal")}
                     className={inputBase}
@@ -2594,9 +2590,10 @@ const ContactPage = () => {
                   Détails du projet
                 </h3>
               </div>
-              <Field label="Décrivez votre projet en quelques lignes">
+              <Field label="Décrivez votre projet en quelques lignes *">
                 <textarea
                   rows={5}
+                  required
                   value={form.description}
                   onChange={update("description")}
                   className={`${inputBase} resize-none`}
