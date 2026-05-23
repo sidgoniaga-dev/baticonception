@@ -19,8 +19,8 @@
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
   <style>
-    html { scroll-behavior: smooth; }
-    body { margin: 0; background: #F7F4ED; font-family: 'Manrope', system-ui, sans-serif; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { margin: 0; background: #F7F4ED; font-family: 'Manrope', system-ui, sans-serif; overflow-x: hidden; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(8px); }
@@ -717,9 +717,9 @@ const BigHero = ({ eyebrow, title, intro, labels }) => {
 
         {/* Giant headline with bottom-fade mask */}
         <h1
-          className="font-['Manrope'] font-extrabold text-center whitespace-nowrap leading-[0.85] tracking-[-0.045em] px-2 pb-8 md:pb-16 select-none"
+          className="font-['Manrope'] font-extrabold text-center leading-[0.85] tracking-[-0.045em] px-2 pb-8 md:pb-16 select-none"
           style={{
-            fontSize: "clamp(3.5rem, 20vw, 22rem)",
+            fontSize: "clamp(2.5rem, 18vw, 22rem)",
             backgroundImage:
               "linear-gradient(180deg, #F7F4ED 0%, #F7F4ED 50%, rgba(247,244,237,0.55) 75%, rgba(247,244,237,0.05) 92%, transparent 100%)",
             WebkitBackgroundClip: "text",
@@ -1239,7 +1239,7 @@ const HomePage = ({ go }) => (
         </div>
 
         {/* Headline */}
-        <h1 className="font-['Fraunces'] text-[11vw] md:text-[7.5vw] lg:text-[6.5rem] leading-[1.05] tracking-[-0.025em] text-[#F7F4ED]">
+        <h1 className="font-['Fraunces'] text-[9vw] md:text-[7.5vw] lg:text-[6.5rem] leading-[1.05] tracking-[-0.025em] text-[#F7F4ED]">
           Votre partenaire{" "}
           <em className="italic font-light text-[#F7F4ED]/80">rénovation</em>
           <br />
@@ -1650,13 +1650,13 @@ const ServicePage = ({ slug, go }) => {
               {s.prestations.map((item, i) => (
                 <div
                   key={i}
-                  className="bg-[#F7F4ED] flex items-center gap-6 py-5 px-6 group hover:bg-[#AED8E6]/20 transition"
+                  className="bg-[#F7F4ED] flex items-center gap-3 md:gap-6 py-4 md:py-5 px-4 md:px-6 group hover:bg-[#AED8E6]/20 transition"
                 >
-                  <span className="font-['Fraunces'] italic text-sm text-[#0A0A0A]/40 w-8">
+                  <span className="font-['Fraunces'] italic text-sm text-[#0A0A0A]/40 w-6 md:w-8 shrink-0">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-[#0A0A0A] text-lg flex-1">{item}</span>
-                  <ArrowRight className="w-4 h-4 text-[#0A0A0A]/30 group-hover:text-[#0A0A0A] group-hover:translate-x-1 transition" />
+                  <span className="text-[#0A0A0A] text-base md:text-lg flex-1">{item}</span>
+                  <ArrowRight className="w-4 h-4 text-[#0A0A0A]/30 group-hover:text-[#0A0A0A] group-hover:translate-x-1 transition shrink-0" />
                 </div>
               ))}
             </div>
