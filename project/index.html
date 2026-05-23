@@ -2332,16 +2332,43 @@ const ContactPage = () => {
     contactType: "",
   });
   const [sent, setSent] = useStateC(false);
+  const [submitting, setSubmitting] = useStateC(false);
+  const [error, setError] = useStateC(null);
 
   const update = (k) => (e) => setForm({ ...form, [k]: e.target.value });
   const updateRadio = (k, v) => setForm({ ...form, [k]: v });
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 100);
+    setSubmitting(true);
+    setError(null);
+    try {
+      const res = await fetch("https://formspree.io/f/xnjrzvbe", {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({
+          Nom: form.nom,
+          Téléphone: form.telephone,
+          Email: form.email,
+          Adresse: `${form.rue}, ${form.codePostal} ${form.ville}`,
+          "Type de projet": form.typeProjet,
+          Délai: form.delai,
+          Surface: form.surface,
+          Description: form.description,
+          "Mode de contact préféré": form.contactType,
+        }),
+      });
+      if (res.ok) {
+        setSent(true);
+        setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
+      } else {
+        setError("Une erreur est survenue. Veuillez réessayer ou nous contacter par email.");
+      }
+    } catch {
+      setError("Impossible d'envoyer le formulaire. Vérifiez votre connexion internet.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (sent) {
@@ -2637,12 +2664,16 @@ const ContactPage = () => {
             </div>
 
             <div className="pt-8 border-t border-[#0A0A0A]/10">
+              {error && (
+                <p className="mb-4 text-sm text-red-600">{error}</p>
+              )}
               <button
                 type="submit"
-                className="w-full md:w-auto inline-flex items-center justify-center gap-3 bg-[#0A0A0A] text-[#F7F4ED] px-10 py-5 rounded-full text-sm tracking-wide hover:bg-[#AED8E6] hover:text-[#0A0A0A] transition-all duration-300 group"
+                disabled={submitting}
+                className="w-full md:w-auto inline-flex items-center justify-center gap-3 bg-[#0A0A0A] text-[#F7F4ED] px-10 py-5 rounded-full text-sm tracking-wide hover:bg-[#AED8E6] hover:text-[#0A0A0A] transition-colors duration-300 group disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Envoyer ma demande
-                <Send className="w-4 h-4 group-hover:translate-x-1 transition" />
+                {submitting ? "Envoi en cours…" : "Envoyer ma demande"}
+                {!submitting && <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
               </button>
               <p className="mt-4 text-xs text-[#0A0A0A]/50">
                 Nous vous répondrons dans les plus brefs délais.
