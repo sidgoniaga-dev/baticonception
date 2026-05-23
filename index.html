@@ -1,0 +1,2746 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bati Conception — Entreprise de rénovation</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React + Babel -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #F7F4ED; font-family: 'Manrope', system-ui, sans-serif; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn { animation: fadeIn 0.5s ease-out; }
+
+    select { background-image: none; }
+
+    /* Splash while React boots */
+    #__boot {
+      position: fixed; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: #F7F4ED; z-index: 9999;
+      transition: opacity .4s ease;
+    }
+    #__boot.gone { opacity: 0; pointer-events: none; }
+    #__boot .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #AED8E6; margin: 0 4px;
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+    #__boot .dot:nth-child(2) { animation-delay: .15s; }
+    #__boot .dot:nth-child(3) { animation-delay: .3s; }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(.6); opacity: .4; }
+      40%           { transform: scale(1);  opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="__boot"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="react">
+// ===== icons.jsx =====
+// Lucide-style icons as React components.
+// Wraps real lucide SVG paths so we don't need to bundle lucide-react.
+
+const Icon = ({ children, className = "w-5 h-5", strokeWidth = 2, fill = "none", ...rest }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill={fill}
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    {...rest}
+  >
+    {children}
+  </svg>
+);
+
+const Menu = (p) => <Icon {...p}><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></Icon>;
+const X = (p) => <Icon {...p}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></Icon>;
+const ArrowRight = (p) => <Icon {...p}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></Icon>;
+const ArrowUpRight = (p) => <Icon {...p}><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></Icon>;
+const Check = (p) => <Icon {...p}><polyline points="20 6 9 17 4 12"/></Icon>;
+const Phone = (p) => <Icon {...p}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></Icon>;
+const Mail = (p) => <Icon {...p}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></Icon>;
+const MapPin = (p) => <Icon {...p}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></Icon>;
+const Bath = (p) => <Icon {...p}><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><line x1="10" y1="5" x2="8" y2="7"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="7" y1="19" x2="7" y2="21"/><line x1="17" y1="19" x2="17" y2="21"/></Icon>;
+const Home = (p) => <Icon {...p}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></Icon>;
+const Hammer = (p) => <Icon {...p}><path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25v-.86L16.01 4.6a5.56 5.56 0 0 0-3.94-1.64H9l.92.82A6.18 6.18 0 0 1 12 8.4v1.56l2 2h2.47l2.26 1.91"/></Icon>;
+const Layers = (p) => <Icon {...p}><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></Icon>;
+const Thermometer = (p) => <Icon {...p}><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4 4 0 1 0 5 0z"/></Icon>;
+const Building2 = (p) => <Icon {...p}><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></Icon>;
+const Camera = (p) => <Icon {...p}><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></Icon>;
+const Star = (p) => <Icon {...p}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></Icon>;
+const ChevronDown = (p) => <Icon {...p}><polyline points="6 9 12 15 18 9"/></Icon>;
+const Send = (p) => <Icon {...p}><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></Icon>;
+const Sparkles = (p) => <Icon {...p}><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></Icon>;
+
+Object.assign(window, {
+  Menu, X, ArrowRight, ArrowUpRight, Check, Phone, Mail, MapPin,
+  Bath, HomeIcon: Home, Hammer, Layers, Thermometer, Building2,
+  Camera, Star, ChevronDown, Send, Sparkles,
+});
+
+// ===== data.jsx =====
+// Logo + SERVICES data
+
+const Logo = ({ className = "h-8", invert = false }) => (
+  <svg
+    viewBox="0 0 440.04 230.18"
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+    aria-label="Bati Conception"
+  >
+    <g>
+      <path
+        fill="#AED8E6"
+        d="M240.12,123.51v-.1s-26.99-27-26.99-27c-2.12-2.12-2.12-5.55,0-7.67h0c2.16-2.16,2.16-5.66,0-7.82l-34.09-34.09c-2.16-2.16-5.66-2.16-7.82,0l-3.83,3.83c-1.09-.05-6.76-.4-11.06-5.15-1.36-1.51-2.26-3.1-2.86-4.57-1.71-4.2-3.95-8.16-7.16-11.37l-14.59-14.59c-2.16-2.16-5.66-2.16-7.82,0l-21.68,21.68c-2.16,2.16-2.16,5.66,0,7.82l12.57,12.57c3.66,3.66,8.13,6.61,13.18,7.77,1.9.43,4.02,1.34,5.93,3.11l.15.15c4.5,4.25,4.6,11.3.23,15.68l-2.77,2.77c-2.16,2.16-2.16,5.66,0,7.82l34.09,34.09c2.16,2.16,5.66,2.16,7.82,0l2.1-2.1c2.36-2.36,6.2-2.36,8.56,0h0c5.99,5.99,13.91,9.64,22.35,10.3l9.86.77c17.99,1.41,27.1,21.4,21.14,37h2.95c13.08-14.46,13-36.56-.27-50.92Z"
+      />
+      <polygon
+        fill="#AED8E6"
+        points="122.51 178.48 162.44 138.55 122.12 98.22 41.86 178.48 122.51 178.48"
+      />
+      <polygon
+        fill={invert ? "#F7F4ED" : "#0A0A0A"}
+        points="247.65 53.34 372.79 178.48 399.04 178.48 220.31 0 182.35 37.82 222.76 78.23 247.65 53.34"
+      />
+      <polygon
+        fill={invert ? "#F7F4ED" : "#0A0A0A"}
+        points="311.19 78.39 350.94 118.02 350.94 50.41 311.19 50.41 311.19 78.39"
+      />
+      <polygon
+        fill={invert ? "#F7F4ED" : "#0A0A0A"}
+        points="242.74 72.17 229.69 85.22 322.94 178.48 349.2 178.48 242.74 72.17"
+      />
+      <path
+        fill="#AED8E6"
+        d="M26.63,214.57c1.25,1.61,1.88,3.45,1.88,5.52,0,2.99-1.04,5.35-3.13,7.1-2.09,1.75-5,2.62-8.73,2.62H0v-35.74h16.09c3.63,0,6.47.83,8.53,2.49s3.08,3.92,3.08,6.77c0,2.11-.55,3.85-1.65,5.24-1.1,1.39-2.57,2.36-4.4,2.9,2.07.44,3.73,1.47,4.99,3.08ZM8.71,208.54h5.7c1.43,0,2.52-.31,3.28-.94.76-.63,1.15-1.55,1.15-2.77s-.38-2.16-1.15-2.8-1.86-.97-3.28-.97h-5.7v7.48ZM18.51,221.8c.8-.66,1.2-1.62,1.2-2.88s-.42-2.24-1.25-2.95c-.83-.71-1.98-1.07-3.44-1.07h-6.31v7.89h6.42c1.46,0,2.59-.33,3.39-.99Z"
+      />
+      <path
+        fill="#AED8E6"
+        d="M55.8,223.51h-13.34l-2.14,6.31h-9.11l12.93-35.74h10.08l12.93,35.74h-9.22l-2.14-6.31ZM53.56,216.79l-4.43-13.08-4.38,13.08h8.81Z"
+      />
+      <path
+        fill="#AED8E6"
+        d="M96.79,194.08v6.98h-9.47v28.77h-8.71v-28.77h-9.47v-6.98h27.65Z"
+      />
+      <path
+        fill="#AED8E6"
+        d="M109.87,194.08v35.74h-8.71v-35.74h8.71Z"
+      />
+      <g fill={invert ? "#F7F4ED" : "#201D1D"}>
+        <path d="M127.74,202.61c1.53-2.77,3.61-4.92,6.26-6.47,2.65-1.54,5.6-2.32,8.86-2.32,3.97,0,7.37.94,10.21,2.83s4.9,4.54,6.19,7.97h-4.17c-1.02-2.41-2.57-4.29-4.66-5.65-2.09-1.36-4.61-2.04-7.56-2.04-2.61,0-4.96.61-7.05,1.83-2.09,1.22-3.73,2.98-4.91,5.27-1.19,2.29-1.78,4.95-1.78,7.97s.59,5.67,1.78,7.94c1.19,2.27,2.83,4.02,4.91,5.24,2.09,1.22,4.44,1.83,7.05,1.83,2.95,0,5.47-.67,7.56-2.01,2.09-1.34,3.64-3.2,4.66-5.58h4.17c-1.29,3.39-3.36,6.03-6.21,7.89-2.85,1.87-6.25,2.8-10.18,2.8-3.26,0-6.21-.77-8.86-2.32-2.65-1.54-4.73-3.69-6.26-6.44s-2.29-5.87-2.29-9.37.76-6.63,2.29-9.39Z" />
+        <path d="M173.36,227.86c-2.68-1.54-4.79-3.7-6.34-6.47-1.55-2.77-2.32-5.9-2.32-9.39s.77-6.63,2.32-9.39c1.54-2.77,3.66-4.92,6.34-6.47,2.68-1.54,5.67-2.32,8.96-2.32s6.33.77,9.01,2.32c2.68,1.54,4.79,3.7,6.31,6.47,1.53,2.77,2.29,5.9,2.29,9.39s-.76,6.63-2.29,9.39c-1.53,2.77-3.63,4.92-6.31,6.47-2.68,1.55-5.69,2.32-9.01,2.32s-6.28-.77-8.96-2.32ZM189.45,225.24c2.1-1.22,3.77-2.98,4.99-5.27,1.22-2.29,1.83-4.95,1.83-7.97s-.61-5.67-1.83-7.94c-1.22-2.27-2.89-4.02-4.99-5.24-2.1-1.22-4.48-1.83-7.13-1.83s-5.02.61-7.13,1.83c-2.1,1.22-3.77,2.97-4.99,5.24-1.22,2.27-1.83,4.92-1.83,7.94s.61,5.68,1.83,7.97c1.22,2.29,2.88,4.05,4.99,5.27,2.1,1.22,4.48,1.83,7.13,1.83s5.02-.61,7.13-1.83Z" />
+        <path d="M233.28,229.82h-3.56l-19.7-29.94v29.94h-3.56v-35.59h3.56l19.7,29.89v-29.89h3.56v35.59Z" />
+        <path d="M242.04,202.61c1.53-2.77,3.61-4.92,6.26-6.47,2.65-1.54,5.6-2.32,8.86-2.32,3.97,0,7.37.94,10.21,2.83s4.9,4.54,6.19,7.97h-4.17c-1.02-2.41-2.57-4.29-4.66-5.65-2.09-1.36-4.61-2.04-7.56-2.04-2.61,0-4.96.61-7.05,1.83-2.09,1.22-3.73,2.98-4.91,5.27-1.19,2.29-1.78,4.95-1.78,7.97s.59,5.67,1.78,7.94c1.19,2.27,2.83,4.02,4.91,5.24,2.09,1.22,4.44,1.83,7.05,1.83,2.95,0,5.47-.67,7.56-2.01,2.09-1.34,3.64-3.2,4.66-5.58h4.17c-1.29,3.39-3.36,6.03-6.21,7.89-2.85,1.87-6.25,2.8-10.18,2.8-3.26,0-6.21-.77-8.86-2.32-2.65-1.54-4.73-3.69-6.26-6.44s-2.29-5.87-2.29-9.37.76-6.63,2.29-9.39Z" />
+        <path d="M284.19,197.14v13.29h13.49v2.95h-13.49v13.49h15.02v2.95h-18.58v-35.64h18.58v2.95h-15.02Z" />
+        <path d="M325.99,211.85c-2,1.87-5.01,2.8-9.01,2.8h-7.18v15.17h-3.56v-35.59h10.74c3.97,0,6.97.93,8.99,2.8,2.02,1.87,3.03,4.34,3.03,7.43s-1,5.52-3,7.38ZM325.33,204.47c0-2.37-.66-4.17-1.99-5.4-1.32-1.22-3.45-1.83-6.36-1.83h-7.18v14.36h7.18c5.57,0,8.35-2.37,8.35-7.13Z" />
+        <path d="M355.78,194.23v2.95h-9.88v32.64h-3.56v-32.64h-9.93v-2.95h23.37Z" />
+        <path d="M364.99,194.23v35.59h-3.56v-35.59h3.56Z" />
+        <path d="M380.11,227.86c-2.68-1.54-4.79-3.7-6.34-6.47-1.55-2.77-2.32-5.9-2.32-9.39s.77-6.63,2.32-9.39c1.54-2.77,3.66-4.92,6.34-6.47,2.68-1.54,5.67-2.32,8.96-2.32s6.33.77,9.01,2.32c2.68,1.54,4.79,3.7,6.31,6.47,1.53,2.77,2.29,5.9,2.29,9.39s-.76,6.63-2.29,9.39c-1.53,2.77-3.63,4.92-6.31,6.47-2.68,1.55-5.69,2.32-9.01,2.32s-6.28-.77-8.96-2.32ZM396.2,225.24c2.1-1.22,3.77-2.98,4.99-5.27,1.22-2.29,1.83-4.95,1.83-7.97s-.61-5.67-1.83-7.94c-1.22-2.27-2.89-4.02-4.99-5.24-2.1-1.22-4.48-1.83-7.13-1.83s-5.02.61-7.13,1.83c-2.1,1.22-3.77,2.97-4.99,5.24-1.22,2.27-1.83,4.92-1.83,7.94s.61,5.68,1.83,7.97c1.22,2.29,2.88,4.05,4.99,5.27,2.1,1.22,4.48,1.83,7.13,1.83s5.02-.61,7.13-1.83Z" />
+        <path d="M440.04,229.82h-3.56l-19.7-29.94v29.94h-3.56v-35.59h3.56l19.7,29.89v-29.89h3.56v35.59Z" />
+      </g>
+    </g>
+  </svg>
+);
+
+const SERVICES = {
+  "salle-de-bain": {
+    icon: Bath,
+    label: "Salle de bain",
+    title: "Rénovation de salle de bain",
+    tagline: "Transformez votre espace en un lieu moderne, confortable et fonctionnel",
+    intro:
+      "La salle de bain est une pièce essentielle de votre habitation. Avec le temps, elle peut devenir moins pratique, moins esthétique ou ne plus correspondre à vos besoins. Nous vous accompagnons dans la rénovation complète ou partielle, avec des solutions adaptées à votre espace, vos envies et votre budget.",
+    prestations: [
+      "Démolition de l'existant",
+      "Réaménagement complet de la pièce",
+      "Création de salle de bain dans un nouvel espace",
+      "Pose de carrelage et faïence",
+      "Installation de douche, baignoire et sanitaires",
+      "Pose de meubles de salle de bain",
+      "Travaux de plomberie",
+      "Travaux d'électricité (via partenaires qualifiés)",
+      "Finitions et mise en service",
+    ],
+    process: [
+      "Analyse de vos besoins",
+      "Conseils sur l'aménagement",
+      "Choix des matériaux",
+      "Coordination des différents travaux",
+      "Suivi du chantier jusqu'à la finition",
+    ],
+    why: [
+      "Améliorer le confort au quotidien",
+      "Moderniser votre habitation",
+      "Optimiser l'espace disponible",
+      "Augmenter la valeur de votre bien",
+      "Réduire les consommations d'eau et d'énergie",
+    ],
+  },
+  toiture: {
+    icon: HomeIcon,
+    label: "Toiture",
+    title: "Rénovation de toiture",
+    tagline: "Protégez durablement votre habitation",
+    intro:
+      "La toiture est l'un des éléments les plus importants de votre habitation. Elle protège votre maison des intempéries, assure l'isolation et contribue à la durabilité du bâtiment. Avec le temps, elle peut se dégrader, perdre en efficacité ou présenter des infiltrations.",
+    prestations: [
+      "Remplacement de la couverture",
+      "Réparation de toiture",
+      "Travaux d'étanchéité",
+      "Isolation de toiture",
+      "Traitement contre l'humidité",
+      "Réfection des éléments de finition (corniches, rives, etc.)",
+    ],
+    process: [
+      "Diagnostic de l'état de votre toiture",
+      "Recommandation : réparation, partielle ou complète",
+      "Sélection des matériaux adaptés",
+      "Réalisation et suivi rigoureux",
+      "Contrôle final des finitions",
+    ],
+    why: [
+      "Protéger votre habitation contre les intempéries",
+      "Éviter les infiltrations d'eau",
+      "Améliorer l'isolation thermique",
+      "Réduire les pertes d'énergie",
+      "Préserver la structure du bâtiment",
+    ],
+    extra: {
+      title: "Types de toiture",
+      items: ["Toitures plates", "Toitures inclinées (en pente)", "Rénovation partielle ou complète"],
+    },
+  },
+  facade: {
+    icon: Layers,
+    label: "Façade",
+    title: "Rénovation de façade",
+    tagline: "Améliorez l'apparence et la performance de votre habitation",
+    intro:
+      "La façade est la première image de votre maison. Elle joue un rôle essentiel, à la fois esthétique et protecteur. Avec le temps, elle peut se dégrader : fissures, salissures, perte d'isolation ou usure des matériaux.",
+    prestations: [
+      "Isolation par la façade (ITE)",
+      "Pose d'isolant et finition (enduit ou revêtement)",
+      "Nettoyage complet de la façade",
+      "Hydrofuge — protection contre l'humidité",
+      "Réparation des fissures",
+      "Rejointoiement",
+      "Rafraîchissement ou rénovation de l'enduit",
+    ],
+    process: [
+      "Diagnostic visuel et technique de la façade",
+      "Choix entre isolation, ravalement ou combiné",
+      "Sélection des finitions et coloris",
+      "Mise en œuvre et suivi de chantier",
+      "Contrôle qualité et finitions",
+    ],
+    why: [
+      "Améliorer l'esthétique de votre maison",
+      "Protéger votre habitation contre les intempéries",
+      "Éviter les infiltrations d'eau",
+      "Améliorer l'isolation thermique",
+      "Augmenter la valeur de votre bien immobilier",
+    ],
+  },
+  amenagement: {
+    icon: Hammer,
+    label: "Aménagement intérieur",
+    title: "Aménagement intérieur",
+    tagline: "Optimisez et transformez vos espaces de vie",
+    intro:
+      "L'aménagement intérieur permet de repenser complètement vos espaces afin de les rendre plus fonctionnels, modernes et adaptés à votre mode de vie. Nous réalisons tous types de travaux intérieurs, de la transformation de volumes existants à la création de nouvelles pièces.",
+    prestations: [
+      "Aménagement de grenier (chambre, bureau, pièce polyvalente)",
+      "Pose de cloisons (Gyproc / plaques de plâtre)",
+      "Faux plafonds avec éclairage intégré",
+      "Travaux de peinture intérieure",
+      "Pose de carrelage (sols et murs)",
+      "Isolation et finitions complètes",
+    ],
+    process: [
+      "Étude de votre espace existant",
+      "Proposition d'aménagement et croquis",
+      "Choix des matériaux et finitions",
+      "Réalisation coordonnée des travaux",
+      "Livraison clé en main",
+    ],
+    why: [
+      "Optimiser chaque mètre carré",
+      "Gagner en confort de vie",
+      "Moderniser votre habitation",
+      "Créer de nouveaux espaces utiles",
+      "Valoriser votre bien immobilier",
+    ],
+  },
+  isolation: {
+    icon: Thermometer,
+    label: "Isolation",
+    title: "Travaux d'isolation",
+    tagline: "Améliorez le confort et réduisez vos factures d'énergie",
+    intro:
+      "Une bonne isolation est essentielle pour garantir le confort de votre habitation tout au long de l'année. Elle permet de limiter les pertes de chaleur en hiver, de garder la fraîcheur en été et de réduire significativement vos consommations énergétiques.",
+    prestations: [
+      "Isolation de toiture (combles, grenier, plate ou inclinée)",
+      "Isolation des façades (intérieure ou extérieure)",
+      "Isolation des sols et planchers",
+      "Amélioration de la performance énergétique globale",
+    ],
+    process: [
+      "Audit thermique de l'habitation",
+      "Recommandation du type d'isolation",
+      "Choix du matériau adapté",
+      "Mise en œuvre soignée",
+      "Vérification des performances",
+    ],
+    why: [
+      "Réduire vos factures de chauffage",
+      "Améliorer le confort thermique",
+      "Diminuer les pertes d'énergie",
+      "Valoriser votre bien immobilier",
+      "Améliorer la performance énergétique du bâtiment",
+    ],
+    extra: {
+      title: "Matériaux utilisés",
+      items: ["Laine de verre", "Laine de roche", "Fibre de bois", "Panneaux isolants rigides"],
+    },
+  },
+  "renovation-complete": {
+    icon: Building2,
+    label: "Rénovation complète",
+    title: "Rénovation complète de votre habitation",
+    tagline: "Un accompagnement de A à Z pour tous vos projets",
+    intro:
+      "Vous souhaitez rénover entièrement votre maison ou votre appartement ? Nous prenons en charge votre projet de rénovation complète, de la conception jusqu'à la réalisation finale. Nous coordonnons l'ensemble des travaux afin de vous offrir un chantier maîtrisé, organisé et sans stress.",
+    prestations: [
+      "Rénovation de salle de bain",
+      "Rénovation de cuisine",
+      "Travaux de peinture",
+      "Pose de carrelage ou parquet",
+      "Aménagement intérieur",
+      "Isolation thermique",
+      "Cloisonnement et redistribution des espaces",
+      "Finitions générales",
+    ],
+    process: [
+      "Planification du chantier",
+      "Coordination des différents corps de métier",
+      "Suivi des travaux",
+      "Gestion des étapes du projet",
+      "Contrôle de la qualité des finitions",
+    ],
+    why: [
+      "Maison à rénover entièrement",
+      "Appartement à moderniser",
+      "Transformation d'un bien ancien",
+      "Rénovation avant mise en location ou vente",
+      "Amélioration globale du confort de vie",
+    ],
+  },
+};
+
+const SERVICE_KEYS = Object.keys(SERVICES);
+
+Object.assign(window, { Logo, SERVICES, SERVICE_KEYS });
+
+// ===== components.jsx =====
+const { useState, useEffect } = React;
+
+// ─────────────────────────────────────────────────────────────
+// Reusable atoms
+// ─────────────────────────────────────────────────────────────
+const SectionLabel = ({ children, n }) => (
+  <div className="flex items-center gap-3 mb-6">
+    {n && (
+      <span className="font-['Fraunces'] italic text-sm opacity-40">{n}</span>
+    )}
+    <span className="h-px w-10 bg-current opacity-30" />
+    <span className="text-xs uppercase tracking-[0.25em] opacity-60">
+      {children}
+    </span>
+  </div>
+);
+
+const CtaButton = ({ children, onClick, variant = "primary" }) => {
+  const styles =
+    variant === "primary"
+      ? "bg-[#0A0A0A] text-[#F7F4ED] hover:bg-[#AED8E6] hover:text-[#0A0A0A]"
+      : "bg-[#AED8E6] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-[#F7F4ED]";
+  return (
+    <button
+      onClick={onClick}
+      className={`inline-flex items-center gap-3 px-7 py-4 rounded-full text-sm tracking-wide transition-all duration-300 group ${styles}`}
+    >
+      {children}
+      <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition-transform" />
+    </button>
+  );
+};
+
+const CheckList = ({ items }) => (
+  <ul className="space-y-3">
+    {items.map((item, i) => (
+      <li key={i} className="flex items-start gap-3 text-[#0A0A0A]/80">
+        <span className="mt-1.5 w-5 h-5 rounded-full bg-[#AED8E6] flex items-center justify-center shrink-0">
+          <Check className="w-3 h-3 text-[#0A0A0A]" strokeWidth={3} />
+        </span>
+        <span>{item}</span>
+      </li>
+    ))}
+  </ul>
+);
+
+// ─────────────────────────────────────────────────────────────
+// Header
+// ─────────────────────────────────────────────────────────────
+const PillNavItem = ({ children, onClick, active }) => (
+  <button
+    onClick={onClick}
+    className={`px-3.5 py-2 text-sm rounded-full transition-colors ${
+      active
+        ? "bg-[#0A0A0A]/[0.06] text-[#0A0A0A]"
+        : "text-[#0A0A0A]/65 hover:text-[#0A0A0A] hover:bg-[#0A0A0A]/[0.04]"
+    }`}
+  >
+    {children}
+  </button>
+);
+
+const MobileNavItem = ({ label, active, onClick }) => (
+  <button
+    onClick={onClick}
+    className={`text-left py-3 border-b border-[#0A0A0A]/10 text-base ${
+      active ? "text-[#0A0A0A]" : "text-[#0A0A0A]/70"
+    }`}
+  >
+    {label}
+  </button>
+);
+
+const Header = ({ go, current }) => {
+  const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const navItem = null; // legacy — replaced by <PillNavItem>
+
+  return (
+    <header className="sticky top-0 z-50 pointer-events-none">
+      {/* Floating pill */}
+      <div className="max-w-[1400px] mx-auto px-4 md:px-6 pt-4 md:pt-6 flex justify-center">
+        <div
+          className={`pointer-events-auto flex items-center gap-1 md:gap-2 pl-3 pr-1.5 md:pl-4 md:pr-2 py-1.5 rounded-full transition-all duration-300 ${
+            scrolled
+              ? "bg-[#F7F4ED]/95 shadow-[0_8px_30px_rgba(0,0,0,0.18)]"
+              : "bg-[#F7F4ED] shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
+          } backdrop-blur-xl ring-1 ring-[#0A0A0A]/5`}
+        >
+          <button
+            onClick={() => go("home")}
+            className="flex items-center pr-2 md:pr-4 pl-1 py-1.5"
+            aria-label="Accueil"
+          >
+            <Logo className="h-7 md:h-8" />
+          </button>
+
+          <nav className="hidden lg:flex items-center gap-1">
+            <PillNavItem active={current === "home"} onClick={() => go("home")}>
+              Accueil
+            </PillNavItem>
+
+            <div
+              className="relative"
+              onMouseEnter={() => setServicesOpen(true)}
+              onMouseLeave={() => setServicesOpen(false)}
+            >
+              <PillNavItem
+                active={current === "services" || SERVICE_KEYS.includes(current)}
+                onClick={() => go("services")}
+              >
+                <span className="flex items-center gap-1">
+                  Services
+                  <ChevronDown
+                    className={`w-3 h-3 transition-transform ${
+                      servicesOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </span>
+              </PillNavItem>
+              {servicesOpen && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3">
+                  <div className="bg-[#0A0A0A] text-[#F7F4ED] w-[280px] py-3 rounded-2xl shadow-2xl ring-1 ring-[#F7F4ED]/10">
+                    <button
+                      onClick={() => {
+                        go("services");
+                        setServicesOpen(false);
+                      }}
+                      className="w-full px-5 py-3 flex items-center gap-3 text-sm hover:bg-[#AED8E6]/15 transition group border-b border-[#F7F4ED]/10 mb-1"
+                    >
+                      <Sparkles className="w-4 h-4 text-[#AED8E6]" strokeWidth={1.5} />
+                      <span className="flex-1 text-left font-medium">
+                        Tous les services
+                      </span>
+                      <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition" />
+                    </button>
+                    {SERVICE_KEYS.map((k) => {
+                      const Ic = SERVICES[k].icon;
+                      return (
+                        <button
+                          key={k}
+                          onClick={() => {
+                            go(k);
+                            setServicesOpen(false);
+                          }}
+                          className="w-full px-5 py-3 flex items-center gap-3 text-sm hover:bg-[#AED8E6]/15 transition group"
+                        >
+                          <Ic className="w-4 h-4 text-[#AED8E6]" strokeWidth={1.5} />
+                          <span className="flex-1 text-left">{SERVICES[k].label}</span>
+                          <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition" />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <PillNavItem
+              active={current === "realisations"}
+              onClick={() => go("realisations")}
+            >
+              Réalisations
+            </PillNavItem>
+            <PillNavItem active={current === "contact"} onClick={() => go("contact")}>
+              Contact
+            </PillNavItem>
+          </nav>
+
+          <button
+            onClick={() => go("contact")}
+            className="hidden md:inline-flex items-center gap-2 bg-[#0A0A0A] text-[#F7F4ED] pl-5 pr-4 py-2.5 text-sm tracking-wide rounded-full hover:bg-[#AED8E6] hover:text-[#0A0A0A] transition-all duration-300 group ml-1"
+          >
+            Devis gratuit
+            <ArrowUpRight className="w-4 h-4 group-hover:rotate-12 transition" />
+          </button>
+
+          <button
+            className="lg:hidden p-2.5 rounded-full hover:bg-[#0A0A0A]/5 transition"
+            onClick={() => setOpen(!open)}
+            aria-label="Menu"
+          >
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+      </div>
+
+      {open && (
+        <div className="lg:hidden pointer-events-auto max-w-[1400px] mx-auto px-4 md:px-6 mt-2">
+          <div className="bg-[#F7F4ED] rounded-3xl shadow-2xl ring-1 ring-[#0A0A0A]/10 px-6 py-5 flex flex-col gap-1">
+            <MobileNavItem
+              label="Accueil"
+              active={current === "home"}
+              onClick={() => {
+                go("home");
+                setOpen(false);
+              }}
+            />
+
+            {/* Services — collapsible */}
+            <button
+              onClick={() => setMobileServicesOpen((v) => !v)}
+              className={`flex items-center justify-between py-3 border-b border-[#0A0A0A]/10 text-base ${
+                current === "services" || SERVICE_KEYS.includes(current)
+                  ? "text-[#0A0A0A]"
+                  : "text-[#0A0A0A]/70"
+              }`}
+            >
+              <span>Services</span>
+              <ChevronDown
+                className={`w-4 h-4 transition-transform ${
+                  mobileServicesOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            {mobileServicesOpen && (
+              <div className="flex flex-col pl-3 pb-1 border-b border-[#0A0A0A]/10">
+                <button
+                  onClick={() => {
+                    go("services");
+                    setOpen(false);
+                    setMobileServicesOpen(false);
+                  }}
+                  className="flex items-center gap-3 py-2.5 text-sm text-[#0A0A0A]/80 hover:text-[#0A0A0A]"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#AED8E6]" strokeWidth={1.5} />
+                  Tous les services
+                </button>
+                {SERVICE_KEYS.map((k) => {
+                  const Ic = SERVICES[k].icon;
+                  return (
+                    <button
+                      key={k}
+                      onClick={() => {
+                        go(k);
+                        setOpen(false);
+                        setMobileServicesOpen(false);
+                      }}
+                      className={`flex items-center gap-3 py-2.5 text-sm ${
+                        current === k
+                          ? "text-[#0A0A0A]"
+                          : "text-[#0A0A0A]/70 hover:text-[#0A0A0A]"
+                      }`}
+                    >
+                      <Ic className="w-3.5 h-3.5 text-[#AED8E6]" strokeWidth={1.5} />
+                      {SERVICES[k].label}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+            <MobileNavItem
+              label="Réalisations"
+              active={current === "realisations"}
+              onClick={() => {
+                go("realisations");
+                setOpen(false);
+              }}
+            />
+            <MobileNavItem
+              label="Contact"
+              active={current === "contact"}
+              onClick={() => {
+                go("contact");
+                setOpen(false);
+              }}
+            />
+
+            <button
+              onClick={() => {
+                go("contact");
+                setOpen(false);
+              }}
+              className="mt-4 bg-[#0A0A0A] text-[#F7F4ED] py-3 rounded-full text-sm tracking-wide"
+            >
+              Demander un devis
+            </button>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────
+// Big hero (Services / Réalisations / Contact)
+// ─────────────────────────────────────────────────────────────
+const BigHero = ({ eyebrow, title, intro, labels }) => {
+  const [scrollY, setScrollY] = useState(0);
+  useEffect(() => {
+    const on = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, []);
+  const blur = Math.min(scrollY / 50, 14);
+  const opacity = Math.max(0.15, 1 - scrollY / 650);
+
+  return (
+    <section
+      data-screen-label={`Hero / ${title}`}
+      className="relative bg-[#0A0A0A] text-[#F7F4ED] -mt-[88px] md:-mt-[96px] pt-[110px] md:pt-[160px] overflow-hidden"
+    >
+      {/* Sky-blue halo from top */}
+      <div className="absolute inset-x-0 top-0 h-full pointer-events-none">
+        <div
+          className="absolute inset-x-0 top-0 h-[85%]"
+          style={{
+            background:
+              "radial-gradient(ellipse 75% 90% at 50% 5%, #AED8E6 0%, rgba(174,216,230,0.7) 18%, rgba(174,216,230,0.25) 45%, rgba(10,10,10,0) 75%)",
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 90% 60% at 50% 80%, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0) 100%)",
+          }}
+        />
+      </div>
+
+      <div
+        className="relative will-change-[filter,opacity]"
+        style={{ filter: `blur(${blur}px)`, opacity }}
+      >
+        <div className="text-center mb-6 md:mb-12 px-6">
+          {eyebrow && (
+            <div className="inline-flex items-center gap-2.5 bg-[#F7F4ED]/[0.07] backdrop-blur-sm ring-1 ring-[#F7F4ED]/15 rounded-full px-4 py-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#AED8E6]" />
+              <span className="text-[11px] md:text-xs text-[#F7F4ED]/85 uppercase tracking-[0.25em]">
+                {eyebrow}
+              </span>
+            </div>
+          )}
+          {intro && (
+            <p className="mt-6 md:mt-8 max-w-2xl mx-auto text-base md:text-lg text-[#F7F4ED]/70 leading-relaxed">
+              {intro}
+            </p>
+          )}
+        </div>
+
+        {/* Giant headline with bottom-fade mask */}
+        <h1
+          className="font-['Manrope'] font-extrabold text-center whitespace-nowrap leading-[0.85] tracking-[-0.045em] px-2 pb-8 md:pb-16 select-none"
+          style={{
+            fontSize: "clamp(3.5rem, 20vw, 22rem)",
+            backgroundImage:
+              "linear-gradient(180deg, #F7F4ED 0%, #F7F4ED 50%, rgba(247,244,237,0.55) 75%, rgba(247,244,237,0.05) 92%, transparent 100%)",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            color: "transparent",
+          }}
+        >
+          {title}
+        </h1>
+      </div>
+    </section>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────
+// Final CTA
+// ─────────────────────────────────────────────────────────────
+const FinalCta = ({ go }) => (
+  <section className="bg-[#AED8E6] py-14 md:py-20 lg:py-28 relative overflow-hidden">
+    <div className="absolute inset-0 pointer-events-none">
+      <svg
+        className="absolute inset-0 w-full h-full opacity-30"
+        viewBox="0 0 1400 400"
+        preserveAspectRatio="none"
+      >
+        {[...Array(20)].map((_, i) => (
+          <line
+            key={i}
+            x1="0"
+            y1={i * 25}
+            x2="1400"
+            y2={i * 25 - 80}
+            stroke="#0A0A0A"
+            strokeWidth="0.3"
+          />
+        ))}
+      </svg>
+    </div>
+    <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-10 items-center">
+      <div className="lg:col-span-8">
+        <div className="flex items-center gap-3 mb-6">
+          <Sparkles className="w-5 h-5 text-[#0A0A0A]" strokeWidth={1.5} />
+          <span className="text-xs uppercase tracking-[0.3em] text-[#0A0A0A]/70">
+            Votre projet commence ici
+          </span>
+        </div>
+        <h2 className="font-['Fraunces'] text-5xl md:text-7xl lg:text-8xl text-[#0A0A0A] leading-[0.95] tracking-[-0.02em]">
+          Parlons de votre
+          <br />
+          <em className="italic font-light">prochain chantier</em>.
+        </h2>
+      </div>
+      <div className="lg:col-span-4 flex flex-col gap-4">
+        <p className="text-[#0A0A0A]/80 leading-relaxed">
+          Un projet en tête ? Obtenez un devis gratuit et personnalisé, sans engagement.
+        </p>
+        <CtaButton onClick={() => go("contact")} variant="dark">
+          Demander un devis
+        </CtaButton>
+      </div>
+    </div>
+  </section>
+);
+
+// ─────────────────────────────────────────────────────────────
+// Footer
+// ─────────────────────────────────────────────────────────────
+const Footer = ({ go }) => (
+  <footer className="bg-[#0A0A0A] text-[#F7F4ED]/70 pt-20 pb-10">
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+      <div className="grid lg:grid-cols-12 gap-10 pb-16 border-b border-[#F7F4ED]/10">
+        <div className="lg:col-span-5">
+          <Logo className="h-12 mb-6" invert />
+          <p className="max-w-md leading-relaxed">
+            Entreprise de rénovation en Belgique. De la salle de bain à la rénovation
+            complète — un seul interlocuteur, un travail soigné.
+          </p>
+        </div>
+
+        <div className="lg:col-span-3">
+          <div className="text-xs uppercase tracking-[0.2em] text-[#F7F4ED]/50 mb-4">
+            Services
+          </div>
+          <ul className="space-y-2">
+            {SERVICE_KEYS.map((k) => (
+              <li key={k}>
+                <button
+                  onClick={() => go(k)}
+                  className="hover:text-[#AED8E6] transition"
+                >
+                  {SERVICES[k].label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="lg:col-span-2">
+          <div className="text-xs uppercase tracking-[0.2em] text-[#F7F4ED]/50 mb-4">
+            Navigation
+          </div>
+          <ul className="space-y-2">
+            <li>
+              <button onClick={() => go("home")} className="hover:text-[#AED8E6] transition">
+                Accueil
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => go("realisations")}
+                className="hover:text-[#AED8E6] transition"
+              >
+                Réalisations
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => go("contact")}
+                className="hover:text-[#AED8E6] transition"
+              >
+                Contact
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div className="lg:col-span-2">
+          <div className="text-xs uppercase tracking-[0.2em] text-[#F7F4ED]/50 mb-4">
+            Contact
+          </div>
+          <ul className="space-y-2">
+            <li className="flex items-start gap-2">
+              <MapPin className="w-4 h-4 mt-0.5 text-[#AED8E6] shrink-0" />
+              <span>Bruxelles & Belgique</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Phone className="w-4 h-4 mt-0.5 text-[#AED8E6] shrink-0" />
+              <a href="tel:+32470866359" className="hover:text-[#AED8E6] transition">+32 470 86 63 59</a>
+            </li>
+            <li className="flex items-start gap-2">
+              <Mail className="w-4 h-4 mt-0.5 text-[#AED8E6] shrink-0" />
+              <a href="mailto:baticonception@outlook.com" className="hover:text-[#AED8E6] transition break-all">baticonception@outlook.com</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#F7F4ED]/40">
+        <span>© {new Date().getFullYear()} Bati Conception — Tous droits réservés</span>
+        <span>Site en construction · Belgique</span>
+      </div>
+    </div>
+  </footer>
+);
+
+Object.assign(window, { SectionLabel, CtaButton, CheckList, Header, BigHero, FinalCta, Footer });
+
+// ===== motion.jsx =====
+// Reusable scroll/cursor animation primitives.
+// Drop on top of React 18 + Babel. No external deps.
+
+const { useState: useStateM, useEffect: useEffectM, useRef: useRefM } = React;
+
+// ─────────────────────────────────────────────────────────────
+// Reveal — fade + translateY on viewport enter
+// ─────────────────────────────────────────────────────────────
+const Reveal = ({
+  children,
+  delay = 0,
+  y = 16,
+  duration = 800,
+  as: Tag = "div",
+  className = "",
+  threshold = 0.12,
+  once = true,
+  style = {},
+  ...rest
+}) => {
+  const ref = useRefM(null);
+  const [visible, setVisible] = useStateM(false);
+
+  useEffectM(() => {
+    if (!ref.current) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVisible(true);
+          if (once) obs.disconnect();
+        } else if (!once) {
+          setVisible(false);
+        }
+      },
+      { threshold, rootMargin: "0px 0px -8% 0px" }
+    );
+    obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [threshold, once]);
+
+  return (
+    <Tag
+      ref={ref}
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : `translateY(${y}px)`,
+        transition: `opacity ${duration}ms cubic-bezier(.22,1,.36,1) ${delay}ms, transform ${duration}ms cubic-bezier(.22,1,.36,1) ${delay}ms`,
+        willChange: "opacity, transform",
+        ...style,
+      }}
+      {...rest}
+    >
+      {children}
+    </Tag>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────
+// Magnetic — element drifts toward cursor when nearby
+// ─────────────────────────────────────────────────────────────
+const Magnetic = ({ children, strength = 0.28, radius = 90, className = "" }) => {
+  const ref = useRefM(null);
+
+  useEffectM(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(pointer: coarse)").matches) return;
+
+    let raf = null;
+    let tx = 0,
+      ty = 0,
+      cx = 0,
+      cy = 0;
+
+    const loop = () => {
+      cx += (tx - cx) * 0.18;
+      cy += (ty - cy) * 0.18;
+      el.style.transform = `translate3d(${cx.toFixed(2)}px, ${cy.toFixed(2)}px, 0)`;
+      if (Math.abs(tx - cx) > 0.05 || Math.abs(ty - cy) > 0.05) {
+        raf = requestAnimationFrame(loop);
+      } else {
+        raf = null;
+      }
+    };
+
+    const onMove = (e) => {
+      const r = el.getBoundingClientRect();
+      const px = r.left + r.width / 2;
+      const py = r.top + r.height / 2;
+      const dx = e.clientX - px;
+      const dy = e.clientY - py;
+      const reach = radius + Math.max(r.width, r.height) / 2;
+      if (Math.hypot(dx, dy) < reach) {
+        tx = dx * strength;
+        ty = dy * strength;
+      } else {
+        tx = 0;
+        ty = 0;
+      }
+      if (!raf) raf = requestAnimationFrame(loop);
+    };
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [strength, radius]);
+
+  return (
+    <span ref={ref} className={`inline-block will-change-transform ${className}`}>
+      {children}
+    </span>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────
+// CountUp — animates 0 → target on viewport enter
+// ─────────────────────────────────────────────────────────────
+const CountUp = ({ to, suffix = "", prefix = "", duration = 1500, className = "" }) => {
+  const ref = useRefM(null);
+  const [value, setValue] = useStateM(0);
+
+  useEffectM(() => {
+    if (!ref.current) return;
+    let raf;
+    let start;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          const step = (t) => {
+            if (!start) start = t;
+            const p = Math.min((t - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            setValue(eased * to);
+            if (p < 1) raf = requestAnimationFrame(step);
+          };
+          raf = requestAnimationFrame(step);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    obs.observe(ref.current);
+    return () => {
+      obs.disconnect();
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [to, duration]);
+
+  const display = Number.isInteger(to) ? Math.round(value) : value.toFixed(0);
+  return (
+    <span ref={ref} className={className}>
+      {prefix}
+      {display}
+      {suffix}
+    </span>
+  );
+};
+
+Object.assign(window, { Reveal, Magnetic, CountUp });
+
+// ===== projects.jsx =====
+// Real renovation projects with before/during/after photos.
+// All paths point to user-uploaded images in /uploads.
+
+const PROJECTS = [
+  {
+    id: "facade-arriere-blanc",
+    category: "Façade",
+    title: "Façade arrière, du brut au blanc",
+    location: "Bruxelles",
+    year: "2025 — 2026",
+    description:
+      "Isolation, enduit et finition d'une façade arrière dégradée. Le mur en briques anciennes, recouvert d'une membrane d'étanchéité provisoire, a été repris intégralement avec un enduit de finition.",
+    avant: "uploads/PHOTO-2025-01-14-14-36-55.jpg",
+    apres: "uploads/PHOTO-2026-01-15-22-19-43.jpg",
+    pendant: ["uploads/PHOTO-2025-01-16-14-52-54.jpg"],
+  },
+  {
+    id: "salle-de-bain-carrare",
+    category: "Salle de bain",
+    title: "Salle de bain en marbre de Carrare",
+    location: "Bruxelles",
+    year: "2025",
+    description:
+      "Rénovation complète d'une salle de bain vétuste : démolition, plomberie, douche italienne avec carrelage effet marbre, meuble suspendu et sèche-serviettes.",
+    avant: "uploads/PHOTO-2025-06-26-17-05-48.jpg",
+    apres: "uploads/PHOTO-2025-08-06-20-11-52.jpg",
+    pendant: [
+      "uploads/PHOTO-2025-06-26-20-35-08.jpg",
+      "uploads/PHOTO-2025-06-27-14-57-16.jpg",
+    ],
+  },
+  {
+    id: "facade-arriere-schaerbeek",
+    category: "Façade",
+    title: "Isolation et ravalement de façade arrière",
+    location: "Schaerbeek",
+    year: "2024",
+    description:
+      "Pose d'un système d'isolation par l'extérieur (ITE) avec panneaux rigides, enduit armé et finition blanche. Reprise complète des appuis de fenêtres et raccords.",
+    avant: "uploads/PHOTO-2024-04-18-19-33-04.jpg",
+    apres: "uploads/PHOTO-2024-05-10-08-25-58.jpg",
+    pendant: [
+      "uploads/PHOTO-2024-04-29-13-05-38.jpg",
+      "uploads/PHOTO-2024-04-29-16-27-58.jpg",
+    ],
+  },
+  {
+    id: "ite-facade-arriere-ixelles",
+    category: "Isolation",
+    title: "Isolation par l'extérieur, façade arrière",
+    location: "Ixelles",
+    year: "2025 — 2026",
+    description:
+      "Mise en œuvre d'un système ITE complet sur cinq étages : pose des panneaux isolants, traitement des linteaux et tableaux de fenêtres, enduit de finition.",
+    avant: "uploads/PHOTO-2025-01-21-19-21-31.jpg",
+    apres: "uploads/PHOTO-2026-01-15-22-32-27.jpg",
+    pendant: [
+      "uploads/PHOTO-2025-01-27-16-32-09.jpg",
+      "uploads/PHOTO-2025-01-28-16-20-41.jpg",
+    ],
+  },
+  {
+    id: "amenagement-interieur-isolation",
+    category: "Aménagement intérieur",
+    title: "Reprise complète d'un espace de vie",
+    location: "Bruxelles",
+    year: "2026",
+    description:
+      "Mise à nu des murs jusqu'aux briques d'origine, ossature métallique, isolation en laine minérale, pose de plaques de plâtre, jointoiement et préparation peinture.",
+    avant: "uploads/PHOTO-2026-02-13-19-28-19.jpg",
+    apres: "uploads/PHOTO-2026-03-06-13-42-24 4.jpg",
+    pendant: [
+      "uploads/PHOTO-2026-02-16-15-11-15.jpg",
+      "uploads/PHOTO-2026-02-17-13-53-51.jpg",
+      "uploads/PHOTO-2026-03-04-15-11-07.jpg",
+      "uploads/PHOTO-2026-03-05-14-55-01.jpg",
+    ],
+  },
+  {
+    id: "facade-rue-uccle",
+    category: "Façade",
+    title: "Isolation de façade côté rue",
+    location: "Uccle",
+    year: "2024 — 2025",
+    description:
+      "Pose de panneaux isolants haute densité sur la façade avant, enduit armé, finition teintée dans la masse. Travail réalisé en façade habitée, sans gêne pour les occupants.",
+    avant: "uploads/PHOTO-2024-08-29-16-41-02.jpg",
+    apres: "uploads/PHOTO-2025-08-02-19-14-37 2.jpg",
+    pendant: ["uploads/PHOTO-2024-09-03-12-53-47.jpg"],
+  },
+  {
+    id: "dalles-exterieures",
+    category: "Aménagement extérieur",
+    title: "Réfection du seuil et des dalles",
+    location: "Périphérie bruxelloise",
+    year: "2025",
+    description:
+      "Démolition d'un revêtement vieillissant, reprise du support, pose de dalles en pierre bleue grand format avec joints au cordeau.",
+    avant: "uploads/PHOTO-2025-05-23-19-48-19.jpg",
+    apres: "uploads/PHOTO-2025-07-31-21-24-40.jpg",
+    pendant: ["uploads/PHOTO-2025-07-10-13-19-31.jpg"],
+  },
+];
+
+window.PROJECTS = PROJECTS;
+
+// ===== pages.jsx =====
+const { useState: useStateP } = React;
+
+// ─────────────────────────────────────────────────────────────
+// HOME
+// ─────────────────────────────────────────────────────────────
+const HomePage = ({ go }) => (
+  <React.Fragment>
+    {/* HERO — dark, centered, halo from bottom */}
+    <section
+      data-screen-label="Home / Hero"
+      className="relative bg-[#0A0A0A] text-[#F7F4ED] -mt-[88px] md:-mt-[96px] pt-[110px] md:pt-[180px] pb-20 md:pb-48 overflow-hidden"
+    >
+      {/* Background video */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style={{ opacity: 0.45 }}
+        src="uploads/room-interior-renovation-with-painting-supplies-an-2026-01-22-19-29-44-utc-1.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+      ></video>
+      {/* Halo — sky-blue radial glow rising from bottom-center */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute inset-x-0 bottom-0 h-[80%]"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 100% at 50% 100%, #AED8E6 0%, rgba(174,216,230,0.55) 25%, rgba(174,216,230,0.18) 55%, rgba(10,10,10,0) 80%)",
+          }}
+        />
+        {/* outer vignette */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(10,10,10,0) 0%, rgba(10,10,10,0.6) 100%)",
+          }}
+        />
+      </div>
+
+      {/* Decorative side tick marks */}
+      <div className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-1.5 text-[#F7F4ED]/30 text-[10px] tracking-[0.4em] font-mono">
+        <span>|||||||||</span>
+        <span className="self-end">○</span>
+      </div>
+      <div className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-1.5 text-[#F7F4ED]/30 text-[10px] tracking-[0.4em] font-mono">
+        <span>○</span>
+        <span>|||||||||</span>
+      </div>
+
+      {/* Circuit tracery rising from bottom-center */}
+      <svg
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] max-w-full h-[420px] pointer-events-none opacity-50"
+        viewBox="0 0 900 420"
+        fill="none"
+      >
+        <defs>
+          <linearGradient id="trace" x1="0" y1="420" x2="0" y2="0">
+            <stop offset="0%" stopColor="#F7F4ED" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#F7F4ED" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <g stroke="url(#trace)" strokeWidth="1">
+          <path d="M450 420 L450 280 L380 280 L380 200 L300 200 L300 120" />
+          <path d="M450 420 L450 300 L520 300 L520 220 L600 220 L600 140" />
+          <path d="M450 420 L450 250 L450 160" />
+          <path d="M380 420 L380 350 L320 350 L320 280" />
+          <path d="M520 420 L520 360 L580 360 L580 300" />
+        </g>
+        <g fill="#F7F4ED" opacity="0.7">
+          <circle cx="300" cy="120" r="2" />
+          <circle cx="600" cy="140" r="2" />
+          <circle cx="450" cy="160" r="2" />
+          <circle cx="320" cy="280" r="2" />
+          <circle cx="580" cy="300" r="2" />
+        </g>
+      </svg>
+
+      <div className="relative max-w-[1100px] mx-auto px-6 md:px-10 text-center">
+        {/* Availability pill badge */}
+        <div className="inline-flex items-center gap-2.5 bg-[#F7F4ED]/[0.08] backdrop-blur-sm ring-1 ring-[#F7F4ED]/15 rounded-full pl-1.5 pr-4 py-1.5 mb-10">
+          <span className="bg-[#AED8E6] text-[#0A0A0A] text-[10px] uppercase tracking-[0.18em] font-semibold px-2.5 py-1 rounded-full">
+            2026
+          </span>
+          <span className="text-xs md:text-sm text-[#F7F4ED]/85 tracking-wide">
+            Disponible pour vos nouveaux chantiers
+          </span>
+        </div>
+
+        {/* Headline */}
+        <h1 className="font-['Fraunces'] text-[11vw] md:text-[7.5vw] lg:text-[6.5rem] leading-[1.05] tracking-[-0.025em] text-[#F7F4ED]">
+          Votre partenaire{" "}
+          <em className="italic font-light text-[#F7F4ED]/80">rénovation</em>
+          <br />
+          de la cave au{" "}
+          <em className="italic font-normal text-[#AED8E6]">grenier</em>.
+        </h1>
+
+        {/* Subhead */}
+        <p className="mt-6 md:mt-10 max-w-2xl mx-auto text-base md:text-lg text-[#F7F4ED]/65 leading-relaxed">
+          Entreprise de rénovation en Belgique. De la salle de bain à la
+          rénovation complète, nous coordonnons chaque corps de métier sous un
+          seul interlocuteur — pour un chantier maîtrisé et un résultat soigné.
+        </p>
+
+        {/* CTA pill (light) */}
+        <div className="mt-8 md:mt-12 flex flex-wrap items-center justify-center gap-3">
+          <button
+            onClick={() => go("contact")}
+            className="inline-flex items-center gap-2.5 bg-[#F7F4ED] text-[#0A0A0A] pl-5 pr-6 py-3.5 rounded-full text-sm tracking-wide hover:bg-[#AED8E6] transition group shadow-[0_10px_40px_rgba(174,216,230,0.35)]"
+          >
+            <span className="w-7 h-7 rounded-full bg-[#0A0A0A] text-[#AED8E6] flex items-center justify-center">
+              <Sparkles className="w-3.5 h-3.5" strokeWidth={2} />
+            </span>
+            Demander un devis gratuit
+          </button>
+          <button
+            onClick={() => go("realisations")}
+            className="inline-flex items-center gap-2 text-[#F7F4ED]/80 hover:text-[#F7F4ED] px-4 py-3 rounded-full text-sm tracking-wide transition group"
+          >
+            Voir nos chantiers
+            <ArrowUpRight className="w-4 h-4 group-hover:rotate-12 transition" />
+          </button>
+        </div>
+      </div>
+    </section>
+
+    {/* Stats strip — modern bento cards */}
+    <section className="relative bg-[#F7F4ED] border-y border-[#0A0A0A]/10 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[700px] h-[220px] rounded-full bg-[#AED8E6]/20 blur-3xl" />
+      </div>
+      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-10 md:py-14 lg:py-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          {[
+            {
+              count: 6,
+              label: "domaines d'expertise",
+              detail: "Salle de bain, façade, toiture, isolation, aménagement, rénovation.",
+              Ic: Layers,
+            },
+            {
+              text: "A→Z",
+              label: "accompagnement complet",
+              detail: "Un seul interlocuteur, de l'étude initiale jusqu'aux finitions.",
+              Ic: Sparkles,
+            },
+            {
+              count: 100,
+              suffix: "%",
+              label: "travail soigné",
+              detail: "Matériaux de qualité, finitions au cordeau, garanties d'usage.",
+              Ic: Check,
+            },
+            {
+              text: "BE",
+              label: "intervention Belgique",
+              detail: "Bruxelles et toute la Belgique, devis gratuit sur place.",
+              Ic: MapPin,
+            },
+          ].map((s, i) => (
+            <Reveal
+              key={i}
+              delay={i * 80}
+              className="group relative bg-[#FBFAF6] rounded-2xl ring-1 ring-[#0A0A0A]/[0.06] shadow-[0_4px_24px_-8px_rgba(10,10,10,0.06),0_24px_48px_-24px_rgba(10,10,10,0.12)] p-5 md:p-6 hover:-translate-y-1 hover:shadow-[0_8px_30px_-8px_rgba(174,216,230,0.55),0_36px_60px_-28px_rgba(10,10,10,0.18)] transition-all duration-500"
+            >
+              <div className="flex items-start justify-between mb-4 md:mb-6">
+                <span className="font-['Fraunces'] italic text-xs text-[#0A0A0A]/40">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div className="w-9 h-9 rounded-xl bg-[#AED8E6]/30 grid place-items-center group-hover:bg-[#AED8E6] transition-colors duration-500">
+                  <s.Ic className="w-4 h-4 text-[#0A0A0A]" strokeWidth={1.5} />
+                </div>
+              </div>
+              <div className="font-['Fraunces'] text-5xl md:text-6xl text-[#0A0A0A] leading-none mb-3 tracking-[-0.02em]">
+                {s.count != null ? (
+                  <CountUp to={s.count} suffix={s.suffix || ""} />
+                ) : (
+                  s.text
+                )}
+              </div>
+              <div className="text-xs md:text-sm text-[#0A0A0A]/80 uppercase tracking-wider mb-2">
+                {s.label}
+              </div>
+              <div className="hidden md:block text-xs text-[#0A0A0A]/55 leading-relaxed">
+                {s.detail}
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* PRÉSENTATION */}
+    <section data-screen-label="Home / Presentation" className="bg-[#0A0A0A] text-[#F7F4ED] py-16 md:py-16 md:py-20 lg:py-24 lg:py-32">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-10">
+        <div className="lg:col-span-4">
+          <SectionLabel n="01">Présentation</SectionLabel>
+          <h2 className="font-['Fraunces'] text-4xl md:text-5xl leading-tight">
+            Le savoir-faire au service de <em className="italic font-light">vos projets</em>.
+          </h2>
+        </div>
+        <div className="lg:col-span-7 lg:col-start-6 space-y-6 text-lg text-[#F7F4ED]/75 leading-relaxed">
+          <p>
+            Chez Bati Conception, nous mettons notre savoir-faire au service de vos projets
+            de rénovation, qu'il s'agisse d'un simple aménagement intérieur ou d'une
+            transformation complète de votre habitation.
+          </p>
+          <p>
+            Notre objectif est simple : vous offrir un résultat <span className="text-[#AED8E6]">durable, esthétique
+            et parfaitement adapté</span> à vos besoins. Nous travaillons avec des matériaux de
+            qualité et coordonnons chaque étape du chantier pour garantir un travail soigné
+            et sans mauvaise surprise.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* SERVICES */}
+    <section
+      data-screen-label="Home / Services"
+      className="relative py-16 md:py-16 md:py-20 lg:py-24 lg:py-32 bg-[#F7F4ED] overflow-hidden"
+    >
+      {/* Soft sky-blue ambient wash */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] rounded-full bg-[#AED8E6]/25 blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-[#AED8E6]/15 blur-3xl" />
+      </div>
+
+      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-14 md:mb-20 gap-6">
+          <div>
+            <SectionLabel n="02">Nos services</SectionLabel>
+            <h2 className="font-['Fraunces'] text-5xl md:text-6xl text-[#0A0A0A] leading-[1]">
+              Six expertises,
+              <br />
+              <em className="italic font-light">une seule équipe</em>.
+            </h2>
+          </div>
+          <p className="text-[#0A0A0A]/60 max-w-sm">
+            Nous intervenons dans différents domaines de la rénovation, du chantier
+            ponctuel à la transformation clé en main.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          {SERVICE_KEYS.map((k, i) => {
+            const s = SERVICES[k];
+            const Ic = s.icon;
+            const featured = k === "renovation-complete";
+            return (
+              <Reveal key={k} delay={i * 70} y={20}>
+              <button
+                onClick={() => go(k)}
+                className={`group relative text-left w-full rounded-3xl p-6 md:p-8 transition-all duration-500 hover:-translate-y-1.5 ${
+                  featured
+                    ? "bg-[#0A0A0A] text-[#F7F4ED] ring-1 ring-[#0A0A0A] shadow-[0_8px_30px_-10px_rgba(10,10,10,0.4),0_40px_70px_-25px_rgba(10,10,10,0.3)] hover:shadow-[0_12px_40px_-12px_rgba(174,216,230,0.5),0_50px_90px_-30px_rgba(10,10,10,0.4)]"
+                    : "bg-[#F7F4ED] ring-1 ring-[#0A0A0A]/8 shadow-[0_4px_24px_-8px_rgba(10,10,10,0.08),0_24px_50px_-20px_rgba(10,10,10,0.10)] hover:shadow-[0_8px_30px_-8px_rgba(174,216,230,0.6),0_40px_70px_-25px_rgba(10,10,10,0.18)]"
+                }`}
+              >
+                {/* Accent dot */}
+                <span
+                  className={`absolute top-7 right-7 font-['Fraunces'] italic text-sm ${
+                    featured ? "text-[#F7F4ED]/40" : "text-[#0A0A0A]/30"
+                  }`}
+                >
+                  0{i + 1}
+                </span>
+
+                {/* Icon tile */}
+                <div
+                  className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl grid place-items-center mb-8 md:mb-10 transition-all duration-500 ${
+                    featured
+                      ? "bg-[#AED8E6]/15 group-hover:bg-[#AED8E6]"
+                      : "bg-[#AED8E6]/30 group-hover:bg-[#AED8E6] group-hover:shadow-[0_8px_20px_-4px_rgba(174,216,230,0.7)]"
+                  }`}
+                >
+                  <Ic
+                    className={`w-7 h-7 md:w-8 md:h-8 transition-colors duration-500 ${
+                      featured ? "text-[#AED8E6] group-hover:text-[#0A0A0A]" : "text-[#0A0A0A]"
+                    }`}
+                    strokeWidth={1.25}
+                  />
+                </div>
+
+                <h3
+                  className={`font-['Fraunces'] text-2xl md:text-3xl leading-tight mb-3 ${
+                    featured ? "text-[#F7F4ED]" : "text-[#0A0A0A]"
+                  }`}
+                >
+                  {s.label}
+                </h3>
+                <p
+                  className={`text-sm leading-relaxed mb-8 ${
+                    featured ? "text-[#F7F4ED]/65" : "text-[#0A0A0A]/60"
+                  }`}
+                >
+                  {s.tagline}
+                </p>
+
+                <div className="flex items-center justify-between">
+                  <span
+                    className={`text-xs uppercase tracking-[0.2em] ${
+                      featured ? "text-[#AED8E6]" : "text-[#0A0A0A]/70"
+                    }`}
+                  >
+                    Découvrir
+                  </span>
+                  <span
+                    className={`w-10 h-10 rounded-full grid place-items-center transition-all duration-500 ${
+                      featured
+                        ? "bg-[#AED8E6] text-[#0A0A0A] group-hover:bg-[#F7F4ED]"
+                        : "bg-[#0A0A0A]/[0.06] text-[#0A0A0A] group-hover:bg-[#0A0A0A] group-hover:text-[#F7F4ED]"
+                    }`}
+                  >
+                    <ArrowUpRight className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+                  </span>
+                </div>
+              </button>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    {/* POURQUOI NOUS */}
+    <section
+      data-screen-label="Home / Pourquoi"
+      className="relative py-16 md:py-16 md:py-20 lg:py-24 lg:py-32 bg-[#0A0A0A] text-[#F7F4ED] overflow-hidden"
+    >
+      {/* Ambient halos */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -left-32 top-1/4 w-[500px] h-[500px] rounded-full bg-[#AED8E6]/15 blur-3xl" />
+        <div className="absolute -right-20 bottom-0 w-[400px] h-[400px] rounded-full bg-[#AED8E6]/10 blur-3xl" />
+      </div>
+
+      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-12 lg:gap-16">
+        {/* Left intro */}
+        <div className="lg:col-span-4 lg:sticky lg:top-32 lg:self-start">
+          <SectionLabel n="03">Pourquoi nous</SectionLabel>
+          <h2 className="font-['Fraunces'] text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-[-0.01em]">
+            Ce qui fait la{" "}
+            <em className="italic font-light text-[#AED8E6]">différence</em>.
+          </h2>
+          <p className="mt-6 text-[#F7F4ED]/70 leading-relaxed max-w-md">
+            Chaque projet est unique. Nous prenons le temps d'analyser vos
+            besoins et de vous proposer des solutions adaptées, du simple
+            rafraîchissement à la rénovation complète.
+          </p>
+          <button
+            onClick={() => go("contact")}
+            className="mt-8 inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#F7F4ED] text-[#0A0A0A] text-sm tracking-wide hover:bg-[#AED8E6] transition group"
+          >
+            Parler de mon projet
+            <ArrowUpRight className="w-4 h-4 group-hover:rotate-12 transition" />
+          </button>
+        </div>
+
+        {/* Cards grid */}
+        <div className="lg:col-span-8 grid sm:grid-cols-2 gap-4 md:gap-5">
+          {[
+            {
+              title: "Accompagnement personnalisé",
+              desc: "Un seul interlocuteur du devis aux finitions. Des conseils à chaque étape, sans jargon.",
+              Icon: Sparkles,
+            },
+            {
+              title: "Délais et budget respectés",
+              desc: "Planning précis, budget transparent. Pas de surprise en cours de chantier.",
+              Icon: Check,
+            },
+            {
+              title: "Coordination de A à Z",
+              desc: "Maçons, plombiers, électriciens, peintres — orchestrés sous un seul chantier.",
+              Icon: Layers,
+            },
+            {
+              title: "Solutions sur-mesure",
+              desc: "Chaque projet est unique. On adapte, on propose, on ajuste avec vous.",
+              Icon: Hammer,
+            },
+            {
+              title: "Travail soigné et durable",
+              desc: "Matériaux de qualité, finitions au cordeau, garanties d'usage. C'est notre signature.",
+              Icon: Building2,
+              wide: true,
+            },
+          ].map((r, i) => {
+            const Ic = r.Icon;
+            return (
+              <Reveal
+                key={i}
+                delay={i * 80}
+                y={20}
+                className={r.wide ? "sm:col-span-2" : ""}
+              >
+              <div
+                className="relative rounded-2xl p-6 md:p-8 bg-[#F7F4ED] text-[#0A0A0A] ring-1 ring-[#F7F4ED]/5 shadow-[0_4px_30px_-10px_rgba(0,0,0,0.4),0_30px_60px_-25px_rgba(0,0,0,0.5)] hover:-translate-y-1 hover:shadow-[0_8px_40px_-10px_rgba(174,216,230,0.4),0_40px_80px_-30px_rgba(0,0,0,0.6)] transition-all duration-500 group overflow-hidden"
+              >
+                {/* Big italic number watermark */}
+                <span className="absolute -top-2 -right-2 font-['Fraunces'] italic text-[7rem] md:text-[8rem] leading-none text-[#AED8E6]/25 select-none pointer-events-none">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                <div className="relative">
+                  <div className="w-11 h-11 rounded-xl bg-[#AED8E6]/30 grid place-items-center mb-5 group-hover:bg-[#AED8E6] transition-colors duration-500">
+                    <Ic className="w-5 h-5 text-[#0A0A0A]" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="font-['Fraunces'] text-xl md:text-2xl leading-tight mb-2 max-w-xs">
+                    {r.title}
+                  </h3>
+                  <p className="text-sm text-[#0A0A0A]/65 leading-relaxed max-w-md">
+                    {r.desc}
+                  </p>
+                </div>
+              </div>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <FinalCta go={go} />
+  </React.Fragment>
+);
+
+// ─────────────────────────────────────────────────────────────
+// SERVICE (générique)
+// ─────────────────────────────────────────────────────────────
+const ServicePage = ({ slug, go }) => {
+  const s = SERVICES[slug];
+  const Ic = s.icon;
+  const idx = SERVICE_KEYS.indexOf(slug);
+
+  return (
+    <React.Fragment>
+      <section data-screen-label={`Service / ${s.label} / Hero`} className="relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -right-40 top-1/4 w-[500px] h-[500px] rounded-full bg-[#AED8E6]/40 blur-3xl" />
+        </div>
+
+        <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-10 pb-20 md:pt-16 md:pb-28">
+          <button
+            onClick={() => go("home")}
+            className="text-xs uppercase tracking-[0.25em] text-[#0A0A0A]/50 hover:text-[#0A0A0A] mb-10 inline-flex items-center gap-2"
+          >
+            ← Tous les services
+          </button>
+
+          <div className="grid lg:grid-cols-12 gap-10 items-end">
+            <div className="lg:col-span-8">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 rounded-full bg-[#AED8E6] flex items-center justify-center">
+                  <Ic className="w-7 h-7 text-[#0A0A0A]" strokeWidth={1.5} />
+                </div>
+                <span className="font-['Fraunces'] italic text-2xl text-[#0A0A0A]/40">
+                  0{idx + 1} / 06
+                </span>
+              </div>
+              <h1 className="font-['Fraunces'] text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-[-0.02em] text-[#0A0A0A]">
+                {s.title.split(" ").slice(0, -1).join(" ")}{" "}
+                <em className="italic font-light">{s.title.split(" ").slice(-1)}</em>.
+              </h1>
+            </div>
+            <div className="lg:col-span-4">
+              <p className="text-lg md:text-xl text-[#0A0A0A]/70 leading-relaxed">
+                {s.tagline}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-screen-label={`Service / ${s.label} / Intro`} className="py-20 md:py-16 md:py-20 lg:py-24 bg-[#0A0A0A] text-[#F7F4ED]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-3">
+            <SectionLabel n="01">Le projet</SectionLabel>
+          </div>
+          <div className="lg:col-span-8 lg:col-start-5">
+            <p className="font-['Fraunces'] text-2xl md:text-3xl leading-relaxed text-[#F7F4ED]">
+              {s.intro}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section data-screen-label={`Service / ${s.label} / Prestations`} className="py-16 md:py-16 md:py-20 lg:py-24 lg:py-32 bg-[#F7F4ED]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-4">
+            <SectionLabel n="02">Nos prestations</SectionLabel>
+            <h2 className="font-['Fraunces'] text-4xl md:text-5xl text-[#0A0A0A] leading-tight mb-6">
+              Ce que nous <em className="italic font-light">réalisons</em>.
+            </h2>
+          </div>
+          <div className="lg:col-span-7 lg:col-start-6">
+            <div className="space-y-px bg-[#0A0A0A]/10 border-y border-[#0A0A0A]/10">
+              {s.prestations.map((item, i) => (
+                <div
+                  key={i}
+                  className="bg-[#F7F4ED] flex items-center gap-6 py-5 px-6 group hover:bg-[#AED8E6]/20 transition"
+                >
+                  <span className="font-['Fraunces'] italic text-sm text-[#0A0A0A]/40 w-8">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-[#0A0A0A] text-lg flex-1">{item}</span>
+                  <ArrowRight className="w-4 h-4 text-[#0A0A0A]/30 group-hover:text-[#0A0A0A] group-hover:translate-x-1 transition" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-screen-label={`Service / ${s.label} / Process`} className="py-16 md:py-16 md:py-20 lg:py-24 lg:py-32 bg-[#AED8E6]/30">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <div className="grid lg:grid-cols-12 gap-10 mb-16">
+            <div className="lg:col-span-5">
+              <SectionLabel n="03">Notre approche</SectionLabel>
+              <h2 className="font-['Fraunces'] text-4xl md:text-5xl text-[#0A0A0A] leading-tight">
+                Un projet de <em className="italic font-light">A à Z</em>.
+              </h2>
+            </div>
+            <div className="lg:col-span-6 lg:col-start-7">
+              <p className="text-[#0A0A0A]/70 text-lg leading-relaxed">
+                De l'étude de votre projet jusqu'à la finition des travaux, nous assurons
+                un suivi rigoureux pour garantir un résultat durable et performant.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-px bg-[#0A0A0A]/10">
+            {s.process.map((step, i) => (
+              <div key={i} className="bg-[#F7F4ED] p-6 md:p-8 relative">
+                <div className="font-['Fraunces'] text-6xl text-[#AED8E6] mb-4 leading-none">
+                  {String(i + 1).padStart(2, "0")}
+                </div>
+                <p className="text-[#0A0A0A] text-sm leading-relaxed">{step}</p>
+                {i < s.process.length - 1 && (
+                  <ArrowRight className="hidden lg:block absolute -right-3 top-1/2 w-5 h-5 text-[#0A0A0A]/30 bg-[#F7F4ED]" />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section data-screen-label={`Service / ${s.label} / Pourquoi`} className="py-16 md:py-16 md:py-20 lg:py-24 lg:py-32 bg-[#F7F4ED]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-5">
+            <SectionLabel n="04">Pourquoi</SectionLabel>
+            <h2 className="font-['Fraunces'] text-4xl md:text-5xl text-[#0A0A0A] leading-tight">
+              Les <em className="italic font-light">bénéfices</em>
+              <br />
+              pour vous.
+            </h2>
+          </div>
+          <div className="lg:col-span-6 lg:col-start-7">
+            <CheckList items={s.why} />
+            {s.extra && (
+              <div className="mt-12 pt-10 border-t border-[#0A0A0A]/10">
+                <div className="text-xs uppercase tracking-[0.25em] text-[#0A0A0A]/60 mb-4">
+                  {s.extra.title}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {s.extra.items.map((it, i) => (
+                    <span
+                      key={i}
+                      className="px-4 py-2 rounded-full border border-[#0A0A0A]/20 text-sm text-[#0A0A0A]"
+                    >
+                      {it}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <FinalCta go={go} />
+    </React.Fragment>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────
+// SERVICES (overview)
+// ─────────────────────────────────────────────────────────────
+const ServicesPage = ({ go }) => (
+  <React.Fragment>
+    <BigHero
+      eyebrow="Nos services"
+      title="Services"
+      intro="De la salle de bain à la rénovation complète, nous coordonnons chaque corps de métier sous un seul interlocuteur. Choisissez l'expertise qui correspond à votre projet."
+      labels={["Salle de bain", "Toiture", "Façade", "Aménagement", "Isolation", "Rénovation"]}
+    />
+
+    {/* Mini-nav chips on cream */}
+    <section className="bg-[#F7F4ED] py-10 md:py-12 border-b border-[#0A0A0A]/10">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex flex-wrap gap-2 justify-center">
+        {SERVICE_KEYS.map((k, i) => {
+          const s = SERVICES[k];
+          const Ic = s.icon;
+          return (
+            <a
+              key={k}
+              href={`#service-${k}`}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#0A0A0A]/20 text-sm text-[#0A0A0A]/80 hover:bg-[#0A0A0A] hover:text-[#F7F4ED] hover:border-[#0A0A0A] transition-all"
+            >
+              <Ic className="w-4 h-4" strokeWidth={1.5} />
+              <span className="font-['Fraunces'] italic text-xs opacity-60">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              {s.label}
+            </a>
+          );
+        })}
+      </div>
+    </section>
+
+    <section data-screen-label="Services / Approche" className="bg-[#0A0A0A] text-[#F7F4ED] py-20">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-10 items-center">
+        <div className="lg:col-span-5">
+          <SectionLabel n="00">Notre approche</SectionLabel>
+          <h2 className="font-['Fraunces'] text-3xl md:text-4xl leading-tight">
+            Un seul <em className="italic font-light">interlocuteur</em>,
+            <br />
+            tous les corps de métier.
+          </h2>
+        </div>
+        <div className="lg:col-span-6 lg:col-start-7 space-y-5 text-[#F7F4ED]/75 leading-relaxed">
+          <p>
+            Chaque projet est pensé dans sa globalité. Nous coordonnons l'intégralité
+            des intervenants — maçons, carreleurs, plombiers, électriciens, peintres —
+            pour garantir un chantier fluide et un résultat cohérent.
+          </p>
+          <p>
+            Que vous ayez besoin d'une seule expertise ponctuelle ou d'un accompagnement
+            de A à Z, chaque service ci-dessous peut être réalisé seul ou combiné aux
+            autres.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section className="bg-[#F7F4ED]">
+      {SERVICE_KEYS.map((k, i) => {
+        const s = SERVICES[k];
+        const Ic = s.icon;
+        const reverse = i % 2 === 1;
+        return (
+          <div
+            key={k}
+            id={`service-${k}`}
+            data-screen-label={`Services / ${s.label}`}
+            className="border-t border-[#0A0A0A]/10 py-14 md:py-20 lg:py-28 scroll-mt-24"
+          >
+            <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+              <div
+                className={`grid lg:grid-cols-12 gap-10 items-start ${
+                  reverse ? "lg:[direction:rtl]" : ""
+                }`}
+              >
+                <div className="lg:col-span-4 lg:[direction:ltr]">
+                  <div className="relative aspect-square bg-gradient-to-br from-[#AED8E6] to-[#AED8E6]/40 flex items-center justify-center overflow-hidden">
+                    <svg
+                      className="absolute inset-0 w-full h-full opacity-25"
+                      viewBox="0 0 200 200"
+                      preserveAspectRatio="none"
+                    >
+                      {[...Array(15)].map((_, j) => (
+                        <line
+                          key={j}
+                          x1="0"
+                          y1={j * 14}
+                          x2="200"
+                          y2={j * 14 - 40}
+                          stroke="#0A0A0A"
+                          strokeWidth="0.4"
+                        />
+                      ))}
+                    </svg>
+                    <div className="relative text-center">
+                      <div className="font-['Fraunces'] italic text-[12rem] md:text-[14rem] leading-none text-[#0A0A0A]/15">
+                        {String(i + 1).padStart(2, "0")}
+                      </div>
+                      <Ic
+                        className="absolute inset-0 m-auto w-20 h-20 text-[#0A0A0A]"
+                        strokeWidth={1}
+                      />
+                    </div>
+                    <div className="absolute top-4 left-4 text-xs uppercase tracking-[0.2em] text-[#0A0A0A]/60">
+                      Service · {String(i + 1).padStart(2, "0")}
+                    </div>
+                    <div className="absolute bottom-4 right-4 text-xs uppercase tracking-[0.2em] text-[#0A0A0A]/60">
+                      / 06
+                    </div>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-7 lg:col-start-6 lg:[direction:ltr]">
+                  <div className="text-xs uppercase tracking-[0.25em] text-[#0A0A0A]/60 mb-4">
+                    {s.label}
+                  </div>
+                  <h3 className="font-['Fraunces'] text-4xl md:text-5xl lg:text-6xl text-[#0A0A0A] leading-[1] tracking-[-0.01em] mb-4">
+                    {s.title.split(" ").slice(0, -1).join(" ")}{" "}
+                    <em className="italic font-light">
+                      {s.title.split(" ").slice(-1)}
+                    </em>
+                    .
+                  </h3>
+                  <p className="font-['Fraunces'] italic text-xl md:text-2xl text-[#0A0A0A]/70 mb-8">
+                    {s.tagline}
+                  </p>
+                  <p className="text-[#0A0A0A]/75 leading-relaxed mb-10 max-w-2xl">
+                    {s.intro}
+                  </p>
+
+                  <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3 mb-10 max-w-2xl">
+                    {s.prestations.slice(0, 6).map((p, j) => (
+                      <div key={j} className="flex items-start gap-3">
+                        <span className="mt-2 w-1 h-1 rounded-full bg-[#0A0A0A] shrink-0" />
+                        <span className="text-sm text-[#0A0A0A]/80">{p}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {s.prestations.length > 6 && (
+                    <div className="text-xs text-[#0A0A0A]/50 italic mb-8">
+                      + {s.prestations.length - 6} autres prestations
+                    </div>
+                  )}
+
+                  <button
+                    onClick={() => go(k)}
+                    className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#0A0A0A] text-[#F7F4ED] text-sm tracking-wide hover:bg-[#AED8E6] hover:text-[#0A0A0A] transition-all duration-300 group"
+                  >
+                    Voir cette expertise
+                    <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </section>
+
+    <section data-screen-label="Services / Pack complet" className="py-16 md:py-16 md:py-20 lg:py-24 lg:py-32 bg-[#AED8E6]/30 relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <svg
+          className="absolute inset-0 w-full h-full opacity-20"
+          viewBox="0 0 1400 600"
+          preserveAspectRatio="none"
+        >
+          {[...Array(30)].map((_, j) => (
+            <line
+              key={j}
+              x1="0"
+              y1={j * 22}
+              x2="1400"
+              y2={j * 22 - 100}
+              stroke="#0A0A0A"
+              strokeWidth="0.3"
+            />
+          ))}
+        </svg>
+      </div>
+      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-10 items-center">
+        <div className="lg:col-span-6">
+          <SectionLabel n="07">Pack rénovation complète</SectionLabel>
+          <h2 className="font-['Fraunces'] text-4xl md:text-5xl lg:text-6xl text-[#0A0A0A] leading-[1] tracking-[-0.01em] mb-6">
+            Besoin de <em className="italic font-light">tout combiner</em> ?
+          </h2>
+          <p className="text-[#0A0A0A]/75 leading-relaxed mb-8 max-w-xl">
+            Nos six expertises peuvent être orchestrées en un seul chantier. Notre
+            rénovation complète prend en charge la coordination, la planification et le
+            suivi — pour un projet livré clé en main.
+          </p>
+          <button
+            onClick={() => go("renovation-complete")}
+            className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-[#0A0A0A] text-[#F7F4ED] text-sm tracking-wide hover:bg-[#F7F4ED] hover:text-[#0A0A0A] transition-all duration-300 group"
+          >
+            Découvrir la rénovation complète
+            <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition" />
+          </button>
+        </div>
+        <div className="lg:col-span-5 lg:col-start-8">
+          <div className="bg-[#F7F4ED] p-6 md:p-8 lg:p-10 border border-[#0A0A0A]/10">
+            <div className="text-xs uppercase tracking-[0.2em] text-[#0A0A0A]/50 mb-6">
+              Ce que ça inclut
+            </div>
+            <ul className="space-y-3">
+              {[
+                "Planification du chantier complet",
+                "Coordination des corps de métier",
+                "Un seul devis, un seul interlocuteur",
+                "Suivi rigoureux et contrôle qualité",
+                "Livraison clé en main",
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3 text-[#0A0A0A]">
+                  <span className="mt-1.5 w-5 h-5 rounded-full bg-[#AED8E6] flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 text-[#0A0A0A]" strokeWidth={3} />
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <FinalCta go={go} />
+  </React.Fragment>
+);
+
+// ─────────────────────────────────────────────────────────────
+// RÉALISATIONS
+// ─────────────────────────────────────────────────────────────
+let beforeAfterAutoDemoUsed = false;
+
+const BeforeAfter = ({ avant, apres, alt }) => {
+  const [pos, setPos] = React.useState(50);
+  const ref = React.useRef(null);
+  const dragging = React.useRef(false);
+  const interacted = React.useRef(false);
+
+  React.useEffect(() => {
+    if (beforeAfterAutoDemoUsed || !ref.current) return;
+    let raf = null;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting && !beforeAfterAutoDemoUsed && !interacted.current) {
+          beforeAfterAutoDemoUsed = true;
+          const start = performance.now();
+          const dur = 2400;
+          const ease = (t) => 1 - Math.pow(1 - t, 3);
+          const step = (t) => {
+            if (interacted.current) return;
+            const p = Math.min((t - start) / dur, 1);
+            // 50 → 82 → 18 → 50
+            let v;
+            if (p < 0.33) v = 50 + 32 * ease(p / 0.33);
+            else if (p < 0.66) v = 82 - 64 * ease((p - 0.33) / 0.33);
+            else v = 18 + 32 * ease((p - 0.66) / 0.34);
+            setPos(v);
+            if (p < 1) raf = requestAnimationFrame(step);
+          };
+          raf = requestAnimationFrame(step);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.45 }
+    );
+    obs.observe(ref.current);
+    return () => {
+      obs.disconnect();
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  const move = (clientX) => {
+    interacted.current = true;
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const p = ((clientX - rect.left) / rect.width) * 100;
+    setPos(Math.max(0, Math.min(100, p)));
+  };
+
+  return (
+    <div
+      ref={ref}
+      className="relative aspect-[4/3] md:aspect-[3/2] overflow-hidden bg-[#0A0A0A] select-none touch-none"
+      style={{ cursor: "ew-resize" }}
+      onMouseDown={(e) => {
+        dragging.current = true;
+        move(e.clientX);
+      }}
+      onMouseMove={(e) => dragging.current && move(e.clientX)}
+      onMouseUp={() => (dragging.current = false)}
+      onMouseLeave={() => (dragging.current = false)}
+      onTouchStart={(e) => {
+        dragging.current = true;
+        move(e.touches[0].clientX);
+      }}
+      onTouchMove={(e) => dragging.current && move(e.touches[0].clientX)}
+      onTouchEnd={() => (dragging.current = false)}
+    >
+      <img
+        src={apres}
+        alt={`${alt} — après`}
+        loading="lazy"
+        draggable={false}
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <img
+        src={avant}
+        alt={`${alt} — avant`}
+        loading="lazy"
+        draggable={false}
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+      />
+
+      <div className="absolute top-4 left-4 bg-[#0A0A0A]/75 text-[#F7F4ED] text-[10px] md:text-xs uppercase tracking-[0.25em] px-3 py-1.5 rounded-full backdrop-blur-sm pointer-events-none">
+        Avant
+      </div>
+      <div className="absolute top-4 right-4 bg-[#AED8E6] text-[#0A0A0A] text-[10px] md:text-xs uppercase tracking-[0.25em] px-3 py-1.5 rounded-full pointer-events-none">
+        Après
+      </div>
+
+      <div
+        className="absolute top-0 bottom-0 w-[2px] bg-[#F7F4ED] pointer-events-none shadow-[0_0_20px_rgba(0,0,0,0.4)]"
+        style={{ left: `${pos}%` }}
+      >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-[#F7F4ED] flex items-center justify-center shadow-2xl ring-1 ring-[#0A0A0A]/10">
+          <svg viewBox="0 0 24 24" className="w-5 h-5 text-[#0A0A0A]" fill="currentColor">
+            <path d="M9 6 4 12l5 6V6zm6 0v12l5-6-5-6z" />
+          </svg>
+        </div>
+      </div>
+
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.25em] text-[#F7F4ED]/80 bg-[#0A0A0A]/40 px-3 py-1 rounded-full backdrop-blur-sm pointer-events-none">
+        Glissez pour comparer
+      </div>
+    </div>
+  );
+};
+
+const Lightbox = ({ src, alt, onClose }) => {
+  React.useEffect(() => {
+    const onKey = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] bg-[#0A0A0A]/95 backdrop-blur flex items-center justify-center p-4 md:p-10 animate-fadeIn"
+      onClick={onClose}
+    >
+      <button
+        onClick={onClose}
+        className="absolute top-5 right-5 w-12 h-12 rounded-full bg-[#F7F4ED]/10 hover:bg-[#F7F4ED]/20 text-[#F7F4ED] flex items-center justify-center transition"
+        aria-label="Fermer"
+      >
+        <X className="w-5 h-5" />
+      </button>
+      <img
+        src={src}
+        alt={alt}
+        className="max-w-full max-h-full object-contain"
+        onClick={(e) => e.stopPropagation()}
+      />
+    </div>
+  );
+};
+
+const CATEGORIES = ["Tous", "Façade", "Salle de bain", "Isolation", "Aménagement intérieur", "Aménagement extérieur"];
+
+const RealisationsPage = ({ go }) => {
+  const [filter, setFilter] = React.useState("Tous");
+  const [lightbox, setLightbox] = React.useState(null);
+
+  const filtered =
+    filter === "Tous" ? PROJECTS : PROJECTS.filter((p) => p.category === filter);
+
+  return (
+    <React.Fragment>
+      <BigHero
+        eyebrow={`Galerie · ${PROJECTS.length} chantiers`}
+        title="Réalisations"
+        intro="Le meilleur moyen de vous convaincre, c'est de vous montrer notre travail. Glissez sur chaque photo pour comparer l'état initial et le résultat final de nos chantiers récents."
+        labels={["Avant · Après", "Façades", "Intérieurs", "Isolation", "Extérieurs"]}
+      />
+
+      {/* Filter chips */}
+      <section className="bg-[#F7F4ED] py-10 md:py-12 border-b border-[#0A0A0A]/10">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex flex-wrap gap-2 justify-center">
+          {CATEGORIES.map((c) => (
+            <button
+              key={c}
+              onClick={() => setFilter(c)}
+              className={`px-4 py-2 rounded-full text-sm border transition-all ${
+                filter === c
+                  ? "bg-[#0A0A0A] text-[#F7F4ED] border-[#0A0A0A]"
+                  : "border-[#0A0A0A]/20 text-[#0A0A0A]/70 hover:border-[#0A0A0A] hover:text-[#0A0A0A]"
+              }`}
+            >
+              {c}
+              <span className="ml-2 text-xs opacity-60">
+                {c === "Tous"
+                  ? PROJECTS.length
+                  : PROJECTS.filter((p) => p.category === c).length}
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Project case-studies */}
+      <section data-screen-label="Réalisations / Galerie" className="pb-20 md:pb-32">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 space-y-20 md:space-y-28">
+          {filtered.map((p, i) => {
+            const reverse = i % 2 === 1;
+            return (
+              <article
+                key={p.id}
+                data-screen-label={`Réalisation / ${p.title}`}
+                className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center"
+              >
+                <div className={`lg:col-span-7 ${reverse ? "lg:order-2" : ""}`}>
+                  <BeforeAfter avant={p.avant} apres={p.apres} alt={p.title} />
+                </div>
+
+                <div className={`lg:col-span-5 ${reverse ? "lg:order-1 lg:pr-6" : "lg:pl-6"}`}>
+                  <div className="flex items-baseline gap-4 mb-6">
+                    <span className="font-['Fraunces'] italic text-3xl text-[#AED8E6]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-xs uppercase tracking-[0.25em] text-[#0A0A0A]/60">
+                      {p.category}
+                    </span>
+                  </div>
+                  <h2 className="font-['Fraunces'] text-3xl md:text-4xl lg:text-5xl text-[#0A0A0A] leading-[1.05] tracking-[-0.01em] mb-5">
+                    {p.title.split(" ").slice(0, -1).join(" ")}{" "}
+                    <em className="italic font-light">
+                      {p.title.split(" ").slice(-1)}
+                    </em>
+                    .
+                  </h2>
+                  <div className="flex items-center gap-4 text-xs uppercase tracking-[0.2em] text-[#0A0A0A]/50 mb-6">
+                    <span className="flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5" strokeWidth={1.5} />
+                      {p.location}
+                    </span>
+                    <span className="w-1 h-1 rounded-full bg-[#0A0A0A]/30" />
+                    <span>{p.year}</span>
+                  </div>
+                  <p className="text-[#0A0A0A]/75 leading-relaxed mb-8">
+                    {p.description}
+                  </p>
+
+                  {p.pendant && p.pendant.length > 0 && (
+                    <div>
+                      <div className="text-[10px] uppercase tracking-[0.25em] text-[#0A0A0A]/50 mb-3">
+                        Pendant le chantier
+                      </div>
+                      <div className="flex gap-2 flex-wrap">
+                        {p.pendant.map((src, j) => (
+                          <button
+                            key={j}
+                            onClick={() =>
+                              setLightbox({ src, alt: `${p.title} — étape ${j + 1}` })
+                            }
+                            className="w-20 h-20 md:w-24 md:h-24 overflow-hidden bg-[#0A0A0A]/5 group relative"
+                          >
+                            <img
+                              src={src}
+                              alt=""
+                              loading="lazy"
+                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                            <div className="absolute inset-0 bg-[#0A0A0A]/0 group-hover:bg-[#0A0A0A]/20 transition" />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+
+          {filtered.length === 0 && (
+            <div className="text-center py-20 text-[#0A0A0A]/50">
+              Aucun chantier dans cette catégorie pour l'instant.
+            </div>
+          )}
+        </div>
+      </section>
+
+      {lightbox && (
+        <Lightbox
+          src={lightbox.src}
+          alt={lightbox.alt}
+          onClose={() => setLightbox(null)}
+        />
+      )}
+
+      <section data-screen-label="Réalisations / Avis" className="py-16 md:py-16 md:py-20 lg:py-24 lg:py-32 bg-[#0A0A0A] text-[#F7F4ED]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <div className="grid lg:grid-cols-12 gap-10 mb-16">
+            <div className="lg:col-span-5">
+              <SectionLabel n="04">Avis clients</SectionLabel>
+              <h2 className="font-['Fraunces'] text-4xl md:text-5xl leading-tight">
+                Ce que nos clients <em className="italic font-light">en disent</em>.
+              </h2>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-px bg-[#F7F4ED]/10">
+            {[
+              "Travail sérieux et très propre, nous sommes ravis du résultat.",
+              "Équipe professionnelle, chantier bien suivi du début à la fin.",
+              "Très bon rapport qualité-prix et respect des délais.",
+            ].map((q, i) => (
+              <div key={i} className="bg-[#0A0A0A] p-6 md:p-8 lg:p-10">
+                <div className="flex gap-1 mb-6">
+                  {[...Array(5)].map((_, k) => (
+                    <Star
+                      key={k}
+                      className="w-4 h-4"
+                      fill="#AED8E6"
+                      stroke="#AED8E6"
+                    />
+                  ))}
+                </div>
+                <p className="font-['Fraunces'] text-xl md:text-2xl leading-relaxed text-[#F7F4ED] italic">
+                  « {q} »
+                </p>
+                <div className="mt-8 pt-6 border-t border-[#F7F4ED]/10 text-xs uppercase tracking-wider text-[#F7F4ED]/50">
+                  Client Bati Conception
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section data-screen-label="Réalisations / Engagement" className="py-16 md:py-20 lg:py-24 bg-[#AED8E6]/30">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-5">
+            <SectionLabel n="05">Notre engagement</SectionLabel>
+            <h2 className="font-['Fraunces'] text-4xl md:text-5xl text-[#0A0A0A] leading-tight">
+              La même exigence sur <em className="italic font-light">chaque chantier</em>.
+            </h2>
+          </div>
+          <div className="lg:col-span-6 lg:col-start-7">
+            <CheckList
+              items={[
+                "Qualité des matériaux sélectionnés",
+                "Suivi rigoureux des travaux",
+                "Finitions soignées et durables",
+                "Respect des attentes du client",
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
+      <FinalCta go={go} />
+    </React.Fragment>
+  );
+};
+
+Object.assign(window, { HomePage, ServicePage, ServicesPage, RealisationsPage });
+
+// ===== contact.jsx =====
+const { useState: useStateC } = React;
+
+const ContactPage = () => {
+  const [form, setForm] = useStateC({
+    nom: "",
+    telephone: "",
+    email: "",
+    rue: "",
+    ville: "",
+    codePostal: "",
+    typeProjet: "",
+    delai: "",
+    surface: "",
+    description: "",
+    contactType: "",
+  });
+  const [sent, setSent] = useStateC(false);
+  const [submitting, setSubmitting] = useStateC(false);
+  const [error, setError] = useStateC(null);
+
+  const update = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+  const updateRadio = (k, v) => setForm({ ...form, [k]: v });
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+    try {
+      const res = await fetch("https://formspree.io/f/xnjrzvbe", {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({
+          Nom: form.nom,
+          Téléphone: form.telephone,
+          Email: form.email,
+          Adresse: `${form.rue}, ${form.codePostal} ${form.ville}`,
+          "Type de projet": form.typeProjet,
+          Délai: form.delai,
+          Surface: form.surface,
+          Description: form.description,
+          "Mode de contact préféré": form.contactType,
+        }),
+      });
+      if (res.ok) {
+        setSent(true);
+        setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
+      } else {
+        setError("Une erreur est survenue. Veuillez réessayer ou nous contacter par email.");
+      }
+    } catch {
+      setError("Impossible d'envoyer le formulaire. Vérifiez votre connexion internet.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (sent) {
+    return (
+      <section data-screen-label="Contact / Sent" className="min-h-[80vh] flex items-center justify-center px-6 py-16 md:py-20 lg:py-24">
+        <div className="max-w-2xl text-center">
+          <div className="w-20 h-20 rounded-full bg-[#AED8E6] mx-auto mb-8 flex items-center justify-center">
+            <Check className="w-10 h-10 text-[#0A0A0A]" strokeWidth={2} />
+          </div>
+          <h2 className="font-['Fraunces'] text-5xl md:text-6xl text-[#0A0A0A] leading-tight mb-6">
+            Demande <em className="italic font-light">envoyée</em>.
+          </h2>
+          <p className="text-lg text-[#0A0A0A]/70 leading-relaxed">
+            Nous vous répondrons dans les plus brefs délais afin de discuter de votre projet
+            et vous proposer une solution adaptée.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  const inputBase =
+    "w-full bg-transparent border-0 border-b border-[#0A0A0A]/20 py-3 text-[#0A0A0A] placeholder-[#0A0A0A]/30 focus:border-[#0A0A0A] focus:outline-none transition-colors";
+
+  const Field = ({ label, children }) => (
+    <label className="block">
+      <span className="text-xs uppercase tracking-[0.2em] text-[#0A0A0A]/60 mb-2 block">
+        {label}
+      </span>
+      {children}
+    </label>
+  );
+
+  const RadioGroup = ({ name, value, options, onChange }) => (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+      {options.map((opt) => (
+        <button
+          type="button"
+          key={opt}
+          onClick={() => onChange(name, opt)}
+          className={`px-4 py-3 rounded-full text-sm border transition-all ${
+            value === opt
+              ? "bg-[#0A0A0A] text-[#F7F4ED] border-[#0A0A0A]"
+              : "border-[#0A0A0A]/20 text-[#0A0A0A]/70 hover:border-[#0A0A0A]"
+          }`}
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  );
+
+  return (
+    <React.Fragment>
+      <BigHero
+        eyebrow="Discutons de votre projet"
+        title="Contact"
+        intro="Notre équipe est à votre écoute. Remplissez le formulaire ci-dessous, nous vous recontacterons rapidement."
+        labels={["Téléphone", "Email", "Devis gratuit", "Belgique"]}
+      />
+
+      <section data-screen-label="Contact / Infos" className="border-y border-[#0A0A0A]/10 bg-[#F7F4ED]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#0A0A0A]/10">
+          {[
+            [MapPin, "Zone d'intervention", "Bruxelles & Belgique", null],
+            [Phone, "Téléphone", "+32 470 86 63 59", "tel:+32470866359"],
+            [Mail, "Email", "baticonception@outlook.com", "mailto:baticonception@outlook.com"],
+          ].map(([Ic, label, val, href], i) => (
+            <div key={i} className="py-6 md:py-8 px-2 md:px-8 flex items-center gap-5">
+              <div className="w-12 h-12 rounded-full bg-[#AED8E6] flex items-center justify-center shrink-0">
+                <Ic className="w-5 h-5 text-[#0A0A0A]" strokeWidth={1.5} />
+              </div>
+              <div>
+                <div className="text-xs uppercase tracking-[0.2em] text-[#0A0A0A]/50 mb-1">
+                  {label}
+                </div>
+                {href ? (
+                  <a href={href} className="text-lg text-[#0A0A0A] hover:text-[#0A0A0A]/70 transition">
+                    {val}
+                  </a>
+                ) : (
+                  <div className="text-lg text-[#0A0A0A]">{val}</div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section data-screen-label="Contact / Formulaire" className="py-14 md:py-20 lg:py-28 bg-[#F7F4ED]">
+        <div className="max-w-4xl mx-auto px-6 md:px-10">
+          <form onSubmit={submit} className="space-y-16">
+            <div>
+              <div className="flex items-baseline gap-4 mb-10">
+                <span className="font-['Fraunces'] italic text-3xl text-[#AED8E6]">01</span>
+                <h3 className="font-['Fraunces'] text-2xl md:text-3xl text-[#0A0A0A]">
+                  Informations personnelles
+                </h3>
+              </div>
+              <div className="grid md:grid-cols-2 gap-x-8 gap-y-8">
+                <Field label="Nom et prénom *">
+                  <input
+                    type="text"
+                    required
+                    value={form.nom}
+                    onChange={update("nom")}
+                    className={inputBase}
+                    placeholder="Marie Dupont"
+                  />
+                </Field>
+                <Field label="Téléphone *">
+                  <input
+                    type="tel"
+                    required
+                    value={form.telephone}
+                    onChange={update("telephone")}
+                    className={inputBase}
+                    placeholder="+32 ..."
+                  />
+                </Field>
+                <Field label="Email *">
+                  <input
+                    type="email"
+                    required
+                    value={form.email}
+                    onChange={update("email")}
+                    className={inputBase}
+                    placeholder="vous@email.be"
+                  />
+                </Field>
+                <Field label="Rue et numéro">
+                  <input
+                    type="text"
+                    value={form.rue}
+                    onChange={update("rue")}
+                    className={inputBase}
+                    placeholder="Rue ..."
+                  />
+                </Field>
+                <Field label="Ville">
+                  <input
+                    type="text"
+                    value={form.ville}
+                    onChange={update("ville")}
+                    className={inputBase}
+                    placeholder="Bruxelles"
+                  />
+                </Field>
+                <Field label="Code postal">
+                  <input
+                    type="text"
+                    value={form.codePostal}
+                    onChange={update("codePostal")}
+                    className={inputBase}
+                    placeholder="1000"
+                  />
+                </Field>
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-baseline gap-4 mb-10">
+                <span className="font-['Fraunces'] italic text-3xl text-[#AED8E6]">02</span>
+                <h3 className="font-['Fraunces'] text-2xl md:text-3xl text-[#0A0A0A]">
+                  Votre projet
+                </h3>
+              </div>
+
+              <Field label="Pour quel type de travaux ? *">
+                <div className="relative">
+                  <select
+                    required
+                    value={form.typeProjet}
+                    onChange={update("typeProjet")}
+                    className={`${inputBase} appearance-none pr-10 cursor-pointer`}
+                  >
+                    <option value="">Sélectionnez...</option>
+                    {SERVICE_KEYS.map((k) => (
+                      <option key={k} value={SERVICES[k].label}>
+                        {SERVICES[k].title}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="w-4 h-4 absolute right-0 top-4 text-[#0A0A0A]/40 pointer-events-none" />
+                </div>
+              </Field>
+            </div>
+
+            <div>
+              <div className="flex items-baseline gap-4 mb-8">
+                <span className="font-['Fraunces'] italic text-3xl text-[#AED8E6]">03</span>
+                <h3 className="font-['Fraunces'] text-2xl md:text-3xl text-[#0A0A0A]">
+                  Quand est prévu votre projet ?
+                </h3>
+              </div>
+              <RadioGroup
+                name="delai"
+                value={form.delai}
+                onChange={updateRadio}
+                options={["Maintenant", "< 3 mois", "3–6 mois", "+6 mois"]}
+              />
+            </div>
+
+            <div>
+              <div className="flex items-baseline gap-4 mb-8">
+                <span className="font-['Fraunces'] italic text-3xl text-[#AED8E6]">04</span>
+                <h3 className="font-['Fraunces'] text-2xl md:text-3xl text-[#0A0A0A]">
+                  Surface concernée
+                </h3>
+              </div>
+              <RadioGroup
+                name="surface"
+                value={form.surface}
+                onChange={updateRadio}
+                options={["< 25 m²", "25–50 m²", "50–100 m²", "+100 m²"]}
+              />
+            </div>
+
+            <div>
+              <div className="flex items-baseline gap-4 mb-8">
+                <span className="font-['Fraunces'] italic text-3xl text-[#AED8E6]">05</span>
+                <h3 className="font-['Fraunces'] text-2xl md:text-3xl text-[#0A0A0A]">
+                  Détails du projet
+                </h3>
+              </div>
+              <Field label="Décrivez votre projet en quelques lignes">
+                <textarea
+                  rows={5}
+                  value={form.description}
+                  onChange={update("description")}
+                  className={`${inputBase} resize-none`}
+                  placeholder="État actuel, envies, contraintes, budget approximatif..."
+                />
+              </Field>
+            </div>
+
+            <div>
+              <div className="flex items-baseline gap-4 mb-3">
+                <span className="font-['Fraunces'] italic text-3xl text-[#AED8E6]">06</span>
+                <h3 className="font-['Fraunces'] text-2xl md:text-3xl text-[#0A0A0A]">
+                  Comment souhaitez-vous être contacté ?
+                </h3>
+              </div>
+              <p className="text-sm text-[#0A0A0A]/60 mb-6 pl-14">
+                Cette étape nous permet de vous proposer un suivi adapté à votre demande.
+              </p>
+              <div className="grid md:grid-cols-2 gap-4">
+                {[
+                  {
+                    val: "Devis précis + visite",
+                    icon: Phone,
+                    title: "Devis précis avec visite",
+                    desc: "Je souhaite être rappelé pour obtenir un devis précis et des conseils sur place.",
+                  },
+                  {
+                    val: "Estimation rapide email",
+                    icon: Mail,
+                    title: "Estimation par email",
+                    desc: "Je souhaite recevoir une estimation indicative par email rapidement.",
+                  },
+                ].map((opt) => {
+                  const Ic = opt.icon;
+                  const active = form.contactType === opt.val;
+                  return (
+                    <button
+                      key={opt.val}
+                      type="button"
+                      onClick={() => updateRadio("contactType", opt.val)}
+                      className={`p-6 text-left rounded-2xl border transition-all ${
+                        active
+                          ? "bg-[#0A0A0A] border-[#0A0A0A] text-[#F7F4ED]"
+                          : "bg-[#F7F4ED] border-[#0A0A0A]/20 text-[#0A0A0A] hover:border-[#0A0A0A]"
+                      }`}
+                    >
+                      <Ic
+                        className={`w-6 h-6 mb-4 ${
+                          active ? "text-[#AED8E6]" : "text-[#0A0A0A]"
+                        }`}
+                        strokeWidth={1.5}
+                      />
+                      <div className="font-['Fraunces'] text-xl mb-2">{opt.title}</div>
+                      <div
+                        className={`text-sm ${
+                          active ? "text-[#F7F4ED]/70" : "text-[#0A0A0A]/60"
+                        }`}
+                      >
+                        {opt.desc}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="pt-8 border-t border-[#0A0A0A]/10">
+              {error && (
+                <p className="mb-4 text-sm text-red-600">{error}</p>
+              )}
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full md:w-auto inline-flex items-center justify-center gap-3 bg-[#0A0A0A] text-[#F7F4ED] px-10 py-5 rounded-full text-sm tracking-wide hover:bg-[#AED8E6] hover:text-[#0A0A0A] transition-colors duration-300 group disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {submitting ? "Envoi en cours…" : "Envoyer ma demande"}
+                {!submitting && <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+              </button>
+              <p className="mt-4 text-xs text-[#0A0A0A]/50">
+                Nous vous répondrons dans les plus brefs délais.
+              </p>
+            </div>
+          </form>
+        </div>
+      </section>
+    </React.Fragment>
+  );
+};
+
+Object.assign(window, { ContactPage });
+
+// ===== app.jsx =====
+const { useState: useStateA } = React;
+
+function App() {
+  const [page, setPage] = useStateA("home");
+
+  const go = (p) => {
+    setPage(p);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const renderPage = () => {
+    if (page === "home") return <HomePage go={go} />;
+    if (page === "services") return <ServicesPage go={go} />;
+    if (page === "realisations") return <RealisationsPage go={go} />;
+    if (page === "contact") return <ContactPage />;
+    if (SERVICE_KEYS.includes(page)) return <ServicePage slug={page} go={go} />;
+    return <HomePage go={go} />;
+  };
+
+  return (
+    <div
+      className="min-h-screen bg-[#F7F4ED] text-[#0A0A0A] antialiased"
+      style={{ fontFamily: "'Manrope', sans-serif" }}
+    >
+      <Header go={go} current={page} />
+      <main key={page} className="animate-fadeIn">
+        {renderPage()}
+      </main>
+      <Footer go={go} />
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+  </script>
+
+  <script>
+    // Hide splash once React has mounted something into #root
+    (function () {
+      const boot = document.getElementById('__boot');
+      const root = document.getElementById('root');
+      const obs = new MutationObserver(() => {
+        if (root.childElementCount > 0) {
+          boot.classList.add('gone');
+          setTimeout(() => boot.remove(), 500);
+          obs.disconnect();
+        }
+      });
+      obs.observe(root, { childList: true });
+    })();
+  </script>
+</body>
+</html>
