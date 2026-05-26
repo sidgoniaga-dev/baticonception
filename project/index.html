@@ -2323,6 +2323,85 @@ const Lightbox = ({ src, alt, onClose }) => {
 
 const CATEGORIES = ["Tous", "Salle de bain", "Façade", "Isolation", "Toiture", "Carrelage"];
 
+const GoogleReviews = () => {
+  const [reviews, setReviews] = React.useState([]);
+  const [rating, setRating] = React.useState(null);
+  const [total, setTotal] = React.useState(null);
+  const [status, setStatus] = React.useState("loading"); // loading | ok | empty
+
+  React.useEffect(() => {
+    fetch("/api/reviews")
+      .then((r) => r.json())
+      .then((data) => {
+        const list = (data.reviews || []).filter((r) => r.rating >= 4).slice(0, 3);
+        setRating(data.rating || null);
+        setTotal(data.userRatingCount || null);
+        setReviews(list);
+        setStatus(list.length > 0 ? "ok" : "empty");
+      })
+      .catch(() => setStatus("empty"));
+  }, []);
+
+  if (status === "loading") return (
+    <div className="grid md:grid-cols-3 gap-px bg-[#F7F4ED]/10">
+      {[0,1,2].map((i) => (
+        <div key={i} className="bg-[#0A0A0A] p-6 md:p-8 lg:p-10 animate-pulse">
+          <div className="flex gap-1 mb-6">{[...Array(5)].map((_,k) => <div key={k} className="w-4 h-4 rounded-full bg-[#F7F4ED]/10" />)}</div>
+          <div className="h-4 bg-[#F7F4ED]/10 rounded mb-3 w-3/4" />
+          <div className="h-4 bg-[#F7F4ED]/10 rounded mb-3 w-full" />
+          <div className="h-4 bg-[#F7F4ED]/10 rounded w-1/2" />
+        </div>
+      ))}
+    </div>
+  );
+
+  if (status === "empty") return (
+    <div className="text-center py-12 text-[#F7F4ED]/40 text-sm italic">
+      Les avis Google seront affichés dès leur publication.
+    </div>
+  );
+
+  return (
+    <div>
+      {rating && (
+        <div className="flex items-center gap-3 mb-10">
+          <span className="font-['Fraunces'] text-5xl text-[#F7F4ED]">{rating.toFixed(1)}</span>
+          <div>
+            <div className="flex gap-1 mb-1">
+              {[...Array(5)].map((_, k) => (
+                <Star key={k} className="w-4 h-4" fill={k < Math.round(rating) ? "#AED8E6" : "none"} stroke="#AED8E6" />
+              ))}
+            </div>
+            <p className="text-xs text-[#F7F4ED]/50 uppercase tracking-[0.2em]">{total} avis Google</p>
+          </div>
+        </div>
+      )}
+      <div className="grid md:grid-cols-3 gap-px bg-[#F7F4ED]/10">
+        {reviews.map((r, i) => (
+          <div key={i} className="bg-[#0A0A0A] p-6 md:p-8 lg:p-10">
+            <div className="flex gap-1 mb-6">
+              {[...Array(5)].map((_, k) => (
+                <Star key={k} className="w-4 h-4" fill={k < r.rating ? "#AED8E6" : "none"} stroke="#AED8E6" />
+              ))}
+            </div>
+            <p className="font-['Fraunces'] text-xl md:text-2xl leading-relaxed text-[#F7F4ED] italic">
+              « {r.text?.text || r.originalText?.text || ""} »
+            </p>
+            <div className="mt-8 pt-6 border-t border-[#F7F4ED]/10 flex items-center gap-3">
+              {r.authorAttribution?.photoUri && (
+                <img src={r.authorAttribution.photoUri} alt="" className="w-8 h-8 rounded-full object-cover" />
+              )}
+              <span className="text-xs uppercase tracking-wider text-[#F7F4ED]/50">
+                {r.authorAttribution?.displayName || "Client Google"}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const RealisationsPage = ({ go }) => {
   const [filter, setFilter] = React.useState("Tous");
   const [lightbox, setLightbox] = React.useState(null);
@@ -2462,32 +2541,7 @@ const RealisationsPage = ({ go }) => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-px bg-[#F7F4ED]/10">
-            {[
-              "Travail sérieux et très propre, nous sommes ravis du résultat.",
-              "Équipe professionnelle, chantier bien suivi du début à la fin.",
-              "Très bon rapport qualité-prix et respect des délais.",
-            ].map((q, i) => (
-              <div key={i} className="bg-[#0A0A0A] p-6 md:p-8 lg:p-10">
-                <div className="flex gap-1 mb-6">
-                  {[...Array(5)].map((_, k) => (
-                    <Star
-                      key={k}
-                      className="w-4 h-4"
-                      fill="#AED8E6"
-                      stroke="#AED8E6"
-                    />
-                  ))}
-                </div>
-                <p className="font-['Fraunces'] text-xl md:text-2xl leading-relaxed text-[#F7F4ED] italic">
-                  « {q} »
-                </p>
-                <div className="mt-8 pt-6 border-t border-[#F7F4ED]/10 text-xs uppercase tracking-wider text-[#F7F4ED]/50">
-                  Client Bati Conception
-                </div>
-              </div>
-            ))}
-          </div>
+          <GoogleReviews />
         </div>
       </section>
 
