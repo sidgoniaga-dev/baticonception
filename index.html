@@ -2906,9 +2906,48 @@ Object.assign(window, { ContactPage });
 const { useState: useStateA } = React;
 
 function App() {
-  const [page, setPage] = useStateA("home");
+  const getPageFromPath = () => {
+    const p = window.location.pathname.replace(/^\//, "").replace(/\/$/, "");
+    return p || "home";
+  };
+
+  const [page, setPage] = useStateA(getPageFromPath());
+
+  React.useEffect(() => {
+    const handlePop = () => {
+      setPage(getPageFromPath());
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    window.addEventListener("popstate", handlePop);
+    return () => window.removeEventListener("popstate", handlePop);
+  }, []);
+
+  const PAGE_TITLES = {
+    home: "BatiConception — Entreprise de rénovation à Bruxelles & Belgique",
+    services: "Nos services — BatiConception",
+    realisations: "Réalisations — BatiConception",
+    contact: "Contact & Devis — BatiConception",
+    "salle-de-bain": "Rénovation de salle de bain — BatiConception",
+    toiture: "Rénovation de toiture — BatiConception",
+    facade: "Rénovation de façade — BatiConception",
+    amenagement: "Aménagement intérieur — BatiConception",
+    isolation: "Isolation thermique — BatiConception",
+    "renovation-complete": "Rénovation complète — BatiConception",
+  };
+
+  React.useEffect(() => {
+    const title = PAGE_TITLES[page] || PAGE_TITLES.home;
+    document.title = title;
+    const canonical = document.querySelector("link[rel='canonical']");
+    if (canonical) {
+      const path = page === "home" ? "/" : "/" + page;
+      canonical.setAttribute("href", "https://baticonception.be" + path);
+    }
+  }, [page]);
 
   const go = (p) => {
+    const path = p === "home" ? "/" : "/" + p;
+    history.pushState(null, "", path);
     setPage(p);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
