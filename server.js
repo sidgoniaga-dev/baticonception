@@ -359,13 +359,33 @@ app.get('/api/reviews', async (req, res) => {
     if (!placeId) {
       return res.status(503).json({ error: 'Place ID not found' });
     }
-    const data = await fetchJson(
-      `https://places.googleapis.com/v1/places/${placeId}`,
-      {
-        'X-Goog-Api-Key': GOOGLE_API_KEY,
-        'X-Goog-FieldMask': 'rating,userRatingCount,reviews',
-      }
+
+    // Utilise l'ancienne Places API (compatible avec restriction "Places API")
+    // Elle retourne les avis textuels sans nécessiter "Places API (New)"
+    const raw = await fetchJson(
+      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,user_ratings_total,reviews&language=fr&key=${GOOGLE_API_KEY}`
     );
+
+    if (raw.status !== 'OK') {
+      return res.status(502).json({ error: `Google API error: ${raw.status}` });
+    }
+
+    // Normalise vers le format attendu par le frontend (Places API New style)
+    const data = {
+      rating: raw.result.rating,
+      userRatingCount: raw.result.user_ratings_total,
+      reviews: (raw.result.reviews || []).map((r) => ({
+        rating: r.rating,
+        text: { text: r.text },
+        relativePublishTimeDescription: r.relative_time_description,
+        authorAttribution: {
+          displayName: r.author_name,
+          photoUri: r.profile_photo_url,
+          uri: r.author_url,
+        },
+      })),
+    };
+
     reviewsCache = { data, ts: now };
     res.json(data);
   } catch (e) {
