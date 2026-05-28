@@ -346,9 +346,25 @@ app.use((req, res, next) => {
 
 // ─── API: Google Reviews ──────────────────────────────────────────────────────
 
+// Debug endpoint — appel frais + réponse brute (pas de cache)
+app.get('/api/reviews/debug', async (req, res) => {
+  if (!GOOGLE_API_KEY) return res.json({ error: 'API key not configured' });
+  try {
+    const placeId = await getPlaceId(GOOGLE_API_KEY);
+    const raw = await fetchJson(
+      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,user_ratings_total,reviews&language=fr&key=${GOOGLE_API_KEY}`
+    );
+    res.json({ placeId, raw });
+  } catch (e) {
+    res.json({ error: e.message });
+  }
+});
+
 app.get('/api/reviews', async (req, res) => {
   const now = Date.now();
-  if (reviewsCache.data && now - reviewsCache.ts < 6 * 3600 * 1000) {
+  // Paramètre ?force=1 pour vider le cache et forcer un appel frais
+  const force = req.query.force === '1';
+  if (!force && reviewsCache.data && now - reviewsCache.ts < 6 * 3600 * 1000) {
     return res.json(reviewsCache.data);
   }
   if (!GOOGLE_API_KEY) {
