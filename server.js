@@ -6,11 +6,12 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const PLACE_ID = 'ChIJZdIvSuehwQ4R4mGYoc3pHi0';
 const GOOGLE_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 
 // Cache 6h reviews
 let reviewsCache = { data: null, ts: 0 };
+// Place ID discovered dynamically (text search → correct listing)
+let resolvedPlaceId = null;
 
 function fetchJson(url, headers) {
   return new Promise((resolve, reject) => {
@@ -21,6 +22,51 @@ function fetchJson(url, headers) {
       res.on('end', () => { try { resolve(JSON.parse(body)); } catch (e) { reject(e); } });
     }).on('error', reject);
   });
+}
+
+// POST helper for Places API text search
+function fetchJsonPost(hostname, path, headers, body) {
+  return new Promise((resolve, reject) => {
+    const buf = Buffer.from(body);
+    const req = https.request(
+      { hostname, path, method: 'POST', headers: { ...headers, 'Content-Length': buf.length } },
+      (res) => {
+        let data = '';
+        res.on('data', (c) => (data += c));
+        res.on('end', () => { try { resolve(JSON.parse(data)); } catch (e) { reject(e); } });
+      }
+    );
+    req.on('error', reject);
+    req.write(buf);
+    req.end();
+  });
+}
+
+// Discover the correct Place ID via text search (avoids hardcoded wrong ID)
+async function getPlaceId(apiKey) {
+  if (resolvedPlaceId) return resolvedPlaceId;
+  try {
+    const result = await fetchJsonPost(
+      'places.googleapis.com',
+      '/v1/places:searchText',
+      {
+        'X-Goog-Api-Key': apiKey,
+        'X-Goog-FieldMask': 'places.id,places.displayName',
+        'Content-Type': 'application/json',
+      },
+      JSON.stringify({ textQuery: 'Bati Conception Entreprise générale de rénovation Bruxelles Belgique' })
+    );
+    if (result.places && result.places.length > 0) {
+      // API returns "places/ChIJXXX" — strip the prefix
+      const id = result.places[0].id.replace(/^places\//, '');
+      resolvedPlaceId = id;
+      console.log(`Place ID résolu : ${id} (${result.places[0].displayName?.text || '?'})`);
+      return id;
+    }
+  } catch (e) {
+    console.error('Impossible de résoudre le Place ID :', e.message);
+  }
+  return null;
 }
 
 // ─── SEO metadata per route ──────────────────────────────────────────────────
@@ -309,8 +355,12 @@ app.get('/api/reviews', async (req, res) => {
     return res.status(503).json({ error: 'API key not configured' });
   }
   try {
+    const placeId = await getPlaceId(GOOGLE_API_KEY);
+    if (!placeId) {
+      return res.status(503).json({ error: 'Place ID not found' });
+    }
     const data = await fetchJson(
-      `https://places.googleapis.com/v1/places/${PLACE_ID}`,
+      `https://places.googleapis.com/v1/places/${placeId}`,
       {
         'X-Goog-Api-Key': GOOGLE_API_KEY,
         'X-Goog-FieldMask': 'rating,userRatingCount,reviews',
