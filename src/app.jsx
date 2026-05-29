@@ -2244,50 +2244,132 @@ const GoogleReviews = () => {
       });
   }, []);
 
+  const marqueeItems = [
+    "★★★★★", "Clients satisfaits", "4,9 / 5",
+    "Travail soigné", "★★★★★", "70 avis vérifiés",
+    "Recommandé", "4,9 / 5", "★★★★★", "Ponctualité & finition",
+  ];
+
   if (status === "loading") return (
-    <div className="grid md:grid-cols-3 gap-px bg-[#F7F4ED]/10">
-      {[0,1,2].map((i) => (
-        <div key={i} className="bg-[#0A0A0A] p-6 md:p-8 lg:p-10 animate-pulse">
-          <div className="flex gap-1 mb-6">{[...Array(5)].map((_,k) => <div key={k} className="w-4 h-4 rounded-full bg-[#F7F4ED]/10" />)}</div>
-          <div className="h-4 bg-[#F7F4ED]/10 rounded mb-3 w-3/4" />
-          <div className="h-4 bg-[#F7F4ED]/10 rounded mb-3 w-full" />
-          <div className="h-4 bg-[#F7F4ED]/10 rounded w-1/2" />
+    <div className="space-y-10 animate-pulse">
+      <div className="flex items-end justify-between border-b border-[#F7F4ED]/10 pb-10">
+        <div className="w-44 h-24 bg-[#F7F4ED]/5 rounded" />
+        <div className="space-y-2 pb-2 text-right">
+          <div className="w-16 h-8 bg-[#F7F4ED]/5 rounded ml-auto" />
+          <div className="w-24 h-3 bg-[#F7F4ED]/5 rounded ml-auto" />
         </div>
-      ))}
+      </div>
+      <div className="grid md:grid-cols-3 gap-4">
+        {[0,1,2].map(i => (
+          <div key={i} className="border border-[#F7F4ED]/10 p-8 space-y-4">
+            <div className="h-3 w-16 bg-[#F7F4ED]/5 rounded" />
+            <div className="space-y-2 pt-2">
+              <div className="h-4 bg-[#F7F4ED]/5 rounded w-full" />
+              <div className="h-4 bg-[#F7F4ED]/5 rounded w-5/6" />
+              <div className="h-4 bg-[#F7F4ED]/5 rounded w-2/3" />
+            </div>
+            <div className="pt-6 flex items-center gap-3">
+              <div className="w-7 h-7 rounded-full bg-[#F7F4ED]/5" />
+              <div className="h-2 w-20 bg-[#F7F4ED]/5 rounded" />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 
   return (
-    <div>
+    <div className="space-y-0">
+      {/* ── Score header ─────────────────────────────────────── */}
       {rating && (
-        <div className="flex items-center gap-3 mb-10">
-          <span className="font-['Fraunces'] text-5xl text-[#F7F4ED]">{rating.toFixed(1)}</span>
-          <div>
-            <div className="flex gap-1 mb-1">
-              {[...Array(5)].map((_, k) => (
-                <Star key={k} className="w-4 h-4" fill={k < Math.round(rating) ? "#AED8E6" : "none"} stroke="#AED8E6" />
-              ))}
+        <div className="flex items-end justify-between border-b border-[#F7F4ED]/10 pb-10 mb-0">
+          <div className="flex items-end gap-4 md:gap-5">
+            <span
+              className="font-['Fraunces'] text-[#F7F4ED] leading-none"
+              style={{ fontSize: 'clamp(4rem, 10vw, 7.5rem)', letterSpacing: '-0.03em' }}
+            >
+              {rating.toFixed(1)}
+            </span>
+            <div className="pb-1 md:pb-2">
+              <div className="flex gap-1 mb-2">
+                {[...Array(5)].map((_, k) => (
+                  <Star key={k} className="w-4 h-4" fill="#AED8E6" stroke="none" />
+                ))}
+              </div>
+              <p className="text-[#F7F4ED]/35 text-[10px] uppercase tracking-[0.25em]">sur 5</p>
             </div>
-            <p className="text-xs text-[#F7F4ED]/50 uppercase tracking-[0.2em]">{total} avis Google</p>
+          </div>
+          <div className="text-right pb-1 md:pb-2">
+            <p
+              className="font-['Fraunces'] text-[#F7F4ED] leading-none"
+              style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)' }}
+            >
+              {total}
+            </p>
+            <p className="text-[#F7F4ED]/35 text-[10px] uppercase tracking-[0.25em] mt-2">avis Google</p>
           </div>
         </div>
       )}
-      <div className="grid md:grid-cols-3 gap-px bg-[#F7F4ED]/10">
+
+      {/* ── Marquee ──────────────────────────────────────────── */}
+      <div className="overflow-hidden -mx-6 md:-mx-10 border-b border-[#F7F4ED]/8 py-3 mb-10">
+        <div className="animate-marquee flex" style={{ width: 'max-content' }}>
+          {[...marqueeItems, ...marqueeItems].map((item, i) => (
+            <span
+              key={i}
+              className="inline-flex items-center gap-5 px-7 text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[#F7F4ED]/25 whitespace-nowrap"
+            >
+              {item}
+              <span className="inline-block w-px h-3 bg-[#F7F4ED]/12" />
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Cards ────────────────────────────────────────────── */}
+      <div className="grid md:grid-cols-3 gap-4 md:gap-5">
         {reviews.map((r, i) => (
-          <div key={i} className="bg-[#0A0A0A] p-6 md:p-8 lg:p-10">
-            <div className="flex gap-1 mb-6">
+          <div
+            key={i}
+            className="group relative flex flex-col p-7 md:p-8 border border-[#F7F4ED]/10 hover:border-[#AED8E6]/40 transition-colors duration-500"
+            style={{ background: 'rgba(247,244,237,0.018)' }}
+          >
+            {/* Guillemet décoratif */}
+            <span
+              aria-hidden="true"
+              className="absolute top-3 right-5 font-['Fraunces'] italic text-[#AED8E6]/10 leading-none select-none pointer-events-none group-hover:text-[#AED8E6]/18 transition-colors duration-500"
+              style={{ fontSize: '5.5rem', lineHeight: 1 }}
+            >
+              "
+            </span>
+
+            {/* Étoiles */}
+            <div className="flex gap-1 mb-7 relative z-10">
               {[...Array(5)].map((_, k) => (
-                <Star key={k} className="w-4 h-4" fill={k < r.rating ? "#AED8E6" : "none"} stroke="#AED8E6" />
+                <Star
+                  key={k}
+                  className="w-3 h-3"
+                  fill={k < r.rating ? "#AED8E6" : "transparent"}
+                  stroke="#AED8E6"
+                  strokeWidth={1.5}
+                />
               ))}
             </div>
-            <p className="font-['Fraunces'] text-xl md:text-2xl leading-relaxed text-[#F7F4ED] italic">
-              « {r.text?.text || r.originalText?.text || ""} »
+
+            {/* Texte */}
+            <p className="font-['Fraunces'] italic leading-[1.7] text-[#F7F4ED]/80 flex-1 relative z-10" style={{ fontSize: 'clamp(1rem, 1.8vw, 1.15rem)' }}>
+              {r.text?.text || r.originalText?.text || ""}
             </p>
-            <div className="mt-8 pt-6 border-t border-[#F7F4ED]/10 flex items-center gap-3">
-              {r.authorAttribution?.photoUri && (
-                <img src={r.authorAttribution.photoUri} alt="" className="w-8 h-8 rounded-full object-cover" />
-              )}
-              <span className="text-xs uppercase tracking-wider text-[#F7F4ED]/50">
+
+            {/* Auteur */}
+            <div className="mt-8 pt-5 border-t border-[#F7F4ED]/8 flex items-center gap-3">
+              <div
+                className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-[11px] font-bold text-[#0A0A0A]"
+                style={{ background: '#AED8E6' }}
+              >
+                {(r.authorAttribution?.displayName || "C")[0].toUpperCase()}
+              </div>
+              <span className="text-[10px] uppercase tracking-[0.2em] text-[#F7F4ED]/40">
                 {r.authorAttribution?.displayName || "Client Google"}
               </span>
             </div>
