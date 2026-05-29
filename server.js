@@ -351,10 +351,22 @@ app.get('/api/reviews/debug', async (req, res) => {
   if (!GOOGLE_API_KEY) return res.json({ error: 'API key not configured' });
   try {
     const placeId = await getPlaceId(GOOGLE_API_KEY);
-    const raw = await fetchJson(
-      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,user_ratings_total,reviews&language=fr&key=${GOOGLE_API_KEY}`
+    // Test avec rating seul (Basic), puis avec reviews (Advanced)
+    const rawBasic = await fetchJson(
+      `https://places.googleapis.com/v1/places/${placeId}?languageCode=fr`,
+      {
+        'X-Goog-Api-Key': GOOGLE_API_KEY,
+        'X-Goog-FieldMask': 'rating,userRatingCount',
+      }
     );
-    res.json({ placeId, raw });
+    const rawAdvanced = await fetchJson(
+      `https://places.googleapis.com/v1/places/${placeId}?languageCode=fr`,
+      {
+        'X-Goog-Api-Key': GOOGLE_API_KEY,
+        'X-Goog-FieldMask': 'rating,userRatingCount,reviews',
+      }
+    );
+    res.json({ placeId, basic: rawBasic, advanced: rawAdvanced });
   } catch (e) {
     res.json({ error: e.message });
   }
@@ -376,30 +388,25 @@ app.get('/api/reviews', async (req, res) => {
       return res.status(503).json({ error: 'Place ID not found' });
     }
 
-    // Utilise l'ancienne Places API (compatible avec restriction "Places API")
-    // Elle retourne les avis textuels sans nécessiter "Places API (New)"
+    // Places API (New) — les avis textuels nécessitent le tier "Advanced"
+    // La clé API doit avoir "Places API (New)" activée dans Google Cloud Console
     const raw = await fetchJson(
-      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,user_ratings_total,reviews&language=fr&key=${GOOGLE_API_KEY}`
+      `https://places.googleapis.com/v1/places/${placeId}`,
+      {
+        'X-Goog-Api-Key': GOOGLE_API_KEY,
+        'X-Goog-FieldMask': 'rating,userRatingCount,reviews',
+      }
     );
 
-    if (raw.status !== 'OK') {
-      return res.status(502).json({ error: `Google API error: ${raw.status}` });
+    if (raw.error) {
+      return res.status(502).json({ error: `Google API error: ${raw.error.message || JSON.stringify(raw.error)}` });
     }
 
-    // Normalise vers le format attendu par le frontend (Places API New style)
+    // Places API (New) retourne déjà le format attendu par le frontend
     const data = {
-      rating: raw.result.rating,
-      userRatingCount: raw.result.user_ratings_total,
-      reviews: (raw.result.reviews || []).map((r) => ({
-        rating: r.rating,
-        text: { text: r.text },
-        relativePublishTimeDescription: r.relative_time_description,
-        authorAttribution: {
-          displayName: r.author_name,
-          photoUri: r.profile_photo_url,
-          uri: r.author_url,
-        },
-      })),
+      rating: raw.rating,
+      userRatingCount: raw.userRatingCount,
+      reviews: raw.reviews || [],
     };
 
     reviewsCache = { data, ts: now };
