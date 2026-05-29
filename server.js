@@ -333,12 +333,12 @@ app.use((req, res, next) => {
     'Content-Security-Policy',
     [
       "default-src 'self' https: data: blob:",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://fonts.googleapis.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://fonts.googleapis.com https://www.googletagmanager.com https://googleads.g.doubleclick.net",
+      "connect-src 'self' https://formspree.io https://www.google-analytics.com https://analytics.google.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.tailwindcss.com",
       "font-src 'self' https://fonts.gstatic.com data:",
-      "img-src 'self' data: blob: https://placehold.co https://lh3.googleusercontent.com",
+      "img-src 'self' data: blob: https://placehold.co https://lh3.googleusercontent.com https://www.googletagmanager.com",
       "media-src 'self' blob:",
-      "connect-src 'self' https://formspree.io",
     ].join('; ')
   );
   next();
