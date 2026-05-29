@@ -2202,23 +2202,46 @@ const Lightbox = ({ src, alt, onClose }) => {
 
 const CATEGORIES = ["Tous", "Salle de bain", "Façade", "Isolation", "Toiture", "Carrelage"];
 
+// Avis réels copiés depuis Google Maps — fallback quand l'API ne retourne pas les textes
+const STATIC_REVIEWS = [
+  {
+    rating: 5,
+    text: { text: "Ayant fait appel à cette société pour des travaux d'isolation de façade, je recommande fortement BatiConception. Ponctualité, très à l'écoute et finition parfaite. Encore un grand merci à vous et j'espère encore collaborer avec vous." },
+    authorAttribution: { displayName: "Andersen Cp" },
+  },
+  {
+    rating: 5,
+    text: { text: "Équipe super professionnelle et très méticuleuse dans son travail. J'ai fait une rénovation complète de ma salle de bains ainsi que de ma cuisine, et le résultat est impeccable. Je recommande fortement !" },
+    authorAttribution: { displayName: "filipos nikos" },
+  },
+  {
+    rating: 5,
+    text: { text: "Entreprise sérieuse et professionnelle. Travail de qualité, délais respectés et équipe très sympathique. Je recommande sans hésitation." },
+    authorAttribution: { displayName: "Simon Malaki" },
+  },
+];
+
 const GoogleReviews = () => {
   const [reviews, setReviews] = React.useState([]);
   const [rating, setRating] = React.useState(null);
   const [total, setTotal] = React.useState(null);
-  const [status, setStatus] = React.useState("loading"); // loading | ok | empty
+  const [status, setStatus] = React.useState("loading"); // loading | ok
 
   React.useEffect(() => {
     fetch("/api/reviews")
       .then((r) => r.json())
       .then((data) => {
-        const list = (data.reviews || []).filter((r) => r.rating >= 4).slice(0, 3);
+        const live = (data.reviews || []).filter((r) => r.rating >= 4).slice(0, 3);
         setRating(data.rating || null);
         setTotal(data.userRatingCount || null);
-        setReviews(list);
-        setStatus(list.length > 0 ? "ok" : "empty");
+        // Utilise les avis live si disponibles, sinon fallback sur les avis statiques
+        setReviews(live.length > 0 ? live : STATIC_REVIEWS);
+        setStatus("ok");
       })
-      .catch(() => setStatus("empty"));
+      .catch(() => {
+        setReviews(STATIC_REVIEWS);
+        setStatus("ok");
+      });
   }, []);
 
   if (status === "loading") return (
@@ -2231,12 +2254,6 @@ const GoogleReviews = () => {
           <div className="h-4 bg-[#F7F4ED]/10 rounded w-1/2" />
         </div>
       ))}
-    </div>
-  );
-
-  if (status === "empty") return (
-    <div className="text-center py-12 text-[#F7F4ED]/40 text-sm italic">
-      Les avis Google seront affichés dès leur publication.
     </div>
   );
 
