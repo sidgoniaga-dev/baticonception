@@ -136,6 +136,20 @@
       40%           { transform: scale(1);  opacity: 1; }
     }
   </style>
+
+  <!-- Google Ads — Conversion "Demande de devis" -->
+  <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') { window.location = url; }
+      };
+      gtag('event', 'conversion', {
+        'send_to': 'AW-18181959176/UEboCIuaobQcEIjc6t1D',
+        'event_callback': callback
+      });
+      return false;
+    }
+  </script>
 </head>
 <body>
   <div id="__boot"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>

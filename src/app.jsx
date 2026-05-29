@@ -2532,6 +2532,10 @@ const ContactPage = () => {
       });
       if (res.ok) {
         setSent(true);
+        // Google Ads — conversion "Demande de devis"
+        if (typeof window.gtag_report_conversion === 'function') {
+          window.gtag_report_conversion();
+        }
         setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
       } else {
         setError("Une erreur est survenue. Veuillez réessayer ou nous contacter par email.");
