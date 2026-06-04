@@ -2630,6 +2630,8 @@ const RadioGroup = ({ name, value, options, onChange }) => (
 );
 
 const ContactPage = () => {
+  const formLoadTime = React.useRef(Date.now());
+
   const [form, setForm] = useStateC({
     nom: "",
     telephone: "",
@@ -2642,6 +2644,7 @@ const ContactPage = () => {
     surface: "",
     description: "",
     contactType: "",
+    _trap: "",
   });
   const [sent, setSent] = useStateC(false);
   const [submitting, setSubmitting] = useStateC(false);
@@ -2652,6 +2655,10 @@ const ContactPage = () => {
 
   const submit = async (e) => {
     e.preventDefault();
+    // Honeypot — bots remplissent ce champ, humains non
+    if (form._trap) { setSent(true); return; }
+    // Délai minimum — un humain met plus de 4s à remplir le formulaire
+    if (Date.now() - formLoadTime.current < 4000) { setSent(true); return; }
     if (!form.delai) { setError("Veuillez choisir un délai pour votre projet."); return; }
     if (!form.surface) { setError("Veuillez choisir une surface concernée."); return; }
     if (!form.contactType) { setError("Veuillez choisir un mode de contact."); return; }
@@ -2662,6 +2669,7 @@ const ContactPage = () => {
         method: "POST",
         headers: { "Accept": "application/json", "Content-Type": "application/json" },
         body: JSON.stringify({
+          _gotcha: form._trap,
           Nom: form.nom,
           Téléphone: form.telephone,
           Email: form.email,
@@ -2675,8 +2683,9 @@ const ContactPage = () => {
       });
       if (res.ok) {
         setSent(true);
-        // Google Ads — conversion "Demande de devis"
-        if (typeof window.gtag_report_conversion === 'function') {
+        // Google Ads — conversion une seule fois par session
+        if (typeof window.gtag_report_conversion === 'function' && !sessionStorage.getItem('_bc_conv')) {
+          sessionStorage.setItem('_bc_conv', '1');
           window.gtag_report_conversion();
         }
         setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
@@ -2750,6 +2759,10 @@ const ContactPage = () => {
       <section data-screen-label="Contact / Formulaire" className="py-14 md:py-20 lg:py-28 bg-[#F7F4ED]">
         <div className="max-w-4xl mx-auto px-6 md:px-10">
           <form onSubmit={submit} className="space-y-16">
+            {/* Honeypot anti-bot — caché aux humains, visible aux bots */}
+            <div style={{position:"absolute",left:"-9999px",top:"-9999px"}} aria-hidden="true">
+              <input type="text" name="website" value={form._trap} onChange={update("_trap")} tabIndex={-1} autoComplete="off" />
+            </div>
             <div>
               <div className="flex items-baseline gap-4 mb-10">
                 <span className="font-['Fraunces'] italic text-3xl text-[#AED8E6]">01</span>
