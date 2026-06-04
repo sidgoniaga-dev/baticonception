@@ -114,6 +114,8 @@ const SERVICES = {
   "salle-de-bain": {
     icon: Bath,
     photo: "uploads/1 salle de bain/apres salle de bain.jpeg",
+    avant: "uploads/1 salle de bain/avant salle de bain.jpeg",
+    apres: "uploads/1 salle de bain/apres salle de bain.jpeg",
     label: "Salle de bain",
     title: "Rénovation de salle de bain",
     tagline: "Transformez votre espace en un lieu moderne, confortable et fonctionnel",
@@ -148,6 +150,8 @@ const SERVICES = {
   toiture: {
     icon: HomeIcon,
     photo: "uploads/4 isolation toiture plate et revetement/apres toiture plate.jpg",
+    avant: "uploads/4 isolation toiture plate et revetement/avant toiture plate.jpg",
+    apres: "uploads/4 isolation toiture plate et revetement/apres toiture plate.jpg",
     label: "Toiture",
     title: "Rénovation de toiture",
     tagline: "Protégez durablement votre habitation",
@@ -183,6 +187,8 @@ const SERVICES = {
   facade: {
     icon: Layers,
     photo: "uploads/5 bardage bois/apres bardage.jpeg",
+    avant: "uploads/8 isolation façade/avant facade 2.jpeg",
+    apres: "uploads/8 isolation façade/apres facade 2.jpg",
     label: "Façade",
     title: "Rénovation de façade",
     tagline: "Améliorez l'apparence et la performance de votre habitation",
@@ -215,6 +221,8 @@ const SERVICES = {
   amenagement: {
     icon: Hammer,
     photo: "uploads/9 isolation acoustique/apres acoustique.jpg",
+    avant: "uploads/9 isolation acoustique/PHOTO-2025-06-11-17-32-49.jpg",
+    apres: "uploads/9 isolation acoustique/apres acoustique.jpg",
     label: "Aménagement intérieur",
     title: "Aménagement intérieur",
     tagline: "Optimisez et transformez vos espaces de vie",
@@ -246,6 +254,8 @@ const SERVICES = {
   isolation: {
     icon: Thermometer,
     photo: "uploads/3 isolation toiture/apres toiture.jpeg",
+    avant: "uploads/3 isolation toiture/avant toiture.jpeg",
+    apres: "uploads/3 isolation toiture/apres toiture.jpeg",
     label: "Isolation",
     title: "Travaux d'isolation",
     tagline: "Améliorez le confort et réduisez vos factures d'énergie",
@@ -279,6 +289,8 @@ const SERVICES = {
   "renovation-complete": {
     icon: Building2,
     photo: "uploads/7 salle de bain/apres salle de bain 3.jpeg",
+    avant: "uploads/7 salle de bain/avant salle de bain 3.jpeg",
+    apres: "uploads/7 salle de bain/apres salle de bain 3.jpeg",
     label: "Rénovation complète",
     title: "Rénovation complète de votre habitation",
     tagline: "Un accompagnement de A à Z pour tous vos projets",
@@ -1829,6 +1841,38 @@ const ServicePage = ({ slug, go }) => {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      </section>
+
+      <section data-screen-label={`Service / ${s.label} / Avant-Après`} className="bg-[#0A0A0A] py-16 md:py-20 lg:py-28">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <div className="grid lg:grid-cols-12 gap-10 mb-10 md:mb-14">
+            <div className="lg:col-span-5">
+              <SectionLabel n="05">Résultat concret</SectionLabel>
+              <h2 className="font-['Fraunces'] text-4xl md:text-5xl text-[#F7F4ED] leading-tight">
+                Avant /{" "}
+                <em className="italic font-light text-[#AED8E6]">Après</em>.
+              </h2>
+            </div>
+            <div className="lg:col-span-6 lg:col-start-7 flex items-end">
+              <p className="text-[#F7F4ED]/60 leading-relaxed">
+                Un exemple réel de notre savoir-faire sur ce type de chantier. Glissez le curseur pour comparer l'état initial et le résultat final.
+              </p>
+            </div>
+          </div>
+          <BeforeAfter avant={s.avant} apres={s.apres} alt={s.label} />
+          <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <p className="text-[#F7F4ED]/40 text-sm italic">
+              Chantier {s.label.toLowerCase()} — réalisé par Bati Conception
+            </p>
+            <button
+              onClick={() => go("realisations")}
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[#F7F4ED]/10 text-[#F7F4ED] text-sm tracking-wide hover:bg-[#AED8E6] hover:text-[#0A0A0A] transition-all duration-300 group"
+            >
+              Voir toutes nos réalisations
+              <ArrowUpRight className="w-4 h-4 group-hover:rotate-12 transition" />
+            </button>
           </div>
         </div>
       </section>
