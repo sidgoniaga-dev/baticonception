@@ -2629,7 +2629,24 @@ const RadioGroup = ({ name, value, options, onChange }) => (
   </div>
 );
 
-const ContactPage = () => {
+const ThankYouPage = ({ go }) => (
+  <section data-screen-label="Contact / Sent" className="min-h-[80vh] flex items-center justify-center px-6 py-16 md:py-20 lg:py-24">
+    <div className="max-w-2xl text-center">
+      <div className="w-20 h-20 rounded-full bg-[#AED8E6] mx-auto mb-8 flex items-center justify-center">
+        <Check className="w-10 h-10 text-[#0A0A0A]" strokeWidth={2} />
+      </div>
+      <h2 className="font-['Fraunces'] text-5xl md:text-6xl text-[#0A0A0A] leading-tight mb-6">
+        Demande <em className="italic font-light">envoyée</em>.
+      </h2>
+      <p className="text-lg text-[#0A0A0A]/70 leading-relaxed">
+        Nous vous répondrons dans les plus brefs délais afin de discuter de votre projet
+        et vous proposer une solution adaptée.
+      </p>
+    </div>
+  </section>
+);
+
+const ContactPage = ({ go }) => {
   const formLoadTime = React.useRef(Date.now());
 
   const [form, setForm] = useStateC({
@@ -2646,7 +2663,6 @@ const ContactPage = () => {
     contactType: "",
     _trap: "",
   });
-  const [sent, setSent] = useStateC(false);
   const [submitting, setSubmitting] = useStateC(false);
   const [error, setError] = useStateC(null);
 
@@ -2656,9 +2672,9 @@ const ContactPage = () => {
   const submit = async (e) => {
     e.preventDefault();
     // Honeypot — bots remplissent ce champ, humains non
-    if (form._trap) { setSent(true); return; }
+    if (form._trap) { go("merci"); return; }
     // Délai minimum — un humain met plus de 4s à remplir le formulaire
-    if (Date.now() - formLoadTime.current < 4000) { setSent(true); return; }
+    if (Date.now() - formLoadTime.current < 4000) { go("merci"); return; }
     if (!form.delai) { setError("Veuillez choisir un délai pour votre projet."); return; }
     if (!form.surface) { setError("Veuillez choisir une surface concernée."); return; }
     if (!form.contactType) { setError("Veuillez choisir un mode de contact."); return; }
@@ -2682,13 +2698,12 @@ const ContactPage = () => {
         }),
       });
       if (res.ok) {
-        setSent(true);
         // Google Ads — conversion une seule fois par session
         if (typeof window.gtag_report_conversion === 'function' && !sessionStorage.getItem('_bc_conv')) {
           sessionStorage.setItem('_bc_conv', '1');
           window.gtag_report_conversion();
         }
-        setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
+        go("merci");
       } else {
         setError("Une erreur est survenue. Veuillez réessayer ou nous contacter par email.");
       }
@@ -2698,26 +2713,6 @@ const ContactPage = () => {
       setSubmitting(false);
     }
   };
-
-  if (sent) {
-    return (
-      <section data-screen-label="Contact / Sent" className="min-h-[80vh] flex items-center justify-center px-6 py-16 md:py-20 lg:py-24">
-        <div className="max-w-2xl text-center">
-          <div className="w-20 h-20 rounded-full bg-[#AED8E6] mx-auto mb-8 flex items-center justify-center">
-            <Check className="w-10 h-10 text-[#0A0A0A]" strokeWidth={2} />
-          </div>
-          <h2 className="font-['Fraunces'] text-5xl md:text-6xl text-[#0A0A0A] leading-tight mb-6">
-            Demande <em className="italic font-light">envoyée</em>.
-          </h2>
-          <p className="text-lg text-[#0A0A0A]/70 leading-relaxed">
-            Nous vous répondrons dans les plus brefs délais afin de discuter de votre projet
-            et vous proposer une solution adaptée.
-          </p>
-        </div>
-      </section>
-    );
-  }
-
 
   return (
     <React.Fragment>
@@ -3019,6 +3014,7 @@ function App() {
     services: "Nos services — BatiConception",
     realisations: "Réalisations — BatiConception",
     contact: "Contact & Devis — BatiConception",
+    merci: "Demande envoyée — BatiConception",
     "salle-de-bain": "Rénovation de salle de bain — BatiConception",
     toiture: "Rénovation de toiture — BatiConception",
     facade: "Rénovation de façade — BatiConception",
@@ -3048,7 +3044,8 @@ function App() {
     if (page === "home") return <HomePage go={go} />;
     if (page === "services") return <ServicesPage go={go} />;
     if (page === "realisations") return <RealisationsPage go={go} />;
-    if (page === "contact") return <ContactPage />;
+    if (page === "contact") return <ContactPage go={go} />;
+    if (page === "merci") return <ThankYouPage go={go} />;
     if (SERVICE_KEYS.includes(page)) return <ServicePage slug={page} go={go} />;
     return <HomePage go={go} />;
   };
