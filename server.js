@@ -3,8 +3,11 @@ const express = require('express');
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
+const crypto = require('crypto');
+const multer = require('multer');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 
 const GOOGLE_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
@@ -343,6 +346,228 @@ app.use((req, res, next) => {
     ].join('; ')
   );
   next();
+});
+
+// ─── CMS : contenu éditable + espace admin ───────────────────────────────────
+
+app.use(express.json({ limit: '2mb' }));
+
+const CONTENT_PATH = path.join(__dirname, 'content.json');
+const CONTENT_SEED_PATH = path.join(__dirname, 'content.default.json');
+const UPLOADS_CMS_DIR = path.join(__dirname, 'uploads', 'cms');
+
+// content.json est généré au runtime (ignoré par git) afin que les modifications
+// du client ne soient pas écrasées lors d'un redéploiement. S'il est absent,
+// on le crée depuis le seed versionné content.default.json.
+if (!fs.existsSync(CONTENT_PATH) && fs.existsSync(CONTENT_SEED_PATH)) {
+  try {
+    fs.copyFileSync(CONTENT_SEED_PATH, CONTENT_PATH);
+    console.log('content.json créé depuis content.default.json');
+  } catch (e) {
+    console.error('Impossible de créer content.json depuis le seed :', e.message);
+  }
+}
+
+const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || '').toLowerCase();
+const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || '';
+const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
+if (!process.env.SESSION_SECRET) {
+  console.warn('SESSION_SECRET absent du .env — les sessions admin seront invalidées à chaque redémarrage.');
+}
+
+const SESSION_TTL = 7 * 24 * 3600 * 1000; // 7 jours
+const COOKIE_NAME = 'bc_admin';
+
+function verifyPassword(password, stored) {
+  const [saltHex, hashHex] = stored.split(':');
+  if (!saltHex || !hashHex) return false;
+  try {
+    const hash = crypto.scryptSync(password, Buffer.from(saltHex, 'hex'), 64);
+    const expected = Buffer.from(hashHex, 'hex');
+    return hash.length === expected.length && crypto.timingSafeEqual(hash, expected);
+  } catch {
+    return false;
+  }
+}
+
+function signToken(payload) {
+  const body = Buffer.from(JSON.stringify(payload)).toString('base64url');
+  const sig = crypto.createHmac('sha256', SESSION_SECRET).update(body).digest('base64url');
+  return `${body}.${sig}`;
+}
+
+function verifyToken(token) {
+  if (!token) return null;
+  const [body, sig] = token.split('.');
+  if (!body || !sig) return null;
+  const expected = crypto.createHmac('sha256', SESSION_SECRET).update(body).digest('base64url');
+  const a = Buffer.from(sig);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+  try {
+    const payload = JSON.parse(Buffer.from(body, 'base64url').toString());
+    if (!payload.exp || Date.now() > payload.exp) return null;
+    return payload;
+  } catch {
+    return null;
+  }
+}
+
+function getCookie(req, name) {
+  const header = req.headers.cookie || '';
+  for (const part of header.split(';')) {
+    const [k, ...v] = part.trim().split('=');
+    if (k === name) return decodeURIComponent(v.join('='));
+  }
+  return null;
+}
+
+function requireAuth(req, res, next) {
+  const payload = verifyToken(getCookie(req, COOKIE_NAME));
+  if (!payload) return res.status(401).json({ error: 'Non authentifié' });
+  req.admin = payload;
+  next();
+}
+
+// Rate-limit login : 8 échecs max par IP par 15 min
+const loginAttempts = new Map();
+function tooManyAttempts(ip) {
+  const rec = loginAttempts.get(ip);
+  if (!rec) return false;
+  if (Date.now() - rec.first > 15 * 60 * 1000) {
+    loginAttempts.delete(ip);
+    return false;
+  }
+  return rec.count >= 8;
+}
+function recordFailure(ip) {
+  const rec = loginAttempts.get(ip);
+  if (rec && Date.now() - rec.first <= 15 * 60 * 1000) rec.count++;
+  else loginAttempts.set(ip, { first: Date.now(), count: 1 });
+}
+
+app.post('/api/admin/login', (req, res) => {
+  const ip = req.ip;
+  if (tooManyAttempts(ip)) {
+    return res.status(429).json({ error: 'Trop de tentatives. Réessayez dans 15 minutes.' });
+  }
+  const { email, password } = req.body || {};
+  if (!ADMIN_EMAIL || !ADMIN_PASSWORD_HASH) {
+    return res.status(503).json({ error: 'Espace admin non configuré (ADMIN_EMAIL / ADMIN_PASSWORD_HASH manquants).' });
+  }
+  if (
+    typeof email !== 'string' ||
+    typeof password !== 'string' ||
+    email.trim().toLowerCase() !== ADMIN_EMAIL ||
+    !verifyPassword(password, ADMIN_PASSWORD_HASH)
+  ) {
+    recordFailure(ip);
+    return res.status(401).json({ error: 'Email ou mot de passe incorrect.' });
+  }
+  loginAttempts.delete(ip);
+  const token = signToken({ email: ADMIN_EMAIL, exp: Date.now() + SESSION_TTL });
+  const secure = req.secure || req.headers['x-forwarded-proto'] === 'https';
+  res.setHeader(
+    'Set-Cookie',
+    `${COOKIE_NAME}=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${SESSION_TTL / 1000}${secure ? '; Secure' : ''}`
+  );
+  res.json({ ok: true, email: ADMIN_EMAIL });
+});
+
+app.post('/api/admin/logout', (req, res) => {
+  res.setHeader('Set-Cookie', `${COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`);
+  res.json({ ok: true });
+});
+
+app.get('/api/admin/me', requireAuth, (req, res) => {
+  res.json({ email: req.admin.email });
+});
+
+// Contenu public — lu par le site au chargement
+app.get('/api/content', (req, res) => {
+  try {
+    const raw = fs.readFileSync(CONTENT_PATH, 'utf-8');
+    res.set('Cache-Control', 'no-cache');
+    res.type('json').send(raw);
+  } catch {
+    res.status(404).json({ error: 'content.json introuvable' });
+  }
+});
+
+// Sauvegarde du contenu (admin)
+app.put('/api/admin/content', requireAuth, (req, res) => {
+  const data = req.body;
+  if (
+    !data ||
+    typeof data !== 'object' ||
+    typeof data.texts !== 'object' ||
+    typeof data.services !== 'object' ||
+    !Array.isArray(data.projects)
+  ) {
+    return res.status(400).json({ error: 'Format de contenu invalide.' });
+  }
+  const json = JSON.stringify(data, null, 2);
+  if (json.length > 2 * 1024 * 1024) {
+    return res.status(413).json({ error: 'Contenu trop volumineux.' });
+  }
+  try {
+    // Backup de la version précédente, puis écriture atomique
+    if (fs.existsSync(CONTENT_PATH)) fs.copyFileSync(CONTENT_PATH, CONTENT_PATH + '.bak');
+    const tmp = CONTENT_PATH + '.tmp';
+    fs.writeFileSync(tmp, json);
+    fs.renameSync(tmp, CONTENT_PATH);
+    res.json({ ok: true });
+  } catch (e) {
+    console.error('Échec sauvegarde content.json :', e.message);
+    res.status(500).json({ error: 'Impossible de sauvegarder le contenu.' });
+  }
+});
+
+// Upload photo (admin) — stocké dans uploads/cms/
+const ALLOWED_IMG = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp' };
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      fs.mkdirSync(UPLOADS_CMS_DIR, { recursive: true });
+      cb(null, UPLOADS_CMS_DIR);
+    },
+    filename: (req, file, cb) => {
+      const base = path
+        .basename(file.originalname, path.extname(file.originalname))
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-zA-Z0-9_-]+/g, '-')
+        .slice(0, 60) || 'photo';
+      cb(null, `${Date.now()}-${base}${ALLOWED_IMG[file.mimetype]}`);
+    },
+  }),
+  limits: { fileSize: 20 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => cb(null, Boolean(ALLOWED_IMG[file.mimetype])),
+});
+
+app.post('/api/admin/upload', requireAuth, upload.single('photo'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: 'Aucune image valide reçue (JPEG, PNG ou WebP, 20 Mo max).' });
+  res.json({ ok: true, path: `uploads/cms/${req.file.filename}` });
+});
+
+// Suppression d'une photo uploadée via le CMS (uniquement uploads/cms/)
+app.delete('/api/admin/upload', requireAuth, (req, res) => {
+  const rel = (req.body && req.body.path) || '';
+  const abs = path.resolve(__dirname, rel);
+  if (!abs.startsWith(UPLOADS_CMS_DIR + path.sep)) {
+    return res.status(400).json({ error: 'Seules les photos uploadées via le CMS peuvent être supprimées.' });
+  }
+  try {
+    fs.unlinkSync(abs);
+    res.json({ ok: true });
+  } catch {
+    res.status(404).json({ error: 'Fichier introuvable.' });
+  }
+});
+
+// Page admin
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
 // ─── API: Google Reviews ──────────────────────────────────────────────────────

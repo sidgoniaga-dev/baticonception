@@ -325,7 +325,85 @@ const SERVICES = {
 
 const SERVICE_KEYS = Object.keys(SERVICES);
 
-Object.assign(window, { Logo, SERVICES, SERVICE_KEYS });
+// ─── Textes éditables via le CMS (/admin) ───────────────────────────────────
+// Valeurs par défaut — écrasées par content.json au chargement (applyContent).
+const TEXTS = {
+  global: {
+    phone: "+32 470 86 63 59",
+    email: "baticonception@outlook.com",
+    zone: "Belgique",
+    tva: "TVA BE 1030.623.416",
+    footerAbout:
+      "Entreprise de rénovation en Belgique. De la salle de bain à la rénovation complète — un seul interlocuteur, un travail soigné.",
+  },
+  home: {
+    badgeYear: "2026",
+    badgeText: "Disponible pour vos nouveaux chantiers",
+    heroLine1Pre: "Votre partenaire",
+    heroLine1Em: "rénovation",
+    heroLine2Pre: "de la cave au",
+    heroLine2Em: "grenier",
+    heroSubtitle:
+      "Entreprise de rénovation en Belgique. De la salle de bain à la rénovation complète, nous coordonnons chaque corps de métier sous un seul interlocuteur — pour un chantier maîtrisé et un résultat soigné.",
+    presentationP1:
+      "Chez Bati Conception, nous mettons notre savoir-faire au service de vos projets de rénovation, qu'il s'agisse d'un simple aménagement intérieur ou d'une transformation complète de votre habitation.",
+    presentationP2:
+      "Notre objectif est simple : vous offrir un résultat durable, esthétique et parfaitement adapté à vos besoins. Nous travaillons avec des matériaux de qualité et coordonnons chaque étape du chantier pour garantir un travail soigné et sans mauvaise surprise.",
+    servicesIntro:
+      "Nous intervenons dans différents domaines de la rénovation, du chantier ponctuel à la transformation clé en main.",
+    pourquoiIntro:
+      "Chaque projet est unique. Nous prenons le temps d'analyser vos besoins et de vous proposer des solutions adaptées, du simple rafraîchissement à la rénovation complète.",
+    pourquoiCards: [
+      { title: "Accompagnement personnalisé", desc: "Un seul interlocuteur du devis aux finitions. Des conseils à chaque étape, sans jargon." },
+      { title: "Délais et budget respectés", desc: "Planning précis, budget transparent. Pas de surprise en cours de chantier." },
+      { title: "Coordination de A à Z", desc: "Maçons, plombiers, électriciens, peintres — orchestrés sous un seul chantier." },
+      { title: "Solutions sur-mesure", desc: "Chaque projet est unique. On adapte, on propose, on ajuste avec vous." },
+      { title: "Travail soigné et durable", desc: "Matériaux de qualité, finitions au cordeau, garanties d'usage. C'est notre signature." },
+    ],
+  },
+  pages: {
+    servicesIntro:
+      "De la salle de bain à la rénovation complète, nous coordonnons chaque corps de métier sous un seul interlocuteur. Choisissez l'expertise qui correspond à votre projet.",
+    realisationsIntro:
+      "Le meilleur moyen de vous convaincre, c'est de vous montrer notre travail. Glissez sur chaque photo pour comparer l'état initial et le résultat final de nos chantiers récents.",
+    contactIntro:
+      "Notre équipe est à votre écoute. Remplissez le formulaire ci-dessous, nous vous recontacterons rapidement.",
+  },
+  finalCta: {
+    text: "Un projet en tête ? Obtenez un devis gratuit et personnalisé, sans engagement.",
+  },
+};
+
+const telHref = () => "tel:" + TEXTS.global.phone.replace(/\s/g, "");
+
+function deepMerge(target, src) {
+  for (const k in src) {
+    if (
+      src[k] && typeof src[k] === "object" && !Array.isArray(src[k]) &&
+      target[k] && typeof target[k] === "object" && !Array.isArray(target[k])
+    ) {
+      deepMerge(target[k], src[k]);
+    } else if (src[k] !== undefined && src[k] !== null) {
+      target[k] = src[k];
+    }
+  }
+}
+
+function applyContent(c) {
+  if (!c || typeof c !== "object") return;
+  if (c.texts) deepMerge(TEXTS, c.texts);
+  if (c.services) {
+    for (const k of Object.keys(c.services)) {
+      if (SERVICES[k]) Object.assign(SERVICES[k], c.services[k]);
+    }
+  }
+  if (Array.isArray(c.projects) && c.projects.length) {
+    PROJECTS.length = 0;
+    PROJECTS.push(...c.projects);
+  }
+}
+
+Object.assign(window, { Logo, SERVICES, SERVICE_KEYS, TEXTS });
 
 // ===== components.jsx =====
 const { useState, useEffect } = React;
@@ -737,7 +815,7 @@ const FinalCta = ({ go }) => (
       </div>
       <div className="lg:col-span-4 flex flex-col gap-4">
         <p className="text-[#0A0A0A]/80 leading-relaxed">
-          Un projet en tête ? Obtenez un devis gratuit et personnalisé, sans engagement.
+          {TEXTS.finalCta.text}
         </p>
         <CtaButton onClick={() => go("contact")} variant="primary">
           Demander un devis
@@ -756,11 +834,8 @@ const Footer = ({ go }) => (
       <div className="grid lg:grid-cols-12 gap-10 pb-16 border-b border-[#F7F4ED]/10">
         <div className="lg:col-span-5">
           <Logo className="h-12 mb-3" invert />
-          <p className="text-xs text-[#F7F4ED]/40 tracking-wide mb-6">TVA BE 1030.623.416</p>
-          <p className="max-w-md leading-relaxed">
-            Entreprise de rénovation en Belgique. De la salle de bain à la rénovation
-            complète — un seul interlocuteur, un travail soigné.
-          </p>
+          <p className="text-xs text-[#F7F4ED]/40 tracking-wide mb-6">{TEXTS.global.tva}</p>
+          <p className="max-w-md leading-relaxed">{TEXTS.global.footerAbout}</p>
         </div>
 
         <div className="lg:col-span-3">
@@ -817,15 +892,15 @@ const Footer = ({ go }) => (
           <ul className="space-y-2">
             <li className="flex items-start gap-2">
               <MapPin className="w-4 h-4 mt-0.5 text-[#AED8E6] shrink-0" />
-              <span>Belgique</span>
+              <span>{TEXTS.global.zone}</span>
             </li>
             <li className="flex items-start gap-2">
               <Phone className="w-4 h-4 mt-0.5 text-[#AED8E6] shrink-0" />
-              <a href="tel:+32470866359" className="hover:text-[#AED8E6] transition">+32 470 86 63 59</a>
+              <a href={telHref()} className="hover:text-[#AED8E6] transition">{TEXTS.global.phone}</a>
             </li>
             <li className="flex items-start gap-2">
               <Mail className="w-4 h-4 mt-0.5 text-[#AED8E6] shrink-0" />
-              <a href="mailto:baticonception@outlook.com" className="hover:text-[#AED8E6] transition break-all">baticonception@outlook.com</a>
+              <a href={`mailto:${TEXTS.global.email}`} className="hover:text-[#AED8E6] transition break-all">{TEXTS.global.email}</a>
             </li>
           </ul>
         </div>
@@ -833,7 +908,7 @@ const Footer = ({ go }) => (
 
       <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#F7F4ED]/40">
         <span>© {new Date().getFullYear()} Bati Conception — Tous droits réservés</span>
-        <span>TVA BE 1030.623.416</span>
+        <span>{TEXTS.global.tva}</span>
       </div>
     </div>
   </footer>
@@ -1347,27 +1422,25 @@ const HomePage = ({ go }) => (
         {/* Availability pill badge */}
         <div className="inline-flex items-center gap-2.5 bg-[#F7F4ED]/[0.08] backdrop-blur-sm ring-1 ring-[#F7F4ED]/15 rounded-full pl-1.5 pr-4 py-1.5 mb-10">
           <span className="bg-[#AED8E6] text-[#0A0A0A] text-[10px] uppercase tracking-[0.18em] font-semibold px-2.5 py-1 rounded-full">
-            2026
+            {TEXTS.home.badgeYear}
           </span>
           <span className="text-xs md:text-sm text-[#F7F4ED]/85 tracking-wide">
-            Disponible pour vos nouveaux chantiers
+            {TEXTS.home.badgeText}
           </span>
         </div>
 
         {/* Headline */}
         <h1 className="font-['Fraunces'] text-[9vw] md:text-[7.5vw] lg:text-[6.5rem] leading-[1.05] tracking-[-0.025em] text-[#F7F4ED]">
-          Votre partenaire{" "}
-          <em className="italic font-light text-[#F7F4ED]/80">rénovation</em>
+          {TEXTS.home.heroLine1Pre}{" "}
+          <em className="italic font-light text-[#F7F4ED]/80">{TEXTS.home.heroLine1Em}</em>
           <br />
-          de la cave au{" "}
-          <em className="italic font-normal text-[#AED8E6]">grenier</em>.
+          {TEXTS.home.heroLine2Pre}{" "}
+          <em className="italic font-normal text-[#AED8E6]">{TEXTS.home.heroLine2Em}</em>.
         </h1>
 
         {/* Subhead */}
         <p className="mt-6 md:mt-10 max-w-2xl mx-auto text-base md:text-lg text-[#F7F4ED]/65 leading-relaxed">
-          Entreprise de rénovation en Belgique. De la salle de bain à la
-          rénovation complète, nous coordonnons chaque corps de métier sous un
-          seul interlocuteur — pour un chantier maîtrisé et un résultat soigné.
+          {TEXTS.home.heroSubtitle}
         </p>
 
         {/* CTA pill (light) */}
@@ -1468,17 +1541,8 @@ const HomePage = ({ go }) => (
           </h2>
         </div>
         <div className="lg:col-span-7 lg:col-start-6 space-y-6 text-lg text-[#F7F4ED]/75 leading-relaxed">
-          <p>
-            Chez Bati Conception, nous mettons notre savoir-faire au service de vos projets
-            de rénovation, qu'il s'agisse d'un simple aménagement intérieur ou d'une
-            transformation complète de votre habitation.
-          </p>
-          <p>
-            Notre objectif est simple : vous offrir un résultat <span className="text-[#AED8E6]">durable, esthétique
-            et parfaitement adapté</span> à vos besoins. Nous travaillons avec des matériaux de
-            qualité et coordonnons chaque étape du chantier pour garantir un travail soigné
-            et sans mauvaise surprise.
-          </p>
+          <p>{TEXTS.home.presentationP1}</p>
+          <p>{TEXTS.home.presentationP2}</p>
         </div>
       </div>
     </section>
@@ -1504,10 +1568,7 @@ const HomePage = ({ go }) => (
               <em className="italic font-light">une seule équipe</em>.
             </h2>
           </div>
-          <p className="text-[#0A0A0A]/60 max-w-sm">
-            Nous intervenons dans différents domaines de la rénovation, du chantier
-            ponctuel à la transformation clé en main.
-          </p>
+          <p className="text-[#0A0A0A]/60 max-w-sm">{TEXTS.home.servicesIntro}</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
@@ -1611,9 +1672,7 @@ const HomePage = ({ go }) => (
             <em className="italic font-light text-[#AED8E6]">différence</em>.
           </h2>
           <p className="mt-6 text-[#F7F4ED]/70 leading-relaxed max-w-md">
-            Chaque projet est unique. Nous prenons le temps d'analyser vos
-            besoins et de vous proposer des solutions adaptées, du simple
-            rafraîchissement à la rénovation complète.
+            {TEXTS.home.pourquoiIntro}
           </p>
           <button
             onClick={() => go("contact")}
@@ -1626,41 +1685,16 @@ const HomePage = ({ go }) => (
 
         {/* Cards grid */}
         <div className="lg:col-span-8 grid sm:grid-cols-2 gap-4 md:gap-5">
-          {[
-            {
-              title: "Accompagnement personnalisé",
-              desc: "Un seul interlocuteur du devis aux finitions. Des conseils à chaque étape, sans jargon.",
-              Icon: Sparkles,
-            },
-            {
-              title: "Délais et budget respectés",
-              desc: "Planning précis, budget transparent. Pas de surprise en cours de chantier.",
-              Icon: Check,
-            },
-            {
-              title: "Coordination de A à Z",
-              desc: "Maçons, plombiers, électriciens, peintres — orchestrés sous un seul chantier.",
-              Icon: Layers,
-            },
-            {
-              title: "Solutions sur-mesure",
-              desc: "Chaque projet est unique. On adapte, on propose, on ajuste avec vous.",
-              Icon: Hammer,
-            },
-            {
-              title: "Travail soigné et durable",
-              desc: "Matériaux de qualité, finitions au cordeau, garanties d'usage. C'est notre signature.",
-              Icon: Building2,
-              wide: true,
-            },
-          ].map((r, i) => {
-            const Ic = r.Icon;
+          {TEXTS.home.pourquoiCards.map((r, i) => {
+            const pourquoiIcons = [Sparkles, Check, Layers, Hammer, Building2];
+            const Ic = pourquoiIcons[i % pourquoiIcons.length];
+            const wide = i === TEXTS.home.pourquoiCards.length - 1;
             return (
               <Reveal
                 key={i}
                 delay={i * 80}
                 y={20}
-                className={r.wide ? "sm:col-span-2" : ""}
+                className={wide ? "sm:col-span-2" : ""}
               >
               <div
                 className="relative rounded-2xl p-6 md:p-8 bg-[#F7F4ED] text-[#0A0A0A] ring-1 ring-[#F7F4ED]/5 shadow-[0_4px_30px_-10px_rgba(0,0,0,0.4),0_30px_60px_-25px_rgba(0,0,0,0.5)] hover:-translate-y-1 hover:shadow-[0_8px_40px_-10px_rgba(174,216,230,0.4),0_40px_80px_-30px_rgba(0,0,0,0.6)] transition-all duration-500 group overflow-hidden"
@@ -1890,7 +1924,7 @@ const ServicesPage = ({ go }) => (
     <BigHero
       eyebrow="Nos services"
       title="Services"
-      intro="De la salle de bain à la rénovation complète, nous coordonnons chaque corps de métier sous un seul interlocuteur. Choisissez l'expertise qui correspond à votre projet."
+      intro={TEXTS.pages.servicesIntro}
       labels={["Salle de bain", "Toiture", "Façade", "Aménagement", "Isolation", "Rénovation"]}
     />
 
@@ -2436,7 +2470,7 @@ const RealisationsPage = ({ go }) => {
       <BigHero
         eyebrow={`Galerie · ${PROJECTS.length} chantiers`}
         title="Réalisations"
-        intro="Le meilleur moyen de vous convaincre, c'est de vous montrer notre travail. Glissez sur chaque photo pour comparer l'état initial et le résultat final de nos chantiers récents."
+        intro={TEXTS.pages.realisationsIntro}
         labels={["Avant · Après", "Façades", "Intérieurs", "Isolation", "Extérieurs"]}
       />
 
@@ -2719,16 +2753,16 @@ const ContactPage = ({ go }) => {
       <BigHero
         eyebrow="Discutons de votre projet"
         title="Contact"
-        intro="Notre équipe est à votre écoute. Remplissez le formulaire ci-dessous, nous vous recontacterons rapidement."
+        intro={TEXTS.pages.contactIntro}
         labels={["Téléphone", "Email", "Devis gratuit", "Belgique"]}
       />
 
       <section data-screen-label="Contact / Infos" className="border-y border-[#0A0A0A]/10 bg-[#F7F4ED]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#0A0A0A]/10">
           {[
-            [MapPin, "Zone d'intervention", "Belgique", null],
-            [Phone, "Téléphone", "+32 470 86 63 59", "tel:+32470866359"],
-            [Mail, "Email", "baticonception@outlook.com", "mailto:baticonception@outlook.com"],
+            [MapPin, "Zone d'intervention", TEXTS.global.zone, null],
+            [Phone, "Téléphone", TEXTS.global.phone, telHref()],
+            [Mail, "Email", TEXTS.global.email, `mailto:${TEXTS.global.email}`],
           ].map(([Ic, label, val, href], i) => (
             <div key={i} className="py-6 md:py-8 px-2 md:px-8 flex items-center gap-5">
               <div className="w-12 h-12 rounded-full bg-[#AED8E6] flex items-center justify-center shrink-0">
@@ -3064,6 +3098,15 @@ function App() {
   );
 }
 
-const root = createRoot(document.getElementById("root"));
-root.render(<App />);
+// Charge le contenu CMS avant le premier rendu, puis monte l'app.
+(async () => {
+  try {
+    const res = await fetch("/api/content", { cache: "no-cache" });
+    if (res.ok) applyContent(await res.json());
+  } catch {
+    // content.json indisponible — les textes par défaut compilés servent de fallback
+  }
+  const root = createRoot(document.getElementById("root"));
+  root.render(<App />);
+})();
 

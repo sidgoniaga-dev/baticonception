@@ -1,0 +1,501 @@
+{
+  "texts": {
+    "global": {
+      "phone": "+32 470 86 63 59",
+      "email": "baticonception@outlook.com",
+      "zone": "Belgique",
+      "tva": "TVA BE 1030.623.416",
+      "footerAbout": "Entreprise de rénovation en Belgique. De la salle de bain à la rénovation complète — un seul interlocuteur, un travail soigné."
+    },
+    "home": {
+      "badgeYear": "2026",
+      "badgeText": "Disponible pour vos nouveaux chantiers",
+      "heroLine1Pre": "Votre partenaire",
+      "heroLine1Em": "rénovation",
+      "heroLine2Pre": "de la cave au",
+      "heroLine2Em": "grenier",
+      "heroSubtitle": "Entreprise de rénovation en Belgique. De la salle de bain à la rénovation complète, nous coordonnons chaque corps de métier sous un seul interlocuteur — pour un chantier maîtrisé et un résultat soigné.",
+      "presentationP1": "Chez Bati Conception, nous mettons notre savoir-faire au service de vos projets de rénovation, qu'il s'agisse d'un simple aménagement intérieur ou d'une transformation complète de votre habitation.",
+      "presentationP2": "Notre objectif est simple : vous offrir un résultat durable, esthétique et parfaitement adapté à vos besoins. Nous travaillons avec des matériaux de qualité et coordonnons chaque étape du chantier pour garantir un travail soigné et sans mauvaise surprise.",
+      "servicesIntro": "Nous intervenons dans différents domaines de la rénovation, du chantier ponctuel à la transformation clé en main.",
+      "pourquoiIntro": "Chaque projet est unique. Nous prenons le temps d'analyser vos besoins et de vous proposer des solutions adaptées, du simple rafraîchissement à la rénovation complète.",
+      "pourquoiCards": [
+        {
+          "title": "Accompagnement personnalisé",
+          "desc": "Un seul interlocuteur du devis aux finitions. Des conseils à chaque étape, sans jargon."
+        },
+        {
+          "title": "Délais et budget respectés",
+          "desc": "Planning précis, budget transparent. Pas de surprise en cours de chantier."
+        },
+        {
+          "title": "Coordination de A à Z",
+          "desc": "Maçons, plombiers, électriciens, peintres — orchestrés sous un seul chantier."
+        },
+        {
+          "title": "Solutions sur-mesure",
+          "desc": "Chaque projet est unique. On adapte, on propose, on ajuste avec vous."
+        },
+        {
+          "title": "Travail soigné et durable",
+          "desc": "Matériaux de qualité, finitions au cordeau, garanties d'usage. C'est notre signature."
+        }
+      ]
+    },
+    "pages": {
+      "servicesIntro": "De la salle de bain à la rénovation complète, nous coordonnons chaque corps de métier sous un seul interlocuteur. Choisissez l'expertise qui correspond à votre projet.",
+      "realisationsIntro": "Le meilleur moyen de vous convaincre, c'est de vous montrer notre travail. Glissez sur chaque photo pour comparer l'état initial et le résultat final de nos chantiers récents.",
+      "contactIntro": "Notre équipe est à votre écoute. Remplissez le formulaire ci-dessous, nous vous recontacterons rapidement."
+    },
+    "finalCta": {
+      "text": "Un projet en tête ? Obtenez un devis gratuit et personnalisé, sans engagement."
+    }
+  },
+  "services": {
+    "salle-de-bain": {
+      "photo": "uploads/1 salle de bain/apres salle de bain.jpeg",
+      "avant": "uploads/1 salle de bain/avant salle de bain.jpeg",
+      "apres": "uploads/1 salle de bain/apres salle de bain.jpeg",
+      "label": "Salle de bain",
+      "title": "Rénovation de salle de bain",
+      "tagline": "Transformez votre espace en un lieu moderne, confortable et fonctionnel",
+      "intro": "La salle de bain est une pièce essentielle de votre habitation. Avec le temps, elle peut devenir moins pratique, moins esthétique ou ne plus correspondre à vos besoins. Nous vous accompagnons dans la rénovation complète ou partielle, avec des solutions adaptées à votre espace, vos envies et votre budget.",
+      "prestations": [
+        "Démolition de l'existant",
+        "Réaménagement complet de la pièce",
+        "Création de salle de bain dans un nouvel espace",
+        "Pose de carrelage et faïence",
+        "Installation de douche, baignoire et sanitaires",
+        "Pose de meubles de salle de bain",
+        "Travaux de plomberie",
+        "Travaux d'électricité (via partenaires qualifiés)",
+        "Finitions et mise en service"
+      ],
+      "process": [
+        "Analyse de vos besoins",
+        "Conseils sur l'aménagement",
+        "Choix des matériaux",
+        "Coordination des différents travaux",
+        "Suivi du chantier jusqu'à la finition"
+      ],
+      "why": [
+        "Améliorer le confort au quotidien",
+        "Moderniser votre habitation",
+        "Optimiser l'espace disponible",
+        "Augmenter la valeur de votre bien",
+        "Réduire les consommations d'eau et d'énergie"
+      ]
+    },
+    "toiture": {
+      "photo": "uploads/4 isolation toiture plate et revetement/apres toiture plate.jpg",
+      "avant": "uploads/4 isolation toiture plate et revetement/avant toiture plate.jpg",
+      "apres": "uploads/4 isolation toiture plate et revetement/apres toiture plate.jpg",
+      "label": "Toiture",
+      "title": "Rénovation de toiture",
+      "tagline": "Protégez durablement votre habitation",
+      "intro": "La toiture est l'un des éléments les plus importants de votre habitation. Elle protège votre maison des intempéries, assure l'isolation et contribue à la durabilité du bâtiment. Avec le temps, elle peut se dégrader, perdre en efficacité ou présenter des infiltrations.",
+      "prestations": [
+        "Remplacement de la couverture",
+        "Réparation de toiture",
+        "Travaux d'étanchéité",
+        "Isolation de toiture",
+        "Traitement contre l'humidité",
+        "Réfection des éléments de finition (corniches, rives, etc.)"
+      ],
+      "process": [
+        "Diagnostic de l'état de votre toiture",
+        "Recommandation : réparation, partielle ou complète",
+        "Sélection des matériaux adaptés",
+        "Réalisation et suivi rigoureux",
+        "Contrôle final des finitions"
+      ],
+      "why": [
+        "Protéger votre habitation contre les intempéries",
+        "Éviter les infiltrations d'eau",
+        "Améliorer l'isolation thermique",
+        "Réduire les pertes d'énergie",
+        "Préserver la structure du bâtiment"
+      ],
+      "extra": {
+        "title": "Types de toiture",
+        "items": [
+          "Toitures plates",
+          "Toitures inclinées (en pente)",
+          "Rénovation partielle ou complète"
+        ]
+      }
+    },
+    "facade": {
+      "photo": "uploads/5 bardage bois/apres bardage.jpeg",
+      "avant": "uploads/8 isolation façade/avant facade 2.jpeg",
+      "apres": "uploads/8 isolation façade/apres facade 2.jpg",
+      "label": "Façade",
+      "title": "Rénovation de façade",
+      "tagline": "Améliorez l'apparence et la performance de votre habitation",
+      "intro": "La façade est la première image de votre maison. Elle joue un rôle essentiel, à la fois esthétique et protecteur. Avec le temps, elle peut se dégrader : fissures, salissures, perte d'isolation ou usure des matériaux.",
+      "prestations": [
+        "Isolation par la façade (ITE)",
+        "Pose d'isolant et finition (enduit ou revêtement)",
+        "Nettoyage complet de la façade",
+        "Hydrofuge — protection contre l'humidité",
+        "Réparation des fissures",
+        "Rejointoiement",
+        "Rafraîchissement ou rénovation de l'enduit"
+      ],
+      "process": [
+        "Diagnostic visuel et technique de la façade",
+        "Choix entre isolation, ravalement ou combiné",
+        "Sélection des finitions et coloris",
+        "Mise en œuvre et suivi de chantier",
+        "Contrôle qualité et finitions"
+      ],
+      "why": [
+        "Améliorer l'esthétique de votre maison",
+        "Protéger votre habitation contre les intempéries",
+        "Éviter les infiltrations d'eau",
+        "Améliorer l'isolation thermique",
+        "Augmenter la valeur de votre bien immobilier"
+      ]
+    },
+    "amenagement": {
+      "photo": "uploads/9 isolation acoustique/apres acoustique.jpg",
+      "avant": "uploads/9 isolation acoustique/PHOTO-2025-06-11-17-32-49.jpg",
+      "apres": "uploads/9 isolation acoustique/apres acoustique.jpg",
+      "label": "Aménagement intérieur",
+      "title": "Aménagement intérieur",
+      "tagline": "Optimisez et transformez vos espaces de vie",
+      "intro": "L'aménagement intérieur permet de repenser complètement vos espaces afin de les rendre plus fonctionnels, modernes et adaptés à votre mode de vie. Nous réalisons tous types de travaux intérieurs, de la transformation de volumes existants à la création de nouvelles pièces.",
+      "prestations": [
+        "Aménagement de grenier (chambre, bureau, pièce polyvalente)",
+        "Pose de cloisons (Gyproc / plaques de plâtre)",
+        "Faux plafonds avec éclairage intégré",
+        "Travaux de peinture intérieure",
+        "Pose de carrelage (sols et murs)",
+        "Isolation et finitions complètes"
+      ],
+      "process": [
+        "Étude de votre espace existant",
+        "Proposition d'aménagement et croquis",
+        "Choix des matériaux et finitions",
+        "Réalisation coordonnée des travaux",
+        "Livraison clé en main"
+      ],
+      "why": [
+        "Optimiser chaque mètre carré",
+        "Gagner en confort de vie",
+        "Moderniser votre habitation",
+        "Créer de nouveaux espaces utiles",
+        "Valoriser votre bien immobilier"
+      ]
+    },
+    "isolation": {
+      "photo": "uploads/3 isolation toiture/apres toiture.jpeg",
+      "avant": "uploads/3 isolation toiture/avant toiture.jpeg",
+      "apres": "uploads/3 isolation toiture/apres toiture.jpeg",
+      "label": "Isolation",
+      "title": "Travaux d'isolation",
+      "tagline": "Améliorez le confort et réduisez vos factures d'énergie",
+      "intro": "Une bonne isolation est essentielle pour garantir le confort de votre habitation tout au long de l'année. Elle permet de limiter les pertes de chaleur en hiver, de garder la fraîcheur en été et de réduire significativement vos consommations énergétiques.",
+      "prestations": [
+        "Isolation de toiture (combles, grenier, plate ou inclinée)",
+        "Isolation des façades (intérieure ou extérieure)",
+        "Isolation des sols et planchers",
+        "Amélioration de la performance énergétique globale"
+      ],
+      "process": [
+        "Audit thermique de l'habitation",
+        "Recommandation du type d'isolation",
+        "Choix du matériau adapté",
+        "Mise en œuvre soignée",
+        "Vérification des performances"
+      ],
+      "why": [
+        "Réduire vos factures de chauffage",
+        "Améliorer le confort thermique",
+        "Diminuer les pertes d'énergie",
+        "Valoriser votre bien immobilier",
+        "Améliorer la performance énergétique du bâtiment"
+      ],
+      "extra": {
+        "title": "Matériaux utilisés",
+        "items": [
+          "Laine de verre",
+          "Laine de roche",
+          "Fibre de bois",
+          "Panneaux isolants rigides"
+        ]
+      }
+    },
+    "renovation-complete": {
+      "photo": "uploads/7 salle de bain/apres salle de bain 3.jpeg",
+      "avant": "uploads/7 salle de bain/avant salle de bain 3.jpeg",
+      "apres": "uploads/7 salle de bain/apres salle de bain 3.jpeg",
+      "label": "Rénovation complète",
+      "title": "Rénovation complète de votre habitation",
+      "tagline": "Un accompagnement de A à Z pour tous vos projets",
+      "intro": "Vous souhaitez rénover entièrement votre maison ou votre appartement ? Nous prenons en charge votre projet de rénovation complète, de la conception jusqu'à la réalisation finale. Nous coordonnons l'ensemble des travaux afin de vous offrir un chantier maîtrisé, organisé et sans stress.",
+      "prestations": [
+        "Rénovation de salle de bain",
+        "Rénovation de cuisine",
+        "Travaux de peinture",
+        "Pose de carrelage ou parquet",
+        "Aménagement intérieur",
+        "Isolation thermique",
+        "Cloisonnement et redistribution des espaces",
+        "Finitions générales"
+      ],
+      "process": [
+        "Planification du chantier",
+        "Coordination des différents corps de métier",
+        "Suivi des travaux",
+        "Gestion des étapes du projet",
+        "Contrôle de la qualité des finitions"
+      ],
+      "why": [
+        "Maison à rénover entièrement",
+        "Appartement à moderniser",
+        "Transformation d'un bien ancien",
+        "Rénovation avant mise en location ou vente",
+        "Amélioration globale du confort de vie"
+      ]
+    }
+  },
+  "projects": [
+    {
+      "id": "salle-de-bain-zellige",
+      "category": "Salle de bain",
+      "title": "Salle de bain zellige bleu & sol chevron",
+      "location": "Bruxelles",
+      "year": "2024 — 2025",
+      "description": "Transformation complète d'une salle de bain sous combles : démolition intégrale, pose d'un zellige bleu ardoise sur tous les murs, sol en chevron effet chêne, Geberit encastré, meuble suspendu rainuré et robinetterie dorée.",
+      "avant": "uploads/1 salle de bain/avant salle de bain.jpeg",
+      "apres": "uploads/1 salle de bain/apres salle de bain.jpeg",
+      "pendant": [
+        "uploads/1 salle de bain/IMG_4939.jpeg",
+        "uploads/1 salle de bain/IMG_4941.jpeg",
+        "uploads/1 salle de bain/IMG_4942.jpeg",
+        "uploads/1 salle de bain/IMG_6106.jpeg",
+        "uploads/1 salle de bain/IMG_6107.jpeg",
+        "uploads/1 salle de bain/IMG_6108.jpeg",
+        "uploads/1 salle de bain/IMG_6211.jpeg",
+        "uploads/1 salle de bain/IMG_6212.jpeg",
+        "uploads/1 salle de bain/IMG_6213.jpeg",
+        "uploads/1 salle de bain/IMG_6522.jpeg",
+        "uploads/1 salle de bain/IMG_6523.jpeg",
+        "uploads/1 salle de bain/IMG_6607.jpeg",
+        "uploads/1 salle de bain/IMG_6608.jpeg",
+        "uploads/1 salle de bain/IMG_6678.jpeg",
+        "uploads/1 salle de bain/IMG_6679.jpeg",
+        "uploads/1 salle de bain/IMG_6681.jpeg",
+        "uploads/1 salle de bain/IMG_6682.jpeg",
+        "uploads/1 salle de bain/IMG_6684.jpeg",
+        "uploads/1 salle de bain/IMG_6688.jpeg",
+        "uploads/1 salle de bain/IMG_6689.jpeg",
+        "uploads/1 salle de bain/IMG_6690.jpeg",
+        "uploads/1 salle de bain/IMG_6692.jpeg"
+      ]
+    },
+    {
+      "id": "salle-de-bain-marbre",
+      "category": "Salle de bain",
+      "title": "Salle de bain effet marbre de Carrare",
+      "location": "Bruxelles",
+      "year": "2025",
+      "description": "Rénovation complète d'une salle de bain entièrement carrelée de noir : démolition, plomberie révisée, douche italienne avec receveur plat, grand carrelage effet marbre blanc, meuble suspendu et sèche-serviettes.",
+      "avant": "uploads/2 salle de bain/avant salle de bain 2.jpeg",
+      "apres": "uploads/2 salle de bain/apres salle de bain 2.jpg",
+      "pendant": [
+        "uploads/2 salle de bain/PHOTO-2025-06-26-17-05-48.jpg",
+        "uploads/2 salle de bain/PHOTO-2025-06-26-20-35-08.jpg",
+        "uploads/2 salle de bain/PHOTO-2025-06-27-14-57-16.jpg",
+        "uploads/2 salle de bain/PHOTO-2025-08-13-12-07-03.jpg"
+      ]
+    },
+    {
+      "id": "isolation-combles",
+      "category": "Isolation",
+      "title": "Isolation et aménagement de combles",
+      "location": "Bruxelles",
+      "year": "2024",
+      "description": "Reprise complète de l'espace sous toiture : isolation en laine minérale entre et sous chevrons, doublage plaque de plâtre, pose d'un plancher, installation d'une fenêtre de toit Velux. Espace transformé en chambre habitable.",
+      "avant": "uploads/3 isolation toiture/avant toiture.jpeg",
+      "apres": "uploads/3 isolation toiture/apres toiture.jpeg",
+      "pendant": [
+        "uploads/3 isolation toiture/IMG_3782.jpeg",
+        "uploads/3 isolation toiture/IMG_3951.jpeg",
+        "uploads/3 isolation toiture/IMG_3962.jpeg",
+        "uploads/3 isolation toiture/img 1.jpeg",
+        "uploads/3 isolation toiture/img.jpeg"
+      ]
+    },
+    {
+      "id": "toiture-plate-terrasse",
+      "category": "Toiture",
+      "title": "Toiture plate étanche & terrasse bois composite",
+      "location": "Bruxelles",
+      "year": "2025",
+      "description": "Dépose d'une toiture plate infiltrante : mise à nu du support, pose de panneaux isolants PIR, membrane bitumineuse soudée à deux couches, puis pose d'une terrasse en bois composite sur plots réglables. Chantier hors d'eau en deux semaines.",
+      "avant": "uploads/4 isolation toiture plate et revetement/avant toiture plate.jpg",
+      "apres": "uploads/4 isolation toiture plate et revetement/apres toiture plate.jpg",
+      "pendant": [
+        "uploads/4 isolation toiture plate et revetement/IMG_8330.jpeg",
+        "uploads/4 isolation toiture plate et revetement/PHOTO-2025-02-07-17-29-35.jpg",
+        "uploads/4 isolation toiture plate et revetement/PHOTO-2025-02-07-17-29-35 copie.jpg",
+        "uploads/4 isolation toiture plate et revetement/PHOTO-2025-08-02-19-11-14.jpg"
+      ]
+    },
+    {
+      "id": "bardage-bois-cedar",
+      "category": "Façade",
+      "title": "Bardage cèdre rouge façade arrière",
+      "location": "Bruxelles",
+      "year": "2024",
+      "description": "Dépose d'un bardage vieillissant et dégradé, pose d'une ossature aluminium et d'un bardage cèdre rouge huilé en lames horizontales. Traitement soigné des retours d'angles et jonctions de menuiseries.",
+      "avant": "uploads/5 bardage bois/avant bardage.jpeg",
+      "apres": "uploads/5 bardage bois/apres bardage.jpeg",
+      "pendant": [
+        "uploads/5 bardage bois/IMG_6188.jpeg",
+        "uploads/5 bardage bois/IMG_7036.jpeg",
+        "uploads/5 bardage bois/IMG_7050.jpeg",
+        "uploads/5 bardage bois/IMG_7323.jpeg",
+        "uploads/5 bardage bois/IMG_7325.jpeg"
+      ]
+    },
+    {
+      "id": "isolation-facade-uccle",
+      "category": "Façade",
+      "title": "Isolation de façade côté rue",
+      "location": "Uccle",
+      "year": "2024 — 2025",
+      "description": "Pose de panneaux isolants haute densité sur la façade avant, enduit armé, finition teintée dans la masse. Traitement soigné des appuis de fenêtres, des linteaux et des angles. Travail réalisé en façade habitée, sans gêne pour les occupants.",
+      "avant": "uploads/5 isolation façade/avant facade.jpeg",
+      "apres": "uploads/5 isolation façade/apres facade.jpg",
+      "pendant": [
+        "uploads/5 isolation façade/PHOTO-2024-08-29-16-41-02.jpg",
+        "uploads/5 isolation façade/PHOTO-2024-09-03-12-53-47.jpg"
+      ]
+    },
+    {
+      "id": "carrelage-entree-exterieure",
+      "category": "Carrelage",
+      "title": "Carrelage grand format, entrée extérieure",
+      "location": "Périphérie bruxelloise",
+      "year": "2025",
+      "description": "Dépose du revêtement existant, remise à niveau du support, pose de dalles grand format en grès cérame antidérapant pour une entrée extérieure et un seuil. Joints fins au cordeau pour un résultat net et durable.",
+      "avant": "uploads/6 travaux carrelage/avant carrelage.jpeg",
+      "apres": "uploads/6 travaux carrelage/apres carrelage.jpeg",
+      "pendant": [
+        "uploads/6 travaux carrelage/3c6055a1-83c8-4852-82d7-5f67e1d19f08.JPG",
+        "uploads/6 travaux carrelage/70a386c6-7137-41a3-9545-02e4bf9b5a83.JPG",
+        "uploads/6 travaux carrelage/IMG_7173.jpeg"
+      ]
+    },
+    {
+      "id": "salle-de-bain-grand-format",
+      "category": "Salle de bain",
+      "title": "Salle de bain grand format gris & paroi vitrée",
+      "location": "Bruxelles",
+      "year": "2026",
+      "description": "Rénovation complète : démolition de l'ancienne baignoire et du carrelage, pose de grands formats gris 60×120, douche avec paroi vitrée pleine hauteur, baignoire encastrée, meuble vasque en marbre et spots encastrés.",
+      "avant": "uploads/7 salle de bain/avant salle de bain 3.jpeg",
+      "apres": "uploads/7 salle de bain/apres salle de bain 3.jpeg",
+      "pendant": [
+        "uploads/7 salle de bain/IMG_3741.jpeg",
+        "uploads/7 salle de bain/IMG_3750.jpeg",
+        "uploads/7 salle de bain/IMG_3755.jpeg",
+        "uploads/7 salle de bain/IMG_4841.jpeg",
+        "uploads/7 salle de bain/IMG_5214.jpeg",
+        "uploads/7 salle de bain/IMG_5217.jpeg",
+        "uploads/7 salle de bain/IMG_5220.jpeg",
+        "uploads/7 salle de bain/IMG_5223.jpeg",
+        "uploads/7 salle de bain/PHOTO-2026-01-26-19-07-48.jpeg"
+      ]
+    },
+    {
+      "id": "ite-facade-schaerbeek",
+      "category": "Façade",
+      "title": "Ravalement et ITE façade arrière, 5 niveaux",
+      "location": "Schaerbeek",
+      "year": "2024",
+      "description": "Façade arrière dégradée avec traces de coulures noires sur toute la hauteur. Nettoyage haute pression, pose d'un système ITE avec panneaux rigides EPS, enduit armé à double couche et finition lisse blanche. Résultat impeccable sur cinq niveaux.",
+      "avant": "uploads/8 isolation façade/avant facade 2.jpeg",
+      "apres": "uploads/8 isolation façade/apres facade 2.jpg",
+      "pendant": [
+        "uploads/8 isolation façade/IMG_3563.jpeg",
+        "uploads/8 isolation façade/PHOTO-2024-04-20-16-49-20.jpg",
+        "uploads/8 isolation façade/PHOTO-2024-04-26-20-23-21.jpg",
+        "uploads/8 isolation façade/PHOTO-2024-04-29-13-05-38.jpg",
+        "uploads/8 isolation façade/PHOTO-2024-04-29-16-27-58.jpg",
+        "uploads/8 isolation façade/PHOTO-2024-05-10-08-25-58.jpg",
+        "uploads/8 isolation façade/PHOTO-2024-05-10-08-26-46 2.jpg"
+      ]
+    },
+    {
+      "id": "isolation-acoustique",
+      "category": "Isolation",
+      "title": "Isolation acoustique d'une chambre mitoyenne",
+      "location": "Bruxelles",
+      "year": "2025",
+      "description": "Traitement acoustique complet : ossature métallique désolidarisée des murs porteurs, laine minérale haute densité 80 mm, double parement plaque de plâtre phonique. Finition enduit, peinture blanche. Espace silencieux et propre.",
+      "avant": "uploads/9 isolation acoustique/PHOTO-2025-06-11-17-32-49.jpg",
+      "apres": "uploads/9 isolation acoustique/apres acoustique.jpg",
+      "pendant": [
+        "uploads/9 isolation acoustique/IMG_6094.JPG"
+      ]
+    },
+    {
+      "id": "crepi-facade-extension",
+      "category": "Façade",
+      "title": "Crépi d'une façade d'extension",
+      "location": "Belgique",
+      "year": "2024",
+      "description": "Reprise complète d'une façade d'extension : nettoyage du support, primaire d'accrochage, projection d'un crépi minéral teinté jaune ocre dans la masse. Réalisation soignée des angles et jonctions avec la charpente bois.",
+      "avant": "uploads/10 crepi façade/avant crepi.jpeg",
+      "apres": "uploads/10 crepi façade/apres crepi.jpeg",
+      "pendant": [
+        "uploads/10 crepi façade/IMG_7039.jpeg"
+      ]
+    },
+    {
+      "id": "ite-facade-ixelles",
+      "category": "Isolation",
+      "title": "ITE façade arrière, multi-étages",
+      "location": "Ixelles",
+      "year": "2025 — 2026",
+      "description": "Mise en œuvre d'un système ITE complet sur cinq étages : pose des panneaux isolants EPS, armature fibre de verre, enduit de base et finition. Traitement soigné des linteaux, tableaux de fenêtres et nez de balcon.",
+      "avant": "uploads/11 isolation façade/avant facade 3.jpeg",
+      "apres": "uploads/11 isolation façade/apres facade 3.jpg",
+      "pendant": [
+        "uploads/11 isolation façade/PHOTO-2025-01-21-19-21-31.jpg",
+        "uploads/11 isolation façade/PHOTO-2025-01-28-16-20-41.jpg"
+      ]
+    },
+    {
+      "id": "ite-facade-bruxelles",
+      "category": "Isolation",
+      "title": "Isolation thermique par l'extérieur, 4 niveaux",
+      "location": "Bruxelles",
+      "year": "2024",
+      "description": "Pose d'un système ITE sur quatre niveaux : panneaux EPS haute densité, armature fibre de verre, enduit de base et finition lisse. Reprise complète des angles, évacuations d'eau et appuis de fenêtres.",
+      "avant": "uploads/12 isolation façade/avant facade 4.jpeg",
+      "apres": "uploads/12 isolation façade/apres facade 4.jpg",
+      "pendant": [
+        "uploads/12 isolation façade/IMG_5195 2.jpeg",
+        "uploads/12 isolation façade/PHOTO-2024-06-24-21-01-45 2.jpg",
+        "uploads/12 isolation façade/PHOTO-2024-06-24-21-03-23.jpg",
+        "uploads/12 isolation façade/PHOTO-2024-06-26-19-11-50 3.jpg"
+      ]
+    },
+    {
+      "id": "carrelage-devant-maison",
+      "category": "Carrelage",
+      "title": "Carrelage grand format devant de maison",
+      "location": "Bruxelles",
+      "year": "2025",
+      "description": "Dépose de l'ancienne voirie, terrassement et remblai compacté, chape, pose de dalles 60×60 gris anthracite avec joints fins. Résultat soigné, aligné sur la limite de propriété et le niveau de la voirie.",
+      "avant": "uploads/13 travaux carrelage/avant facade 2.jpg",
+      "apres": "uploads/13 travaux carrelage/apres carrelage 2.jpg",
+      "pendant": []
+    }
+  ]
+}

@@ -2,3 +2,15 @@
 node_modules/
 *.log
 temporary screenshots/
+
+# Secrets — ne jamais committer
+.env
+
+# Contenu éditable en production (le client le modifie via /admin).
+# Le seed versionné est content.default.json ; content.json est généré au runtime.
+content.json
+content.json.bak
+content.json.tmp
+
+# Photos uploadées par le client via le CMS (stockées sur le disque du serveur)
+uploads/cms/
