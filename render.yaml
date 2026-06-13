@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: baticonception
+    runtime: node
+    plan: starter            # offre payante ~7 $/mois — requise pour le disque persistant
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /
+    autoDeploy: true
+    disk:
+      name: data
+      mountPath: /var/data   # contenu éditable + photos uploadées (persistant)
+      sizeGB: 1
+    envVars:
+      - key: DATA_DIR
+        value: /var/data
+      - key: NODE_VERSION
+        value: "20"
+      # Renseignés dans le dashboard Render (Environment) — jamais dans le code :
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: GOOGLE_PLACES_API_KEY
+        sync: false

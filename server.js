@@ -352,9 +352,15 @@ app.use((req, res, next) => {
 
 app.use(express.json({ limit: '2mb' }));
 
-const CONTENT_PATH = path.join(__dirname, 'content.json');
+// DATA_DIR = dossier persistant (disque monté sur Render/VPS). En local, défaut
+// = racine du projet. C'est là que vivent le contenu éditable et les photos
+// uploadées par le client, pour survivre aux redéploiements.
+const DATA_DIR = process.env.DATA_DIR || __dirname;
+fs.mkdirSync(DATA_DIR, { recursive: true });
+
+const CONTENT_PATH = path.join(DATA_DIR, 'content.json');
 const CONTENT_SEED_PATH = path.join(__dirname, 'content.default.json');
-const UPLOADS_CMS_DIR = path.join(__dirname, 'uploads', 'cms');
+const UPLOADS_CMS_DIR = path.join(DATA_DIR, 'uploads', 'cms');
 
 // content.json est généré au runtime (ignoré par git) afin que les modifications
 // du client ne soient pas écrasées lors d'un redéploiement. S'il est absent,
@@ -643,6 +649,11 @@ app.get('/api/reviews', async (req, res) => {
 });
 
 // ─── Static assets ────────────────────────────────────────────────────────────
+
+// Photos uploadées par le client — servies depuis le disque persistant (DATA_DIR).
+// Doit passer avant le static général pour que les URL "uploads/cms/..." pointent
+// vers le disque et non vers le dossier du dépôt.
+app.use('/uploads/cms', express.static(path.join(DATA_DIR, 'uploads', 'cms')));
 
 app.use(express.static(path.join(__dirname)));
 
