@@ -1,0 +1,401 @@
+[
+  {
+    "path": [
+      "texts",
+      "home",
+      "heroSubtitle"
+    ],
+    "from": "Entreprise de rénovation en Belgique. De la salle de bain à la rénovation complète, nous coordonnons chaque corps de métier sous un seul interlocuteur — pour un chantier maîtrisé et un résultat soigné.",
+    "to": "Salle de bain, façade, toiture ou maison entière : vous avez un seul contact, et il coordonne pour vous maçons, plombiers, électriciens et peintres."
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "presentationP1"
+    ],
+    "from": "Chez Bati Conception, nous mettons notre savoir-faire au service de vos projets de rénovation, qu'il s'agisse d'un simple aménagement intérieur ou d'une transformation complète de votre habitation.",
+    "to": "Bati Conception rénove des maisons et des appartements à Bruxelles et partout en Belgique. Certains clients nous appellent pour une salle de bain, d'autres pour reprendre une maison de la cave au grenier."
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "presentationP2"
+    ],
+    "from": "Notre objectif est simple : vous offrir un résultat durable, esthétique et parfaitement adapté à vos besoins. Nous travaillons avec des matériaux de qualité et coordonnons chaque étape du chantier pour garantir un travail soigné et sans mauvaise surprise.",
+    "to": "Avant de chiffrer, nous venons voir le chantier : le devis est gratuit et se fait sur place. Ensuite, nous organisons les corps de métier dans le bon ordre et vous tenons au courant à chaque étape."
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "servicesIntro"
+    ],
+    "from": "Nous intervenons dans différents domaines de la rénovation, du chantier ponctuel à la transformation clé en main.",
+    "to": "Six domaines, du petit chantier à la rénovation clé en main. Ouvrez celui qui vous concerne pour voir ce que nous faisons et comment nous travaillons."
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "pourquoiIntro"
+    ],
+    "from": "Chaque projet est unique. Nous prenons le temps d'analyser vos besoins et de vous proposer des solutions adaptées, du simple rafraîchissement à la rénovation complète.",
+    "to": "La même personne suit votre projet du premier rendez-vous à la fin des travaux, que vous refassiez une pièce ou toute la maison."
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "pourquoiCards",
+      0,
+      "title"
+    ],
+    "from": "Accompagnement personnalisé",
+    "to": "Un seul interlocuteur"
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "pourquoiCards",
+      0,
+      "desc"
+    ],
+    "from": "Un seul interlocuteur du devis aux finitions. Des conseils à chaque étape, sans jargon.",
+    "to": "La même personne vous suit du devis aux finitions et vous explique chaque choix sans jargon."
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "pourquoiCards",
+      1,
+      "title"
+    ],
+    "from": "Délais et budget respectés",
+    "to": "Délais et budget tenus"
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "pourquoiCards",
+      1,
+      "desc"
+    ],
+    "from": "Planning précis, budget transparent. Pas de surprise en cours de chantier.",
+    "to": "Vous recevez un planning et un budget clairs avant le début des travaux."
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "pourquoiCards",
+      2,
+      "desc"
+    ],
+    "from": "Maçons, plombiers, électriciens, peintres — orchestrés sous un seul chantier.",
+    "to": "Nous gérons le calendrier des maçons, plombiers, électriciens et peintres. Vous n'avez qu'un numéro à appeler."
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "pourquoiCards",
+      3,
+      "title"
+    ],
+    "from": "Solutions sur-mesure",
+    "to": "Sur mesure"
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "pourquoiCards",
+      3,
+      "desc"
+    ],
+    "from": "Chaque projet est unique. On adapte, on propose, on ajuste avec vous.",
+    "to": "Nous partons de votre logement, de vos envies et de votre budget, puis nous ajustons la proposition avec vous."
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "pourquoiCards",
+      4,
+      "title"
+    ],
+    "from": "Travail soigné et durable",
+    "to": "Finitions au cordeau"
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "pourquoiCards",
+      4,
+      "desc"
+    ],
+    "from": "Matériaux de qualité, finitions au cordeau, garanties d'usage. C'est notre signature.",
+    "to": "Joints alignés, angles repris, appuis de fenêtres traités : les photos avant/après de nos chantiers le montrent."
+  },
+  {
+    "path": [
+      "texts",
+      "pages",
+      "servicesIntro"
+    ],
+    "from": "De la salle de bain à la rénovation complète, nous coordonnons chaque corps de métier sous un seul interlocuteur. Choisissez l'expertise qui correspond à votre projet.",
+    "to": "Un seul interlocuteur coordonne tous les corps de métier, de la salle de bain à la rénovation complète. Choisissez le type de travaux qui vous concerne."
+  },
+  {
+    "path": [
+      "texts",
+      "pages",
+      "realisationsIntro"
+    ],
+    "from": "Le meilleur moyen de vous convaincre, c'est de vous montrer notre travail. Glissez sur chaque photo pour comparer l'état initial et le résultat final de nos chantiers récents.",
+    "to": "Voici nos chantiers récents à Bruxelles et alentour. Glissez sur chaque photo pour comparer l'avant et l'après."
+  },
+  {
+    "path": [
+      "texts",
+      "pages",
+      "contactIntro"
+    ],
+    "from": "Notre équipe est à votre écoute. Remplissez le formulaire ci-dessous, nous vous recontacterons rapidement.",
+    "to": "Décrivez votre projet dans le formulaire. Nous vous rappelons pour fixer une visite et un devis gratuit sur place."
+  },
+  {
+    "path": [
+      "texts",
+      "finalCta",
+      "text"
+    ],
+    "from": "Un projet en tête ? Obtenez un devis gratuit et personnalisé, sans engagement.",
+    "to": "Un projet en tête ? Demandez votre devis : il est gratuit, fait sur place et sans engagement."
+  },
+  {
+    "path": [
+      "texts",
+      "global",
+      "footerAbout"
+    ],
+    "from": "Entreprise de rénovation en Belgique. De la salle de bain à la rénovation complète — un seul interlocuteur, un travail soigné.",
+    "to": "Rénovation à Bruxelles et dans toute la Belgique. Salle de bain, façade, toiture ou maison entière, avec un seul interlocuteur du devis aux finitions."
+  },
+  {
+    "path": [
+      "services",
+      "salle-de-bain",
+      "tagline"
+    ],
+    "from": "Transformez votre espace en un lieu moderne, confortable et fonctionnel",
+    "to": "Rénovation partielle ou complète, de la démolition à la mise en service"
+  },
+  {
+    "path": [
+      "services",
+      "salle-de-bain",
+      "intro"
+    ],
+    "from": "La salle de bain est une pièce essentielle de votre habitation. Avec le temps, elle peut devenir moins pratique, moins esthétique ou ne plus correspondre à vos besoins. Nous vous accompagnons dans la rénovation complète ou partielle, avec des solutions adaptées à votre espace, vos envies et votre budget.",
+    "to": "Baignoire qui ne sert plus, carrelage daté, rangements qui manquent ? Nous refaisons votre salle de bain en partie ou en entier, ou nous en créons une dans un nouvel espace, sous les combles par exemple. Vous choisissez les matériaux avec nous. Nous gérons la plomberie, le carrelage et la coordination avec notre électricien partenaire."
+  },
+  {
+    "path": [
+      "services",
+      "toiture",
+      "tagline"
+    ],
+    "from": "Protégez durablement votre habitation",
+    "to": "Réparation, étanchéité et isolation, en toiture plate ou en pente"
+  },
+  {
+    "path": [
+      "services",
+      "toiture",
+      "intro"
+    ],
+    "from": "La toiture est l'un des éléments les plus importants de votre habitation. Elle protège votre maison des intempéries, assure l'isolation et contribue à la durabilité du bâtiment. Avec le temps, elle peut se dégrader, perdre en efficacité ou présenter des infiltrations.",
+    "to": "Une tache au plafond, une membrane qui cloque, des tuiles qui bougent ? Nous venons diagnostiquer votre toiture, puis nous vous disons s'il faut réparer une zone ou tout refaire. Sur une toiture plate à Bruxelles, nous avons remis le chantier hors d'eau en deux semaines."
+  },
+  {
+    "path": [
+      "services",
+      "toiture",
+      "process",
+      3
+    ],
+    "from": "Réalisation et suivi rigoureux",
+    "to": "Réalisation et suivi du chantier"
+  },
+  {
+    "path": [
+      "services",
+      "facade",
+      "tagline"
+    ],
+    "from": "Améliorez l'apparence et la performance de votre habitation",
+    "to": "Isoler, réparer ou rafraîchir votre façade"
+  },
+  {
+    "path": [
+      "services",
+      "facade",
+      "intro"
+    ],
+    "from": "La façade est la première image de votre maison. Elle joue un rôle essentiel, à la fois esthétique et protecteur. Avec le temps, elle peut se dégrader : fissures, salissures, perte d'isolation ou usure des matériaux.",
+    "to": "Fissures, coulures noires, enduit qui s'effrite, murs froids côté intérieur ? Nous nettoyons, réparons et isolons les façades par l'extérieur (ITE), y compris sur des immeubles de cinq niveaux. Vous pouvez rester chez vous pendant les travaux."
+  },
+  {
+    "path": [
+      "services",
+      "facade",
+      "prestations",
+      3
+    ],
+    "from": "Hydrofuge — protection contre l'humidité",
+    "to": "Hydrofuge contre l'humidité"
+  },
+  {
+    "path": [
+      "services",
+      "amenagement",
+      "tagline"
+    ],
+    "from": "Optimisez et transformez vos espaces de vie",
+    "to": "Grenier, cloisons, faux plafonds : de nouvelles pièces dans votre volume existant"
+  },
+  {
+    "path": [
+      "services",
+      "amenagement",
+      "intro"
+    ],
+    "from": "L'aménagement intérieur permet de repenser complètement vos espaces afin de les rendre plus fonctionnels, modernes et adaptés à votre mode de vie. Nous réalisons tous types de travaux intérieurs, de la transformation de volumes existants à la création de nouvelles pièces.",
+    "to": "Un grenier inutilisé peut devenir une chambre ou un bureau, et une grande pièce peut se diviser en deux. Nous montons les cloisons, posons les faux plafonds avec éclairage intégré, isolons et faisons les finitions, peinture et carrelage compris."
+  },
+  {
+    "path": [
+      "services",
+      "isolation",
+      "tagline"
+    ],
+    "from": "Améliorez le confort et réduisez vos factures d'énergie",
+    "to": "Moins de chauffage l'hiver, plus de fraîcheur l'été"
+  },
+  {
+    "path": [
+      "services",
+      "isolation",
+      "intro"
+    ],
+    "from": "Une bonne isolation est essentielle pour garantir le confort de votre habitation tout au long de l'année. Elle permet de limiter les pertes de chaleur en hiver, de garder la fraîcheur en été et de réduire significativement vos consommations énergétiques.",
+    "to": "Une maison mal isolée perd sa chaleur par le toit, les murs et le sol. Nous isolons les trois : combles et toitures plates, façades par l'intérieur ou l'extérieur, sols et planchers. Avant les travaux, nous vous recommandons le matériau qui convient à votre logement."
+  },
+  {
+    "path": [
+      "services",
+      "isolation",
+      "process",
+      3
+    ],
+    "from": "Mise en œuvre soignée",
+    "to": "Pose de l'isolant"
+  },
+  {
+    "path": [
+      "services",
+      "renovation-complete",
+      "tagline"
+    ],
+    "from": "Un accompagnement de A à Z pour tous vos projets",
+    "to": "Une maison ou un appartement repris de A à Z, avec un seul interlocuteur"
+  },
+  {
+    "path": [
+      "services",
+      "renovation-complete",
+      "intro"
+    ],
+    "from": "Vous souhaitez rénover entièrement votre maison ou votre appartement ? Nous prenons en charge votre projet de rénovation complète, de la conception jusqu'à la réalisation finale. Nous coordonnons l'ensemble des travaux afin de vous offrir un chantier maîtrisé, organisé et sans stress.",
+    "to": "Vous achetez un bien ancien, vous préparez une mise en location ou vous voulez tout refaire chez vous ? Nous prenons le chantier en main de la conception à la réception : planning, coordination des corps de métier, suivi et contrôle des finitions."
+  },
+  {
+    "path": [
+      "projects",
+      4,
+      "description"
+    ],
+    "from": "Dépose d'un bardage vieillissant et dégradé, pose d'une ossature aluminium et d'un bardage cèdre rouge huilé en lames horizontales. Traitement soigné des retours d'angles et jonctions de menuiseries.",
+    "to": "Dépose d'un bardage vieillissant et dégradé, pose d'une ossature aluminium et d'un bardage cèdre rouge huilé en lames horizontales. Reprise des retours d'angles et des jonctions de menuiseries."
+  },
+  {
+    "path": [
+      "projects",
+      5,
+      "description"
+    ],
+    "from": "Pose de panneaux isolants haute densité sur la façade avant, enduit armé, finition teintée dans la masse. Traitement soigné des appuis de fenêtres, des linteaux et des angles. Travail réalisé en façade habitée, sans gêne pour les occupants.",
+    "to": "Pose de panneaux isolants haute densité sur la façade avant, enduit armé, finition teintée dans la masse. Reprise des appuis de fenêtres, des linteaux et des angles. Les occupants ont continué à vivre dans la maison pendant le chantier."
+  },
+  {
+    "path": [
+      "projects",
+      6,
+      "description"
+    ],
+    "from": "Dépose du revêtement existant, remise à niveau du support, pose de dalles grand format en grès cérame antidérapant pour une entrée extérieure et un seuil. Joints fins au cordeau pour un résultat net et durable.",
+    "to": "Dépose du revêtement existant, remise à niveau du support, pose de dalles grand format en grès cérame antidérapant pour une entrée extérieure et un seuil. Joints fins, tirés au cordeau."
+  },
+  {
+    "path": [
+      "projects",
+      8,
+      "description"
+    ],
+    "from": "Façade arrière dégradée avec traces de coulures noires sur toute la hauteur. Nettoyage haute pression, pose d'un système ITE avec panneaux rigides EPS, enduit armé à double couche et finition lisse blanche. Résultat impeccable sur cinq niveaux.",
+    "to": "Façade arrière dégradée, avec des coulures noires sur toute la hauteur. Nettoyage haute pression, pose d'un système ITE en panneaux rigides EPS, enduit armé à double couche et finition lisse blanche sur les cinq niveaux."
+  },
+  {
+    "path": [
+      "projects",
+      9,
+      "description"
+    ],
+    "from": "Traitement acoustique complet : ossature métallique désolidarisée des murs porteurs, laine minérale haute densité 80 mm, double parement plaque de plâtre phonique. Finition enduit, peinture blanche. Espace silencieux et propre.",
+    "to": "Traitement acoustique complet : ossature métallique désolidarisée des murs porteurs, laine minérale haute densité 80 mm, double parement en plaque de plâtre phonique. Finition enduit et peinture blanche."
+  },
+  {
+    "path": [
+      "projects",
+      10,
+      "description"
+    ],
+    "from": "Reprise complète d'une façade d'extension : nettoyage du support, primaire d'accrochage, projection d'un crépi minéral teinté jaune ocre dans la masse. Réalisation soignée des angles et jonctions avec la charpente bois.",
+    "to": "Reprise complète d'une façade d'extension : nettoyage du support, primaire d'accrochage, projection d'un crépi minéral teinté jaune ocre dans la masse. Reprise des angles et des jonctions avec la charpente bois."
+  },
+  {
+    "path": [
+      "projects",
+      11,
+      "description"
+    ],
+    "from": "Mise en œuvre d'un système ITE complet sur cinq étages : pose des panneaux isolants EPS, armature fibre de verre, enduit de base et finition. Traitement soigné des linteaux, tableaux de fenêtres et nez de balcon.",
+    "to": "Mise en œuvre d'un système ITE complet sur cinq étages : pose des panneaux isolants EPS, armature en fibre de verre, enduit de base et finition. Reprise des linteaux, des tableaux de fenêtres et des nez de balcon."
+  },
+  {
+    "path": [
+      "projects",
+      13,
+      "description"
+    ],
+    "from": "Dépose de l'ancienne voirie, terrassement et remblai compacté, chape, pose de dalles 60×60 gris anthracite avec joints fins. Résultat soigné, aligné sur la limite de propriété et le niveau de la voirie.",
+    "to": "Dépose de l'ancienne voirie, terrassement et remblai compacté, chape, pose de dalles 60×60 gris anthracite à joints fins. Dalles alignées sur la limite de propriété et le niveau de la voirie."
+  }
+]

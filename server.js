@@ -380,6 +380,37 @@ if (!fs.existsSync(CONTENT_PATH) && fs.existsSync(CONTENT_SEED_PATH)) {
   }
 }
 
+// Migrations de textes (migrations/*.json : [{ path, from, to }]). Un champ n'est
+// remplacé que s'il contient encore exactement `from` : les textes modifiés par le
+// client dans /admin ne sont jamais écrasés, et relancer la migration ne change rien.
+function applyContentMigrations() {
+  const dir = path.join(__dirname, 'migrations');
+  if (!fs.existsSync(dir) || !fs.existsSync(CONTENT_PATH)) return;
+  try {
+    const content = JSON.parse(fs.readFileSync(CONTENT_PATH, 'utf-8'));
+    let changed = 0;
+    for (const file of fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort()) {
+      for (const { path: keys, from, to } of JSON.parse(fs.readFileSync(path.join(dir, file), 'utf-8'))) {
+        const parent = keys.slice(0, -1).reduce((o, k) => (o == null ? o : o[k]), content);
+        const last = keys[keys.length - 1];
+        if (parent != null && parent[last] === from) {
+          parent[last] = to;
+          changed++;
+        }
+      }
+    }
+    if (!changed) return;
+    fs.copyFileSync(CONTENT_PATH, CONTENT_PATH + '.bak');
+    const tmp = CONTENT_PATH + '.tmp';
+    fs.writeFileSync(tmp, JSON.stringify(content, null, 2));
+    fs.renameSync(tmp, CONTENT_PATH);
+    console.log(`Migrations de contenu : ${changed} champ(s) mis à jour`);
+  } catch (e) {
+    console.error('Échec des migrations de contenu :', e.message);
+  }
+}
+applyContentMigrations();
+
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || '').toLowerCase();
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || '';
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');

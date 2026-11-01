@@ -5,7 +5,7 @@
       "email": "baticonception@outlook.com",
       "zone": "Belgique",
       "tva": "TVA BE 1030.623.416",
-      "footerAbout": "Entreprise de rénovation en Belgique. De la salle de bain à la rénovation complète — un seul interlocuteur, un travail soigné."
+      "footerAbout": "Rénovation à Bruxelles et dans toute la Belgique. Salle de bain, façade, toiture ou maison entière, avec un seul interlocuteur du devis aux finitions."
     },
     "home": {
       "badgeYear": "2026",
@@ -14,41 +14,41 @@
       "heroLine1Em": "rénovation",
       "heroLine2Pre": "de la cave au",
       "heroLine2Em": "grenier",
-      "heroSubtitle": "Entreprise de rénovation en Belgique. De la salle de bain à la rénovation complète, nous coordonnons chaque corps de métier sous un seul interlocuteur — pour un chantier maîtrisé et un résultat soigné.",
-      "presentationP1": "Chez Bati Conception, nous mettons notre savoir-faire au service de vos projets de rénovation, qu'il s'agisse d'un simple aménagement intérieur ou d'une transformation complète de votre habitation.",
-      "presentationP2": "Notre objectif est simple : vous offrir un résultat durable, esthétique et parfaitement adapté à vos besoins. Nous travaillons avec des matériaux de qualité et coordonnons chaque étape du chantier pour garantir un travail soigné et sans mauvaise surprise.",
-      "servicesIntro": "Nous intervenons dans différents domaines de la rénovation, du chantier ponctuel à la transformation clé en main.",
-      "pourquoiIntro": "Chaque projet est unique. Nous prenons le temps d'analyser vos besoins et de vous proposer des solutions adaptées, du simple rafraîchissement à la rénovation complète.",
+      "heroSubtitle": "Salle de bain, façade, toiture ou maison entière : vous avez un seul contact, et il coordonne pour vous maçons, plombiers, électriciens et peintres.",
+      "presentationP1": "Bati Conception rénove des maisons et des appartements à Bruxelles et partout en Belgique. Certains clients nous appellent pour une salle de bain, d'autres pour reprendre une maison de la cave au grenier.",
+      "presentationP2": "Avant de chiffrer, nous venons voir le chantier : le devis est gratuit et se fait sur place. Ensuite, nous organisons les corps de métier dans le bon ordre et vous tenons au courant à chaque étape.",
+      "servicesIntro": "Six domaines, du petit chantier à la rénovation clé en main. Ouvrez celui qui vous concerne pour voir ce que nous faisons et comment nous travaillons.",
+      "pourquoiIntro": "La même personne suit votre projet du premier rendez-vous à la fin des travaux, que vous refassiez une pièce ou toute la maison.",
       "pourquoiCards": [
         {
-          "title": "Accompagnement personnalisé",
-          "desc": "Un seul interlocuteur du devis aux finitions. Des conseils à chaque étape, sans jargon."
+          "title": "Un seul interlocuteur",
+          "desc": "La même personne vous suit du devis aux finitions et vous explique chaque choix sans jargon."
         },
         {
-          "title": "Délais et budget respectés",
-          "desc": "Planning précis, budget transparent. Pas de surprise en cours de chantier."
+          "title": "Délais et budget tenus",
+          "desc": "Vous recevez un planning et un budget clairs avant le début des travaux."
         },
         {
           "title": "Coordination de A à Z",
-          "desc": "Maçons, plombiers, électriciens, peintres — orchestrés sous un seul chantier."
+          "desc": "Nous gérons le calendrier des maçons, plombiers, électriciens et peintres. Vous n'avez qu'un numéro à appeler."
         },
         {
-          "title": "Solutions sur-mesure",
-          "desc": "Chaque projet est unique. On adapte, on propose, on ajuste avec vous."
+          "title": "Sur mesure",
+          "desc": "Nous partons de votre logement, de vos envies et de votre budget, puis nous ajustons la proposition avec vous."
         },
         {
-          "title": "Travail soigné et durable",
-          "desc": "Matériaux de qualité, finitions au cordeau, garanties d'usage. C'est notre signature."
+          "title": "Finitions au cordeau",
+          "desc": "Joints alignés, angles repris, appuis de fenêtres traités : les photos avant/après de nos chantiers le montrent."
         }
       ]
     },
     "pages": {
-      "servicesIntro": "De la salle de bain à la rénovation complète, nous coordonnons chaque corps de métier sous un seul interlocuteur. Choisissez l'expertise qui correspond à votre projet.",
-      "realisationsIntro": "Le meilleur moyen de vous convaincre, c'est de vous montrer notre travail. Glissez sur chaque photo pour comparer l'état initial et le résultat final de nos chantiers récents.",
-      "contactIntro": "Notre équipe est à votre écoute. Remplissez le formulaire ci-dessous, nous vous recontacterons rapidement."
+      "servicesIntro": "Un seul interlocuteur coordonne tous les corps de métier, de la salle de bain à la rénovation complète. Choisissez le type de travaux qui vous concerne.",
+      "realisationsIntro": "Voici nos chantiers récents à Bruxelles et alentour. Glissez sur chaque photo pour comparer l'avant et l'après.",
+      "contactIntro": "Décrivez votre projet dans le formulaire. Nous vous rappelons pour fixer une visite et un devis gratuit sur place."
     },
     "finalCta": {
-      "text": "Un projet en tête ? Obtenez un devis gratuit et personnalisé, sans engagement."
+      "text": "Un projet en tête ? Demandez votre devis : il est gratuit, fait sur place et sans engagement."
     }
   },
   "services": {
@@ -58,8 +58,8 @@
       "apres": "uploads/1 salle de bain/apres salle de bain.jpeg",
       "label": "Salle de bain",
       "title": "Rénovation de salle de bain",
-      "tagline": "Transformez votre espace en un lieu moderne, confortable et fonctionnel",
-      "intro": "La salle de bain est une pièce essentielle de votre habitation. Avec le temps, elle peut devenir moins pratique, moins esthétique ou ne plus correspondre à vos besoins. Nous vous accompagnons dans la rénovation complète ou partielle, avec des solutions adaptées à votre espace, vos envies et votre budget.",
+      "tagline": "Rénovation partielle ou complète, de la démolition à la mise en service",
+      "intro": "Baignoire qui ne sert plus, carrelage daté, rangements qui manquent ? Nous refaisons votre salle de bain en partie ou en entier, ou nous en créons une dans un nouvel espace, sous les combles par exemple. Vous choisissez les matériaux avec nous. Nous gérons la plomberie, le carrelage et la coordination avec notre électricien partenaire.",
       "prestations": [
         "Démolition de l'existant",
         "Réaménagement complet de la pièce",
@@ -92,8 +92,8 @@
       "apres": "uploads/4 isolation toiture plate et revetement/apres toiture plate.jpg",
       "label": "Toiture",
       "title": "Rénovation de toiture",
-      "tagline": "Protégez durablement votre habitation",
-      "intro": "La toiture est l'un des éléments les plus importants de votre habitation. Elle protège votre maison des intempéries, assure l'isolation et contribue à la durabilité du bâtiment. Avec le temps, elle peut se dégrader, perdre en efficacité ou présenter des infiltrations.",
+      "tagline": "Réparation, étanchéité et isolation, en toiture plate ou en pente",
+      "intro": "Une tache au plafond, une membrane qui cloque, des tuiles qui bougent ? Nous venons diagnostiquer votre toiture, puis nous vous disons s'il faut réparer une zone ou tout refaire. Sur une toiture plate à Bruxelles, nous avons remis le chantier hors d'eau en deux semaines.",
       "prestations": [
         "Remplacement de la couverture",
         "Réparation de toiture",
@@ -106,7 +106,7 @@
         "Diagnostic de l'état de votre toiture",
         "Recommandation : réparation, partielle ou complète",
         "Sélection des matériaux adaptés",
-        "Réalisation et suivi rigoureux",
+        "Réalisation et suivi du chantier",
         "Contrôle final des finitions"
       ],
       "why": [
@@ -131,13 +131,13 @@
       "apres": "uploads/8 isolation façade/apres facade 2.jpg",
       "label": "Façade",
       "title": "Rénovation de façade",
-      "tagline": "Améliorez l'apparence et la performance de votre habitation",
-      "intro": "La façade est la première image de votre maison. Elle joue un rôle essentiel, à la fois esthétique et protecteur. Avec le temps, elle peut se dégrader : fissures, salissures, perte d'isolation ou usure des matériaux.",
+      "tagline": "Isoler, réparer ou rafraîchir votre façade",
+      "intro": "Fissures, coulures noires, enduit qui s'effrite, murs froids côté intérieur ? Nous nettoyons, réparons et isolons les façades par l'extérieur (ITE), y compris sur des immeubles de cinq niveaux. Vous pouvez rester chez vous pendant les travaux.",
       "prestations": [
         "Isolation par la façade (ITE)",
         "Pose d'isolant et finition (enduit ou revêtement)",
         "Nettoyage complet de la façade",
-        "Hydrofuge — protection contre l'humidité",
+        "Hydrofuge contre l'humidité",
         "Réparation des fissures",
         "Rejointoiement",
         "Rafraîchissement ou rénovation de l'enduit"
@@ -163,8 +163,8 @@
       "apres": "uploads/9 isolation acoustique/apres acoustique.jpg",
       "label": "Aménagement intérieur",
       "title": "Aménagement intérieur",
-      "tagline": "Optimisez et transformez vos espaces de vie",
-      "intro": "L'aménagement intérieur permet de repenser complètement vos espaces afin de les rendre plus fonctionnels, modernes et adaptés à votre mode de vie. Nous réalisons tous types de travaux intérieurs, de la transformation de volumes existants à la création de nouvelles pièces.",
+      "tagline": "Grenier, cloisons, faux plafonds : de nouvelles pièces dans votre volume existant",
+      "intro": "Un grenier inutilisé peut devenir une chambre ou un bureau, et une grande pièce peut se diviser en deux. Nous montons les cloisons, posons les faux plafonds avec éclairage intégré, isolons et faisons les finitions, peinture et carrelage compris.",
       "prestations": [
         "Aménagement de grenier (chambre, bureau, pièce polyvalente)",
         "Pose de cloisons (Gyproc / plaques de plâtre)",
@@ -194,8 +194,8 @@
       "apres": "uploads/3 isolation toiture/apres toiture.jpeg",
       "label": "Isolation",
       "title": "Travaux d'isolation",
-      "tagline": "Améliorez le confort et réduisez vos factures d'énergie",
-      "intro": "Une bonne isolation est essentielle pour garantir le confort de votre habitation tout au long de l'année. Elle permet de limiter les pertes de chaleur en hiver, de garder la fraîcheur en été et de réduire significativement vos consommations énergétiques.",
+      "tagline": "Moins de chauffage l'hiver, plus de fraîcheur l'été",
+      "intro": "Une maison mal isolée perd sa chaleur par le toit, les murs et le sol. Nous isolons les trois : combles et toitures plates, façades par l'intérieur ou l'extérieur, sols et planchers. Avant les travaux, nous vous recommandons le matériau qui convient à votre logement.",
       "prestations": [
         "Isolation de toiture (combles, grenier, plate ou inclinée)",
         "Isolation des façades (intérieure ou extérieure)",
@@ -206,7 +206,7 @@
         "Audit thermique de l'habitation",
         "Recommandation du type d'isolation",
         "Choix du matériau adapté",
-        "Mise en œuvre soignée",
+        "Pose de l'isolant",
         "Vérification des performances"
       ],
       "why": [
@@ -232,8 +232,8 @@
       "apres": "uploads/7 salle de bain/apres salle de bain 3.jpeg",
       "label": "Rénovation complète",
       "title": "Rénovation complète de votre habitation",
-      "tagline": "Un accompagnement de A à Z pour tous vos projets",
-      "intro": "Vous souhaitez rénover entièrement votre maison ou votre appartement ? Nous prenons en charge votre projet de rénovation complète, de la conception jusqu'à la réalisation finale. Nous coordonnons l'ensemble des travaux afin de vous offrir un chantier maîtrisé, organisé et sans stress.",
+      "tagline": "Une maison ou un appartement repris de A à Z, avec un seul interlocuteur",
+      "intro": "Vous achetez un bien ancien, vous préparez une mise en location ou vous voulez tout refaire chez vous ? Nous prenons le chantier en main de la conception à la réception : planning, coordination des corps de métier, suivi et contrôle des finitions.",
       "prestations": [
         "Rénovation de salle de bain",
         "Rénovation de cuisine",
@@ -350,7 +350,7 @@
       "title": "Bardage cèdre rouge façade arrière",
       "location": "Bruxelles",
       "year": "2024",
-      "description": "Dépose d'un bardage vieillissant et dégradé, pose d'une ossature aluminium et d'un bardage cèdre rouge huilé en lames horizontales. Traitement soigné des retours d'angles et jonctions de menuiseries.",
+      "description": "Dépose d'un bardage vieillissant et dégradé, pose d'une ossature aluminium et d'un bardage cèdre rouge huilé en lames horizontales. Reprise des retours d'angles et des jonctions de menuiseries.",
       "avant": "uploads/5 bardage bois/avant bardage.jpeg",
       "apres": "uploads/5 bardage bois/apres bardage.jpeg",
       "pendant": [
@@ -367,7 +367,7 @@
       "title": "Isolation de façade côté rue",
       "location": "Uccle",
       "year": "2024 — 2025",
-      "description": "Pose de panneaux isolants haute densité sur la façade avant, enduit armé, finition teintée dans la masse. Traitement soigné des appuis de fenêtres, des linteaux et des angles. Travail réalisé en façade habitée, sans gêne pour les occupants.",
+      "description": "Pose de panneaux isolants haute densité sur la façade avant, enduit armé, finition teintée dans la masse. Reprise des appuis de fenêtres, des linteaux et des angles. Les occupants ont continué à vivre dans la maison pendant le chantier.",
       "avant": "uploads/5 isolation façade/avant facade.jpeg",
       "apres": "uploads/5 isolation façade/apres facade.jpg",
       "pendant": [
@@ -381,7 +381,7 @@
       "title": "Carrelage grand format, entrée extérieure",
       "location": "Périphérie bruxelloise",
       "year": "2025",
-      "description": "Dépose du revêtement existant, remise à niveau du support, pose de dalles grand format en grès cérame antidérapant pour une entrée extérieure et un seuil. Joints fins au cordeau pour un résultat net et durable.",
+      "description": "Dépose du revêtement existant, remise à niveau du support, pose de dalles grand format en grès cérame antidérapant pour une entrée extérieure et un seuil. Joints fins, tirés au cordeau.",
       "avant": "uploads/6 travaux carrelage/avant carrelage.jpeg",
       "apres": "uploads/6 travaux carrelage/apres carrelage.jpeg",
       "pendant": [
@@ -417,7 +417,7 @@
       "title": "Ravalement et ITE façade arrière, 5 niveaux",
       "location": "Schaerbeek",
       "year": "2024",
-      "description": "Façade arrière dégradée avec traces de coulures noires sur toute la hauteur. Nettoyage haute pression, pose d'un système ITE avec panneaux rigides EPS, enduit armé à double couche et finition lisse blanche. Résultat impeccable sur cinq niveaux.",
+      "description": "Façade arrière dégradée, avec des coulures noires sur toute la hauteur. Nettoyage haute pression, pose d'un système ITE en panneaux rigides EPS, enduit armé à double couche et finition lisse blanche sur les cinq niveaux.",
       "avant": "uploads/8 isolation façade/avant facade 2.jpeg",
       "apres": "uploads/8 isolation façade/apres facade 2.jpg",
       "pendant": [
@@ -436,7 +436,7 @@
       "title": "Isolation acoustique d'une chambre mitoyenne",
       "location": "Bruxelles",
       "year": "2025",
-      "description": "Traitement acoustique complet : ossature métallique désolidarisée des murs porteurs, laine minérale haute densité 80 mm, double parement plaque de plâtre phonique. Finition enduit, peinture blanche. Espace silencieux et propre.",
+      "description": "Traitement acoustique complet : ossature métallique désolidarisée des murs porteurs, laine minérale haute densité 80 mm, double parement en plaque de plâtre phonique. Finition enduit et peinture blanche.",
       "avant": "uploads/9 isolation acoustique/PHOTO-2025-06-11-17-32-49.jpg",
       "apres": "uploads/9 isolation acoustique/apres acoustique.jpg",
       "pendant": [
@@ -449,7 +449,7 @@
       "title": "Crépi d'une façade d'extension",
       "location": "Belgique",
       "year": "2024",
-      "description": "Reprise complète d'une façade d'extension : nettoyage du support, primaire d'accrochage, projection d'un crépi minéral teinté jaune ocre dans la masse. Réalisation soignée des angles et jonctions avec la charpente bois.",
+      "description": "Reprise complète d'une façade d'extension : nettoyage du support, primaire d'accrochage, projection d'un crépi minéral teinté jaune ocre dans la masse. Reprise des angles et des jonctions avec la charpente bois.",
       "avant": "uploads/10 crepi façade/avant crepi.jpeg",
       "apres": "uploads/10 crepi façade/apres crepi.jpeg",
       "pendant": [
@@ -462,7 +462,7 @@
       "title": "ITE façade arrière, multi-étages",
       "location": "Ixelles",
       "year": "2025 — 2026",
-      "description": "Mise en œuvre d'un système ITE complet sur cinq étages : pose des panneaux isolants EPS, armature fibre de verre, enduit de base et finition. Traitement soigné des linteaux, tableaux de fenêtres et nez de balcon.",
+      "description": "Mise en œuvre d'un système ITE complet sur cinq étages : pose des panneaux isolants EPS, armature en fibre de verre, enduit de base et finition. Reprise des linteaux, des tableaux de fenêtres et des nez de balcon.",
       "avant": "uploads/11 isolation façade/avant facade 3.jpeg",
       "apres": "uploads/11 isolation façade/apres facade 3.jpg",
       "pendant": [
@@ -492,7 +492,7 @@
       "title": "Carrelage grand format devant de maison",
       "location": "Bruxelles",
       "year": "2025",
-      "description": "Dépose de l'ancienne voirie, terrassement et remblai compacté, chape, pose de dalles 60×60 gris anthracite avec joints fins. Résultat soigné, aligné sur la limite de propriété et le niveau de la voirie.",
+      "description": "Dépose de l'ancienne voirie, terrassement et remblai compacté, chape, pose de dalles 60×60 gris anthracite à joints fins. Dalles alignées sur la limite de propriété et le niveau de la voirie.",
       "avant": "uploads/13 travaux carrelage/avant facade 2.jpg",
       "apres": "uploads/13 travaux carrelage/apres carrelage 2.jpg",
       "pendant": []
