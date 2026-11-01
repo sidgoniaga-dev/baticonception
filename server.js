@@ -342,11 +342,12 @@ app.use((req, res, next) => {
     'Content-Security-Policy',
     [
       "default-src 'self' https: data: blob:",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://fonts.googleapis.com https://www.googletagmanager.com https://googleads.g.doubleclick.net",
-      "connect-src 'self' https://formspree.io https://www.google-analytics.com https://analytics.google.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://fonts.googleapis.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.google.com",
+      // Google Ads (AW-18181959176) : collecte de conversions via google.com/ccm, ad.doubleclick.net et google.be
+      "connect-src 'self' https://formspree.io https://www.google-analytics.com https://analytics.google.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://www.google.com https://www.google.be https://ad.doubleclick.net https://www.googleadservices.com https://pagead2.googlesyndication.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.tailwindcss.com",
       "font-src 'self' https://fonts.gstatic.com data:",
-      "img-src 'self' data: blob: https://placehold.co https://lh3.googleusercontent.com https://www.googletagmanager.com",
+      "img-src 'self' data: blob: https://placehold.co https://lh3.googleusercontent.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.be https://ad.doubleclick.net https://www.googleadservices.com",
       "media-src 'self' blob:",
     ].join('; ')
   );
