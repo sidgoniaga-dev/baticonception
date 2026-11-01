@@ -1475,22 +1475,21 @@ const HomePage = ({ go }) => (
           {[
             {
               count: 6,
-              label: "domaines d'expertise",
-              detail: "Salle de bain, façade, toiture, isolation, aménagement, rénovation.",
+              label: "domaines de travaux",
+              detail: "Salle de bain, façade, toiture, isolation, aménagement, rénovation complète.",
               Ic: Layers,
             },
             {
               text: "A→Z",
-              label: "accompagnement complet",
-              detail: "Un seul interlocuteur, de l'étude initiale jusqu'aux finitions.",
+              label: "un seul interlocuteur",
+              detail: "La même personne vous suit du devis aux finitions.",
               Ic: Sparkles,
             },
             {
-              count: 100,
-              suffix: "%",
-              label: "travail soigné",
-              detail: "Matériaux de qualité, finitions au cordeau, garanties d'usage.",
-              Ic: Check,
+              count: PROJECTS.length,
+              label: "chantiers en photos",
+              detail: "Avant, pendant et après, sur la page Réalisations.",
+              Ic: Camera,
             },
             {
               text: "BE",

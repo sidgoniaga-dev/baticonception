@@ -14,3 +14,6 @@ content.json.tmp
 
 # Photos uploadées par le client via le CMS (stockées sur le disque du serveur)
 uploads/cms/
+
+# Documents de travail (non publiés : la racine du projet est servie en statique)
+_docs/
