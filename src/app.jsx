@@ -1910,6 +1910,8 @@ const ServicePage = ({ slug, go }) => {
         </div>
       </section>
 
+      <ReviewsSection n="06" screen={`Service / ${s.label} / Avis`} divider />
+
       <FinalCta go={go} />
     </React.Fragment>
   );
@@ -2125,6 +2127,8 @@ const ServicesPage = ({ go }) => (
         </div>
       </div>
     </section>
+
+    <ReviewsSection n="08" screen="Services / Avis" />
 
     <FinalCta go={go} />
   </React.Fragment>
@@ -2457,6 +2461,25 @@ const GoogleReviews = () => {
     </div>
   );
 };
+
+// Bloc « Avis clients » réutilisé en bas des pages services.
+// `divider` ajoute un filet quand la section précédente est déjà sombre.
+const ReviewsSection = ({ n, screen, divider }) => (
+  <section data-screen-label={screen} className={`${divider ? "pb-16 md:pb-20 lg:pb-32" : "py-16 md:py-20 lg:py-32"} bg-[#0A0A0A] text-[#F7F4ED]`}>
+    <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+      {divider && <div className="border-t border-[#F7F4ED]/10 mb-16 md:mb-20 lg:mb-24" />}
+      <div className="grid lg:grid-cols-12 gap-10 mb-16">
+        <div className="lg:col-span-5">
+          <SectionLabel n={n}>Avis clients</SectionLabel>
+          <h2 className="font-['Fraunces'] text-4xl md:text-5xl leading-tight">
+            Ce que nos clients <em className="italic font-light">en disent</em>.
+          </h2>
+        </div>
+      </div>
+      <GoogleReviews />
+    </div>
+  </section>
+);
 
 const RealisationsPage = ({ go }) => {
   const [filter, setFilter] = React.useState("Tous");
