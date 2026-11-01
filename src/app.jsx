@@ -2322,10 +2322,11 @@ const GoogleReviews = () => {
       });
   }, []);
 
+  const ratingLabel = `${(rating || 4.9).toFixed(1).replace(".", ",")} / 5`;
   const marqueeItems = [
-    "★★★★★", "Clients satisfaits", "4,9 / 5",
-    "Travail soigné", "★★★★★", "70 avis vérifiés",
-    "Recommandé", "4,9 / 5", "★★★★★", "Ponctualité & finition",
+    "★★★★★", "Clients satisfaits", ratingLabel,
+    "Travail soigné", "★★★★★", total ? `${total} avis Google` : "Avis Google vérifiés",
+    "Recommandé", ratingLabel, "★★★★★", "Ponctualité & finition",
   ];
 
   if (status === "loading") return (

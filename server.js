@@ -46,8 +46,13 @@ function fetchJsonPost(hostname, path, headers, body) {
   });
 }
 
-// Discover the correct Place ID via text search (avoids hardcoded wrong ID)
+// Fiche Google « Bati Conception | Entreprise générale de rénovation » (zone de service,
+// sans adresse publique). La recherche texte ne la trouve pas et tombe sur « Bati Belgium group ».
+const BATI_PLACE_ID = process.env.GOOGLE_PLACE_ID || 'ChIJ55Uee7ajTU0RLXS7ZxHP-Oc';
+
+// Discover the correct Place ID via text search (fallback si aucun ID n'est fixé)
 async function getPlaceId(apiKey) {
+  if (BATI_PLACE_ID) return BATI_PLACE_ID;
   if (resolvedPlaceId) return resolvedPlaceId;
   try {
     const result = await fetchJsonPost(
