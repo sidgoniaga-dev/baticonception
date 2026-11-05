@@ -1494,7 +1494,7 @@ const HomePage = ({ go }) => (
             {
               text: "BE",
               label: "intervention Belgique",
-              detail: "Bruxelles et toute la Belgique, devis gratuit sur place.",
+              detail: "Bruxelles, Brabant wallon, Brabant flamand.",
               Ic: MapPin,
             },
           ].map((s, i) => (

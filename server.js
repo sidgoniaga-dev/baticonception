@@ -89,7 +89,7 @@ const PAGE_META = {
     h1: 'Votre partenaire rénovation de la cave au grenier.',
     body: `<p>Entreprise de rénovation en Belgique. De la salle de bain à la rénovation complète, nous coordonnons chaque corps de métier sous un seul interlocuteur — pour un chantier maîtrisé et un résultat soigné.</p>
 <p>6 domaines d'expertise : Salle de bain · Toiture · Façade · Isolation · Aménagement intérieur · Rénovation complète.</p>
-<p>Un seul interlocuteur du devis aux finitions. Devis gratuit. Intervention en Belgique. TVA BE 1030.623.416.</p>`,
+<p>Un seul interlocuteur du devis aux finitions. Devis gratuit. Intervention à Bruxelles, en Brabant wallon et en Brabant flamand. TVA BE 1030.623.416.</p>`,
   },
   '/services': {
     title: 'Nos services — BatiConception | Rénovation Belgique',
@@ -134,7 +134,7 @@ const PAGE_META = {
     body: `<p>Demandez votre devis gratuit pour votre projet de rénovation en Belgique.</p>
 <p>Téléphone : +32 470 86 63 59</p>
 <p>Email : baticonception@outlook.com</p>
-<p>Zone d'intervention : Bruxelles et toute la Belgique.</p>`,
+<p>Zone d'intervention : Bruxelles, Brabant wallon, Brabant flamand.</p>`,
   },
   '/salle-de-bain': {
     title: 'Rénovation de salle de bain — BatiConception Belgique',

@@ -1,0 +1,29 @@
+[
+  {
+    "path": [
+      "texts",
+      "global",
+      "zone"
+    ],
+    "from": "Belgique",
+    "to": "Bruxelles, Brabant wallon, Brabant flamand"
+  },
+  {
+    "path": [
+      "texts",
+      "global",
+      "footerAbout"
+    ],
+    "from": "Rénovation à Bruxelles et dans toute la Belgique. Salle de bain, façade, toiture ou maison entière, avec un seul interlocuteur du devis aux finitions.",
+    "to": "Rénovation à Bruxelles, en Brabant wallon et en Brabant flamand. Salle de bain, façade, toiture ou maison entière, avec un seul interlocuteur du devis aux finitions."
+  },
+  {
+    "path": [
+      "texts",
+      "home",
+      "presentationP1"
+    ],
+    "from": "Bati Conception rénove des maisons et des appartements à Bruxelles et partout en Belgique. Certains clients nous appellent pour une salle de bain, d'autres pour reprendre une maison de la cave au grenier.",
+    "to": "Bati Conception rénove des maisons et des appartements à Bruxelles, en Brabant wallon et en Brabant flamand. Certains clients nous appellent pour une salle de bain, d'autres pour reprendre une maison de la cave au grenier."
+  }
+]
